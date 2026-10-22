@@ -256,27 +256,29 @@ Sơ đồ sau minh họa rõ hai kịch bản: Khi Database Driver hợp tác h�
 sequenceDiagram
     autonumber
     actor Caller as Ingestion Worker
-    participant Ctx as Context (Timeout)
-    participant Driver as Database Driver / Socket
-    participant PG as PostgreSQL Server
+    participant Ctx as Go Context
+    participant Driver as Database Driver
+    participant PG as PostgreSQL
 
-    Note over Caller,PG: KHỞI TẠO TÁC VỤ VỚI CONTEXT TIMEOUT (Ví dụ minh họa: 150ms)
-    Caller->>Ctx: context.WithTimeout(parentCtx, timeout)
-    Caller->>Driver: ExecContext(ctx, query)
-    Driver->>PG: Gửi truy vấn SQL qua TCP socket
+    rect rgb(244, 248, 252)
+        Note over Caller,PG: 01 - Khoi tao truy van
+        Caller->>Ctx: Tao context.WithTimeout
+        Caller->>Driver: ExecContext(ctx, query)
+        Driver->>PG: Gui truy van SQL
+        Note over Ctx: Deadline het han - ctx.Done() dong
+    end
 
-    Note over Ctx: Hết hạn Timeout! <-ctx.Done() đóng lại
-
-    alt Nhánh A: Thao tác Hợp tác (Cooperative Operation)
-        Ctx-->>Driver: Tín hiệu hủy qua <-ctx.Done()
-        Driver->>PG: Đóng socket hoặc gửi lệnh ngắt truy vấn
-        Driver-->>Caller: Trả về lỗi context.DeadlineExceeded sớm
-        Note over Caller: Worker bắt lỗi, hủy bỏ tác vụ và GIẢI PHÓNG TÀI NGUYÊN đúng hạn
-    else Nhánh B: Thao tác Bất hợp tác / Mất kết nối ranh giới (Non-Cooperative / Boundary Timeout)
-        Note over Driver,PG: Driver I/O chặn cứng HOẶC timeout xảy ra đúng lúc gửi gói COMMIT
-        Driver--xCtx: Bỏ qua tín hiệu ctx.Done() hoặc socket bị treo ở kernel
-        PG-->>PG: CSDL tiếp tục thực thi ngầm hoặc đã COMMIT thành công trên đĩa!
-        Note over Caller: Worker BỊ TREO hoặc KHÔNG THỂ BIẾT transaction đã commit hay chưa!<br>Cần cơ chế đối soát (Reconciliation) tầng ứng dụng.
+    alt A - Driver quan sat huy
+        Note over Ctx,Driver: Driver chu dong quan sat ctx.Done()
+        opt Driver ho tro huy truy van
+            Driver-->>PG: Gui yeu cau huy
+        end
+        Driver-->>Caller: Tra loi va giai phong tai nguyen
+    else B - Khong huy kip hoac commit bat dinh
+        Note over Ctx,Driver: Huy khong duoc xu ly kip thoi
+        Driver->>PG: I/O hoac COMMIT co the tiep tuc
+        Note over Driver,PG: Phan hoi co the that lac
+        Note over Caller,PG: Client timeout khong chung minh rollback. Can idempotency va reconciliation
     end
 ```
 
