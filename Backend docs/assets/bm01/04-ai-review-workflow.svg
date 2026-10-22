@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1070" height="805" viewBox="0 0 1070 805" role="img" aria-label="Quy trình 6 bước giao nhiệm vụ và phản biện mã AI">
+
+<style>
+  text { font-family: Arial, "DejaVu Sans", sans-serif; fill: #172b4d; }
+  .title { font-size: 26px; font-weight: 700; fill: #0b2545; }
+  .sub { font-size: 15px; fill: #516782; }
+  .section { font-size: 16px; font-weight: 700; fill: #194a76; }
+  .node { font-size: 15px; font-weight: 600; }
+  .minor { font-size: 13px; font-weight: 400; fill: #425a78; }
+  .edgeLabel { font-size: 13px; font-weight: 600; fill: #1c628a; }
+  .arrow { fill: none; stroke: #3286b5; stroke-width: 2.6; marker-end: url(#head); stroke-linejoin: round; }
+  .dashed { stroke-dasharray: 8 6; }
+</style>
+<defs><marker id="head" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L9 4.5 L0 9 Z" fill="#3286b5"/></marker></defs><rect width="1070" height="805" fill="#ffffff"/>
+<text x="30" y="44" class="title" text-anchor="start">Quy trình 6 bước giao nhiệm vụ và phản biện mã AI</text><text x="30" y="68" class="sub" text-anchor="start">Chỉ đánh dấu CONFIRMED sau khi có bằng chứng kiểm tra phù hợp</text>
+<rect x="208" y="100" width="650" height="79" rx="13" fill="#eef6fd" stroke="#aacddd" stroke-width="2"/><text x="533" y="134.6" class="node" text-anchor="middle" font-size="15">01 · SOẠN PROMPT KỸ THUẬT</text><text x="533" y="154.6" class="minor" text-anchor="middle" font-size="14">Bối cảnh, ràng buộc, hợp đồng, test</text><path class="arrow" d="M533 179 L533 216"/><rect x="208" y="216" width="650" height="79" rx="13" fill="#eef6fd" stroke="#aacddd" stroke-width="2"/><text x="533" y="250.6" class="node" text-anchor="middle" font-size="15">02 · AI SINH PHƯƠNG ÁN MÃ</text><text x="533" y="270.6" class="minor" text-anchor="middle" font-size="14">Đề xuất giải pháp và giả định</text><path class="arrow" d="M533 295 L533 332"/><rect x="208" y="332" width="650" height="79" rx="13" fill="#eef6fd" stroke="#aacddd" stroke-width="2"/><text x="533" y="366.6" class="node" text-anchor="middle" font-size="15">03 · THẨM TRA TĨNH</text><text x="533" y="386.6" class="minor" text-anchor="middle" font-size="14">Concurrency, goroutine leak, ownership, lock scope</text><path class="arrow" d="M533 411 L533 448"/><rect x="208" y="448" width="650" height="79" rx="13" fill="#eef6fd" stroke="#aacddd" stroke-width="2"/><text x="533" y="482.6" class="node" text-anchor="middle" font-size="15">04 · XÁC MINH BẰNG TOOLCHAIN</text><text x="533" y="502.6" class="minor" text-anchor="middle" font-size="14">go vet ./... · go test -race</text><path class="arrow" d="M533 527 L533 564"/><rect x="208" y="564" width="650" height="79" rx="13" fill="#fff8ee" stroke="#e0ba77" stroke-width="2"/><text x="533" y="598.6" class="node" text-anchor="middle" font-size="15">05 · PHẢN BIỆN, YÊU CẦU SỬA</text><text x="533" y="618.6" class="minor" text-anchor="middle" font-size="14">Chỉ rõ root cause và căn cứ kỹ thuật</text><path class="arrow" d="M533 643 L533 681"/><rect x="208" y="681" width="650" height="79" rx="13" fill="#eff9f2" stroke="#8bcc9a" stroke-width="2"/><text x="533" y="715.6" class="node" text-anchor="middle" font-size="15">06 · GHI NHẬN TRẠNG THÁI</text><text x="533" y="735.6" class="minor" text-anchor="middle" font-size="14">CONFIRMED / NOT_VERIFIED / LIMITATIONS</text><path class="arrow dashed" d="M208 605 L105 605 L105 255 L208 255"/><text x="105" y="433" class="edgeLabel" text-anchor="middle">Nếu còn lỗi</text><text x="890" y="667" class="edgeLabel" text-anchor="start">Tests đạt</text>
+</svg>

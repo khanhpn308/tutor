@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1090" height="530" viewBox="0 0 1090 530" role="img" aria-label="Context Deadline ≠ Tự động dừng goroutine">
+
+<style>
+  text { font-family: Arial, "DejaVu Sans", sans-serif; fill: #172b4d; }
+  .title { font-size: 26px; font-weight: 700; fill: #0b2545; }
+  .sub { font-size: 15px; fill: #516782; }
+  .section { font-size: 16px; font-weight: 700; fill: #194a76; }
+  .node { font-size: 15px; font-weight: 600; }
+  .minor { font-size: 13px; font-weight: 400; fill: #425a78; }
+  .edgeLabel { font-size: 13px; font-weight: 600; fill: #1c628a; }
+  .arrow { fill: none; stroke: #3286b5; stroke-width: 2.6; marker-end: url(#head); stroke-linejoin: round; }
+  .dashed { stroke-dasharray: 8 6; }
+</style>
+<defs><marker id="head" markerWidth="9" markerHeight="9" refX="7.5" refY="4.5" orient="auto" markerUnits="userSpaceOnUse"><path d="M0 0 L9 4.5 L0 9 Z" fill="#3286b5"/></marker></defs><rect width="1090" height="530" fill="#ffffff"/>
+<text x="30" y="44" class="title" text-anchor="start">Context Deadline ≠ Tự động dừng goroutine</text><text x="30" y="68" class="sub" text-anchor="start">Sự khác biệt giữa cooperative cancellation và delayed cancellation</text>
+<rect x="36" y="229" width="250" height="78" rx="13" fill="#eef6fd" stroke="#aacddd" stroke-width="2"/><text x="161" y="263.1" class="node" text-anchor="middle" font-size="15">Caller đặt deadline</text><text x="161" y="283.1" class="minor" text-anchor="middle" font-size="14">100 ms</text><rect x="347" y="229" width="274" height="78" rx="13" fill="#fff9e9" stroke="#e1c988" stroke-width="2"/><text x="484" y="263.1" class="node" text-anchor="middle" font-size="15">Worker kiểm tra</text><text x="484" y="283.1" class="minor" text-anchor="middle" font-size="14">ctx.Done()?</text><path class="arrow" d="M286 268 L347 268"/><rect x="730" y="92" width="326" height="85" rx="13" fill="#eff9f2" stroke="#93caaa" stroke-width="2"/><text x="893" y="129.6" class="node" text-anchor="middle" font-size="15">CÓ — Quan sát tín hiệu hủy</text><text x="893" y="149.6" class="minor" text-anchor="middle" font-size="14">Kết thúc sớm và giải phóng tài nguyên</text><rect x="730" y="300" width="326" height="80" rx="13" fill="#fff6ee" stroke="#e5b9a1" stroke-width="2"/><text x="893" y="335.1" class="node" text-anchor="middle" font-size="15">KHÔNG — Tiếp tục chạy</text><text x="893" y="355.1" class="minor" text-anchor="middle" font-size="14">Cho tới khi tác vụ tự kết thúc</text><rect x="730" y="427" width="326" height="75" rx="13" fill="#fff0ef" stroke="#e5a7a2" stroke-width="2"/><text x="893" y="459.6" class="node" text-anchor="middle" font-size="15">Delayed cancellation</text><text x="893" y="479.6" class="minor" text-anchor="middle" font-size="14">Lãng phí tài nguyên / chờ I/O</text><path class="arrow" d="M621 255 L673 255 L673 135 L730 135"/><text x="674" y="125" class="edgeLabel" text-anchor="middle">Có</text><path class="arrow" d="M621 283 L673 283 L673 341 L730 341"/><text x="674" y="327" class="edgeLabel" text-anchor="middle">Không</text><path class="arrow" d="M893 380 L893 427"/>
+</svg>

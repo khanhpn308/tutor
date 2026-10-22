@@ -85,7 +85,12 @@ Nếu sử dụng các ngôn ngữ hướng kịch bản (Python/NodeJS) hoặc 
 
 #### Nguyên lý hoạt động & Luồng dữ liệu hệ thống (HOW)
 
-```mermaid
+![Sơ đồ kiến trúc IoT 5 tầng từ ESP32 và MQTT đến Go Backend, PostgreSQL và React](./assets/bm01/01-system-architecture.svg)
+
+<details>
+<summary>Mã nguồn sơ đồ (Mermaid) — nhấn để xem và chỉnh sửa</summary>
+
+```text
 flowchart LR
     subgraph Edge ["Tầng 1: Vô tuyến & Thiết bị Biên"]
         Node["10-15 ESP32 LoRa Nodes<br>(Thực thi khe TDMA)"]
@@ -123,6 +128,8 @@ flowchart LR
     Broker --> MqttSub
     Sched -.->|"Downlink Schedule<br>QoS 1"| Broker
 ```
+
+</details>
 
 - **Phân tách trách nhiệm kiến trúc sống còn (ADR-0001):**
   - **ESP32 Gateway:** Là TDMA Master cục bộ, thực thi phần cứng thời gian thực (GPTimer, SPI tới SX1276 với độ chính xác micro-giây), chuyển tiếp khung nhị phân LoRa thành bản tin MQTT JSON.
@@ -240,7 +247,12 @@ Nếu không có Context:
 ##### 2. Sequence Diagram: Hai Nhánh Xử Lý Khi Context Timeout Thao Tác CSDL
 Sơ đồ sau minh họa rõ hai kịch bản: Khi Database Driver hợp tác hủy và khi Database Driver bất hợp tác hoặc timeout xảy ra tại ranh giới commit:
 
-```mermaid
+![Sơ đồ tuần tự Context Timeout: nhánh hợp tác hủy và nhánh bất định transaction COMMIT](./assets/bm01/02-context-timeout-sequence.svg)
+
+<details>
+<summary>Mã nguồn sơ đồ (Mermaid) — nhấn để xem và chỉnh sửa</summary>
+
+```text
 sequenceDiagram
     autonumber
     actor Caller as Ingestion Worker
@@ -267,6 +279,8 @@ sequenceDiagram
         Note over Caller: Worker BỊ TREO hoặc KHÔNG THỂ BIẾT transaction đã commit hay chưa!<br>Cần cơ chế đối soát (Reconciliation) tầng ứng dụng.
     end
 ```
+
+</details>
 
 > [!IMPORTANT]
 > **Lưu ý kỹ thuật quan trọng về Timeout & Ranh giới Transaction:**
@@ -375,7 +389,12 @@ Nếu không có Graceful Shutdown và tiến trình bị dừng đột ngột:
 
 ##### 1. Chuỗi trạng thái của Graceful Shutdown
 
-```mermaid
+![Flowchart graceful shutdown với timeout producer và worker](./assets/bm01/03-graceful-shutdown.svg)
+
+<details>
+<summary>Mã nguồn sơ đồ (Mermaid) — nhấn để xem và chỉnh sửa</summary>
+
+```text
 flowchart LR
     A[RUNNING] --> B[STOP ADMISSION]
     B --> C[WAIT PRODUCERS]
@@ -385,6 +404,8 @@ flowchart LR
     C -->|Quá hạn| X[ABORT POLICY - KHÔNG ĐÓNG QUEUE]
     E -->|Quá hạn| Y[LOG UNFINISHED - TERMINAL ABORT]
 ```
+
+</details>
 
 Đây là trình tự an toàn ở cấp **mô hình thiết kế**: dừng tiếp nhận mới, chờ producer hiện hành, đóng queue chỉ khi không còn bên gửi, để workers xả cạn, sau đó giải phóng tài nguyên. Timeout không tự giết goroutine đang bị chặn.
 
@@ -432,7 +453,12 @@ Nếu tin tưởng mù quáng vào mã do AI sinh ra:
 
 #### Quy Trình 6 Bước Giao Nhiệm Vụ & Phản Biện Mã AI (HOW)
 
-```mermaid
+![Quy trình sáu bước phản biện mã do AI sinh, có vòng lặp sửa lỗi và xác minh toolchain](./assets/bm01/04-ai-review-workflow.svg)
+
+<details>
+<summary>Mã nguồn sơ đồ (Mermaid) — nhấn để xem và chỉnh sửa</summary>
+
+```text
 flowchart TD
     Prompt["Bước 1: Soạn Prompt Kỹ Thuật Chặt Chẽ<br>(Bối cảnh, Ràng buộc, Hợp đồng, Test)"] --> AIOutput["Bước 2: AI Sinh Giải Pháp Mã Nguồn"]
     AIOutput --> StaticAudit["Bước 3: Thẩm Tra Tĩnh (Static Inspection)<br>- Rà soát Concurrency & Goroutine Leaks<br>- Kiểm tra Resource Ownership & Lock Scopes"]
@@ -441,6 +467,8 @@ flowchart TD
     Critique --> AIOutput
     ToolVerify -- Vượt qua Tests --> Document["Bước 6: Ghi Nhận Giới Hạn & Trạng Thái<br>(Phân định rõ ràng CONFIRMED vs NOT_VERIFIED)"]
 ```
+
+</details>
 
 1. **Bước 1 — Soạn thảo Prompt kỹ thuật chuẩn:**
    - Cung cấp rõ ràng: Phiên bản Go (`go 1.23`), kiểu dữ liệu hợp đồng (`telemetry.schema.json`), ràng buộc tài nguyên.
@@ -533,13 +561,20 @@ Mỗi workshop thực hiện theo quy trình: **Dự đoán → Quan sát sơ đ
 
 **Mô hình:** Một `buffered channel` có `capacity = 50`, chưa khởi chạy workers. Producer thử đưa liên tiếp 60 telemetry messages vào queue theo chính sách *non-blocking enqueue*; khi queue đầy thì từ chối message mới.
 
-```mermaid
+![Ví dụ 60 telemetry jobs đi vào queue capacity 50, 50 accepted và 10 rejected](./assets/bm01/05-queue-overflow.svg)
+
+<details>
+<summary>Mã nguồn sơ đồ (Mermaid) — nhấn để xem và chỉnh sửa</summary>
+
+```text
 flowchart LR
     A[60 telemetry jobs] --> B{Queue cap = 50}
     B -->|50 accepted| C[Chờ 4 workers xử lý]
     B -->|10 rejected| D[Overflow counter + cảnh báo]
     C --> E[PostgreSQL - giả lập]
 ```
+
+</details>
 
 **Hãy trả lời:**
 
@@ -554,13 +589,20 @@ flowchart LR
 
 **Mô hình:** Caller đặt timeout 100 ms cho một tác vụ mất 200 ms nếu chạy liên tục. So sánh hai trường hợp:
 
-```mermaid
+![Flowchart context deadline 100ms: worker có và không kiểm tra ctx.Done](./assets/bm01/06-context-cancellation.svg)
+
+<details>
+<summary>Mã nguồn sơ đồ (Mermaid) — nhấn để xem và chỉnh sửa</summary>
+
+```text
 flowchart TD
     A[Caller đặt deadline 100 ms] --> B{Worker kiểm tra ctx.Done?}
     B -->|Có| C[Quan sát hủy -> kết thúc sớm]
     B -->|Không| D[Tiếp tục công việc tới khi tự kết thúc]
     D --> E[Delayed cancellation / resource waste]
 ```
+
+</details>
 
 **Hãy trả lời:**
 
