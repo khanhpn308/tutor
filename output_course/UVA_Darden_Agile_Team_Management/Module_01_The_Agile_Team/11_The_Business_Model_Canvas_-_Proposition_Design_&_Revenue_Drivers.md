@@ -1,0 +1,23 @@
+# 🎥 The Business Model Canvas - Proposition Design & Revenue Drivers
+
+🔗 **Link Video MP4:** [Xem / Tải Video](https://d3c33hcgiwev3.cloudfront.net/zwolX5zQEemPZRLYQifSTA.processed/full/540p/index.mp4?Expires=1792886400&Signature=KCDMak04~7cl7W0jaFGJGWK51Srjxigr9QjJ1i17Fbg9W4qBCVdAqK1CMyNP1wm5FSupOPTJAR4ghbLLN-QXHe7rhbThTWkVBBml662lb-kTVafPm8JML6fo8-kf6BZahJ2zfoq6Qv38Uax5vJaRSTsP3NpSPzx1mCx7h~VbduQ_&Key-Pair-Id=APKAJLTNE6QMUY6HBC5A)
+
+---
+
+## 📜 Lời giảng viên (Transcript)
+
+Play video starting at :: and follow transcript
+0:00
+​We talked about this question of how do we achieve alignment. ​We looked at these three questions here. ​We're going to dive in and look at this first part of question one. ​We're going to use a Canvas as the backdrop to this and ​what were really interested in is this idea of product market fit. ​So what it is the relationship between customer segments and value propositions, ​because this is really what should propel the rest of the canvas. ​Let's take a look at some examples. ​Home Depot is a hardware retailer here in the US and maybe we have, ​this is all made up. 
+Play video starting at ::36 and follow transcript
+0:36
+​I am not an expert on Home Depot. ​I'm just sort of speculating for my own experience heading over there. ​So we have your do-it-yourselfer who does repairs on thei r homes. ​Your casual shopper who is maybe just buying a mop or a hammer, or ​something just wants to get in and get out. ​And then contractors, professionals who are working on houses. ​So maybe these do-it-yourselfers primarily value the broad selection. ​The casual shoppers, the convenience and the contractors, ​this combination of broad selection and convenience. 
+Play video starting at :1:9 and follow transcript
+1:09
+​So this again is just one example, but this is the kind of result that we're ​looking for to build out the rest of the Canvas and instead of working ​assumptions about what really propels the business in terms of revenue drivers. ​Here is a breakdown of this for our example company that we use, ​HVAC in a Hurry. ​This is a company that services heating, ​ventilation air conditioning systems for business and they have three segments. ​Medium businesses, landlords and small businesses and ​the medium businesses primarily value these these four things. ​They want comfort and they want good economics, but they're not so ​much worried about month of month cost savings. ​Because they have the liquidity and ​the longer view of what the operation of the business kind of means. ​They have landlords who value these three things, ​because they also relatively long view. 
+Play video starting at :2: and follow transcript
+2:00
+​But user comfort is kind of up to the individual businesses that ​occupy these places and they sort of tune that. ​And then they have the small businesses that really are just, ​they are going to squeeze every moment out of that old HVAC system and ​respond to emergencies in just kind of deal with everything on the fly. ​And so this is an example of how this might breakdown for ​the example company that we're going to kind of take through the rest of it and ​then here's how that breakdown might look in the Canvas. ​And you'll find a template for using these various kinds of lines and ​so forth in the Google Slides template that I'll show you as we go forward, and ​you can find in the course resources. ​Another thing that we will look at after we look at this kind of product ​market fit is this idea of how does that relate to revenue drivers. ​And so here, what we see is there's these as-billed contracts and ​equipment resale that they do for ​the small businesses, and some of the landlords. ​And then some landlords are on these fixed price full service contracts, ​which is primarily what they sell to the medium business and some of the landlords. 
+Play video starting at :3:10 and follow transcript
+3:10
+​And as we'll see as we go through this, getting customers upsold to those full ​price contracts is really important to them. ​because not only does it drive higher quality, ​more predictable revenue, but it also affects their cost drivers. ​Because it allows them to be more proactive about who they dispatch to what ​place and kind of manage their resources, these technicians better. ​So that is a view how we answer what might seem to everybody like the really obvious ​answers, but ​probably aren't as obvious and as specific to everyone as you might think. ​And this is probably the single most important first step in driving to ​a really good shared understanding with your general management about what ​alignment means for your team.

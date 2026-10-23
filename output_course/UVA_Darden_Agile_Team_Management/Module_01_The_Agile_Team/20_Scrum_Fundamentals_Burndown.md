@@ -1,0 +1,20 @@
+# 🎥 Scrum Fundamentals: Burndown
+
+🔗 **Link Video MP4:** [Xem / Tải Video](https://d3c33hcgiwev3.cloudfront.net/hhWGj_ELEeWdog4J34Sclw.processed/full/540p/index.mp4?Expires=1792886400&Signature=IuyBIk4bLcHUNmlVm132zfZCheLEI6ruSkUJ49HchjzkgtJ~z9jz5BAEjA~yYq7QCXDCnqBpnluJqz99ZAMTqvsRHSniLAbYrsuXFsF4bB9MpbGjhZI79MiTEDll2fNrQvZmvr7~wQcO~aYrZd2-uWvU2bUHhPlBg5dLgfeQwOU_&Key-Pair-Id=APKAJLTNE6QMUY6HBC5A)
+
+---
+
+## 📜 Lời giảng viên (Transcript)
+
+Play video starting at :: and follow transcript
+0:00
+​In this video we're going to talk about the practice of burn down. ​And this is a practice from Scrum that helps you look at ​where you are from the very beginning of your sprint when you've got a whole set ​of back log that's not finished to the end of your sprint where ideally ​you finished all that back log it's been completed into working software. ​And the way that this Burndown tracking process works is that you have a chart and ​you might put it up on the wall and manually do it or a piece of software ​you're using to manage your processes might generate this automatically for ​you or maybe you do both, that's okay. ​But the way it works is on the X axis you have time so this is the sprint beginning ​date, this is the sprint end date and you're marking this off by days. ​And then on the y axis, you have some measure of the total size of the backlog. ​Usually this is delineated in story points, ​some kind of measure that you put on each individual story to give you ​a very general idea of how big it is relative to the other stories. ​So, here is the full size of the backlog at the very top of the y axis. 
+Play video starting at :1:9 and follow transcript
+1:09
+​And what you do is every day, you mark out how many story points you completed. ​So for instance here, they haven't completed any, which is totally normal for ​the beginning of an iteration. ​And here it looks like maybe they've completed one say. ​So at this point, we've gone from 15 here to 14. ​And so we mark this on the chart, ​and that's the series that you're seeing here, this top series. ​This other series here, as you can probably guess, ​the ideal linear progress if you finish these at a completely even rate over time. ​And the purpose this serves is giving you an idea ​of how you're doing against your goal in completing all the stories. 
+Play video starting at :1:53 and follow transcript
+1:53
+​This is a example of this done, I think in probably in Excel, ​where you see the blue line is the ideal burn down and the red is the actual. ​So, is this a practice you want to use, or not? ​I would say that some teams find it helpful, ​is what I hear and have seen, and some teams do not. ​It's easier to do when you have a set of features that are pretty well understood. ​Something you've done a lot of times, and have a sense of your ongoing velocity, ​the rate at which you can finish them. ​And it's harder to do if your approaching something brand new where there's a lot of ​uncertainty about how your going to approach it and decompose it and ​how long things will take. ​And, why would you need this? 
+Play video starting at :2:37 and follow transcript
+2:37
+​In regardless of how easy it is, is it useful for you? ​Well, it's the way of seeing, whether your going to make a goal or not. ​So if making your goal is something where, if you do make it, ​don't make it, companies are going to need to make particularly decisions, ​then maybe this is useful to have an eye on. ​If it is just a rallying point for the team about how they're doing and ​making progress and that makes everybody work better, ​then it's probably a helpful practice and a good thing. ​But if it's difficult to calculate, if it makes everybody edgy and ​work less well in some fashion, then maybe it's not a good practice. ​So those are some of the things I would consider about ​adopting this particular part of Scrum. ​You'll also hear from some practitioners after this about what they've found with ​Burndown in different situations, how well it worked for them.

@@ -1,0 +1,159 @@
+# 🎥 Rowena: Delegating the details
+
+🔗 **Link xem Video MP4:** [Xem / Tải Video](https://d3c33hcgiwev3.cloudfront.net/OulJFF5HTfqpSRReR136jQ.processed/full/540p/index.mp4?Expires=1792886400&Signature=aL15~gdMsFlMis~1aRccds5QdfltBNvYcXBcjJGqhVBqTlOIGcIJ7z9pBU7GYKzOpSDJbK7NwsnR2hco0qdJ~A7n9IGZCAtjufFQx~CNKNI7dLLnbB1RyVOlYD7jqJX59F8BP82CqcKaKmkuvzMr1lrtXJ-DUwacsWYJBlhZJGI_&Key-Pair-Id=APKAJLTNE6QMUY6HBC5A)
+
+---
+
+## 📜 Transcript (Lời giảng viên)
+
+​Hi. I'm Rowena, a Senior Program Manager ​in the Systems Productivity and ​Reporting Team in Google Cloud. ​As a project manager, ​you'll find that you're not actually ​the direct manager of people in their roles. ​The key soft skill to have here is ​around influence; influencing without authority. ​It's the ability to be able to ​communicate with people and make sure that ​they understand your goals and objectives and ​take them along on a shared vision and shared journey. ​When I first became a project manager, ​one of the mistakes that I often made was trying to do ​everything for myself and not asking for help. ​Over the course of the last couple of years, ​I've really learned how to delegate and work ​with others as part of a team to make ​sure that I'm effectively managing a project as ​a project manager regardless of whether I ​have management or authority over the project team, ​and allowing those SMEs to ​really do what they're really good at.
+
+​Hi. I'm Rowena, a Senior Program Manager
+
+​in the Systems Productivity and
+
+​Reporting Team in Google Cloud.
+
+​As a project manager,
+
+​you'll find that you're not actually
+
+​the direct manager of people in their roles.
+
+​The key soft skill to have here is
+
+​around influence; influencing without authority.
+
+​It's the ability to be able to
+
+​communicate with people and make sure that
+
+​they understand your goals and objectives and
+
+​take them along on a shared vision and shared journey.
+
+​When I first became a project manager,
+
+​one of the mistakes that I often made was trying to do
+
+​everything for myself and not asking for help.
+
+​Over the course of the last couple of years,
+
+​I've really learned how to delegate and work
+
+​with others as part of a team to make
+
+​sure that I'm effectively managing a project as
+
+​a project manager regardless of whether I
+
+​have management or authority over the project team,
+
+​and allowing those SMEs to
+
+​really do what they're really good at.
+
+​Delegating for me in my day-to-day role looks like this: ​I try to find subject matter experts or people that ​really enjoy doing a specific something ​that may not actually be their role. ​One of the best pieces of advice I ​ever got from a mentor was around ​finding people in the organization that ​enjoy doing something and delegating your work to them. ​That way you can focus on overall project ​or program management without having to get ​bogged down in the weeds by ​certain details that actually you might not enjoy ​doing or someone else really enjoys doing. ​Psychological safety is really important in ​teams because it brings ​diversity of thought to the table. ​One thing that I'm really working on is making sure ​that we practice inclusive meetings. ​An example of that could ​be in a meeting if you notice that ​one or two participants ​are usually quiet or don't speak up, ​try to encourage them to be a part ​of the conversation. Even better, ​have a coffee with them before and ​ask them what they think of the upcoming topic.
+
+​Delegating for me in my day-to-day role looks like this:
+
+​I try to find subject matter experts or people that
+
+​really enjoy doing a specific something
+
+​that may not actually be their role.
+
+​One of the best pieces of advice I
+
+​ever got from a mentor was around
+
+​finding people in the organization that
+
+​enjoy doing something and delegating your work to them.
+
+​That way you can focus on overall project
+
+​or program management without having to get
+
+​bogged down in the weeds by
+
+​certain details that actually you might not enjoy
+
+​doing or someone else really enjoys doing.
+
+​Psychological safety is really important in
+
+​teams because it brings
+
+​diversity of thought to the table.
+
+​One thing that I'm really working on is making sure
+
+​that we practice inclusive meetings.
+
+​An example of that could
+
+​be in a meeting if you notice that
+
+​one or two participants
+
+​are usually quiet or don't speak up,
+
+​try to encourage them to be a part
+
+​of the conversation. Even better,
+
+​have a coffee with them before and
+
+​ask them what they think of the upcoming topic.
+
+​Encourage them to bring those ideas to the table. ​Having diversity of thought in the room is so important. ​Otherwise, you're going to end up ​with one person in the room ​constantly just bringing their thoughts ​and ideas to the table. ​That's not very diverse. ​One thing with psychological safety ​is this partnership with mentorship and sponsorship. ​To delegate, I make sure that I sponsor people. ​I make sure that I showcase ​their best quality work across the whole project team.
+
+​Encourage them to bring those ideas to the table.
+
+​Having diversity of thought in the room is so important.
+
+​Otherwise, you're going to end up
+
+​with one person in the room
+
+​constantly just bringing their thoughts
+
+​and ideas to the table.
+
+​That's not very diverse.
+
+​One thing with psychological safety
+
+​is this partnership with mentorship and sponsorship.
+
+​To delegate, I make sure that I sponsor people.
+
+​I make sure that I showcase
+
+​their best quality work across the whole project team.
+
+​It's really important for morale. ​On the other side with mentorship, ​if there's a junior team member ​on a team that maybe doesn't have ​the experience or isn't as confident speaking up, ​I usually delegate smaller tasks to ​them to build up their confidence or ​delegate something that they might actually consider to ​be fun that's not in their normal day-to-day work. ​Finding those unique balances is ​the best way to delegate and prioritize.
+
+​It's really important for morale.
+
+​On the other side with mentorship,
+
+​if there's a junior team member
+
+​on a team that maybe doesn't have
+
+​the experience or isn't as confident speaking up,
+
+​I usually delegate smaller tasks to
+
+​them to build up their confidence or
+
+​delegate something that they might actually consider to
+
+​be fun that's not in their normal day-to-day work.
+
+​Finding those unique balances is
+
+​the best way to delegate and prioritize.

@@ -1,0 +1,105 @@
+# 🎥 Sarah: Why I love retrospectives
+
+🔗 **Link xem Video MP4:** [Xem / Tải Video](https://d3c33hcgiwev3.cloudfront.net/6cXgrKZ9ToeF4Kymfe6H9Q.processed/full/540p/index.mp4?Expires=1792886400&Signature=cgmEFi9lNi025MJNwkVuNvRVU1iP9GG7f2xiOGfzq448sUpRRWhY9ARRHtxB~0b8JiZYZAVBWcrRazDyjiOe6Sg7s~-Eonh5YWj~JhJQJ6uPzdAjF9Al5vNpxEj81pfIHJTUt1Blr0OvGYk2R1SI0-BdbdmdbFax-9za51kqczU_&Key-Pair-Id=APKAJLTNE6QMUY6HBC5A)
+
+---
+
+## 📜 Transcript (Lời giảng viên)
+
+​[MUSIC] ​Hi, I'm Sarah and I'm a program manager, ​on the Engineering Education team at Google. ​As a program manager, I manage cross functional teams on designing, ​launching and growing Computer Science Education Programs at Google. ​So right now my primary remit and my scope is essentially working with organizations ​in New York City to try to provide more tech education experiences and ​growth opportunities to youth in the area. ​During one of our biggest tech education moments of the year, ​one of the programs that I work on relies on a third party's platform to be able ​to run our activities and content. ​And during a moment where 1000s of students and ​teachers were getting ready to code online, the platform completely broke. ​And so you can imagine that the number of emails and bugs and ​requests that were coming into our team were plentiful. ​Don't panic.
+
+​[MUSIC]
+
+​Hi, I'm Sarah and I'm a program manager,
+
+​on the Engineering Education team at Google.
+
+​As a program manager, I manage cross functional teams on designing,
+
+​launching and growing Computer Science Education Programs at Google.
+
+​So right now my primary remit and my scope is essentially working with organizations
+
+​in New York City to try to provide more tech education experiences and
+
+​growth opportunities to youth in the area.
+
+​During one of our biggest tech education moments of the year,
+
+​one of the programs that I work on relies on a third party's platform to be able
+
+​to run our activities and content.
+
+​And during a moment where 1000s of students and
+
+​teachers were getting ready to code online, the platform completely broke.
+
+​And so you can imagine that the number of emails and bugs and
+
+​requests that were coming into our team were plentiful.
+
+​Don't panic.
+
+​Communicate openly and quickly on the latter side of the issue. ​Once you've already, kind of, fixed the problem focus on a retrospective and ​a clear post-mortem that's going to help your team and then future teams be able ​to prevent and mitigate something like that from happening in the future. ​I love retrospectives. ​I do them all the time at Google just because they're a great way to be able ​to coalesce your entire team to look at the great impact that you've had. ​But then also reflect on some of the things that you've learned and ​could potentially do better for the future. ​And particularly at Google. ​What I love about retrospectives is that we have in engineering, and ​then across a lot of other operational roles, including project management, ​a culture of blamelessness, ​right? If something goes wrong and ​something breaks, instead of pointing at your engineering team to say you weren't ​prepared, or to point at your comms team and say there was an error, ​the whole team should be taking responsibility.
+
+​Communicate openly and quickly on the latter side of the issue.
+
+​Once you've already, kind of, fixed the problem focus on a retrospective and
+
+​a clear post-mortem that's going to help your team and then future teams be able
+
+​to prevent and mitigate something like that from happening in the future.
+
+​I love retrospectives.
+
+​I do them all the time at Google just because they're a great way to be able
+
+​to coalesce your entire team to look at the great impact that you've had.
+
+​But then also reflect on some of the things that you've learned and
+
+​could potentially do better for the future.
+
+​And particularly at Google.
+
+​What I love about retrospectives is that we have in engineering, and
+
+​then across a lot of other operational roles, including project management,
+
+​a culture of blamelessness,
+
+​right? If something goes wrong and
+
+​something breaks, instead of pointing at your engineering team to say you weren't
+
+​prepared, or to point at your comms team and say there was an error,
+
+​the whole team should be taking responsibility.
+
+​And the whole team can actually look at that as an opportunity to improve and ​learn for future iterations of what you're working on. ​I've learned everything from big lessons around the way that you should be building ​more flexibility into your timeline, to very, very small tactical changes that ​you're going to need to make in order to be running your project more effectively. ​And so I think it's critical to be capturing not only these very big ​strategic level changes that you might want to make. ​But some of these small tactical things you might be able to tweak to improve ​efficiency going forward. ​Sometimes when you have assumptions or anticipations about the direction that ​somethings going to go and then they completely shift the other direction or ​they show something completely different than what you expected. ​[SOUND]
+
+​And the whole team can actually look at that as an opportunity to improve and
+
+​learn for future iterations of what you're working on.
+
+​I've learned everything from big lessons around the way that you should be building
+
+​more flexibility into your timeline, to very, very small tactical changes that
+
+​you're going to need to make in order to be running your project more effectively.
+
+​And so I think it's critical to be capturing not only these very big
+
+​strategic level changes that you might want to make.
+
+​But some of these small tactical things you might be able to tweak to improve
+
+​efficiency going forward.
+
+​Sometimes when you have assumptions or anticipations about the direction that
+
+​somethings going to go and then they completely shift the other direction or
+
+​they show something completely different than what you expected.
+
+​[SOUND]

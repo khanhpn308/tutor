@@ -1,0 +1,29 @@
+# 🎥 The Daily Scrum and Sprint Review
+
+🔗 **Link Video MP4:** [Xem / Tải Video](https://d3c33hcgiwev3.cloudfront.net/Sp9u8TYYSZafbvE2GJmWYA.processed/full/540p/index.mp4?Expires=1792886400&Signature=MlV-egkfzYZpgBcZPlYhyCmuSCHXjNpFxkYkXBMrejmfL~TtgXo6q3mViKFl2qttQeYBznkAjVndxYaywyUe46dGupNW2ZbXaxl4CkYSU-iHKkWFRLgscs-ZSo01tWtStWLRrmDFjHJLv985GsHzabTRofA2WBogUhpm~bNnTQo_&Key-Pair-Id=APKAJLTNE6QMUY6HBC5A)
+
+---
+
+## 📜 Lời giảng viên (Transcript)
+
+Play video starting at ::1 and follow transcript
+0:01
+​As a refresher, one of the principles from the Agile manifesto ​states: the most efficient and effective method of conveying information to and ​within a Development Team is face to face conversation. ​So in this video will discuss communicating with the team through two ​kinds of face to face events that occur during and after the Sprint, ​the Daily Scrum and the Sprint Review. ​First, the Daily Scrum, which is sometimes referred to as stand up, ​is a time for the Scrum Team to synchronize and prioritize activities for ​the day. In 15 minutes, and at the same time and place every day, ​each team member answers the following questions: ​What did I do yesterday that helped the Development Team, meet the Sprint goal? ​What will I do today to help the Development Team meet the Sprint goal? ​Do I notice any impediment that prevents me or ​the Development Team from meeting our goals? ​Daily stand ups should provide the Scrum Master with the opportunity to ​quickly unblock the team with little delay. And Daily Stand-ups are an opportunity ​to reinforce focus on the Sprint Backlog and Sprint Goal. 
+Play video starting at :1:9 and follow transcript
+1:09
+​The official Scrum Guide says that Daily Stand-ups must happen every single day, ​though I will say I have had successful Scrum Teams who meet less frequently ​than that. ​My current Scrum Team has a one week Sprint and ​we have stand-ups two days during the week. ​We found that this works really well for us. ​Try it out and see what works best for your team. At the closing of a Sprint, ​the team will complete another event, known as the Sprint Review. ​This Sprint event is crucial to the Scrum Pillars of inspection and ​adaptation, and demonstrates the values of openness, courage, and respect. ​Let's discuss what I mean by that. 
+Play video starting at :1:48 and follow transcript
+1:48
+​The Sprint Review is a meeting with the entire Scrum Team where the product is ​demonstrated in order to determine which aspects are finished and ​which aren't. During a Sprint Review, ​the Development Team and ​Product Owner will play a heavy role in this inspection and discussion. ​They will also cover an exploration of which items should be considered done in ​the Product Backlog, and they'll demonstrate and inspect the product. ​Sprint Reviews should be really fun and ​uplifting. The Sprint Review is when the team gets to impress each other with ​the cool things they've accomplished over the last 1 to 4 weeks. ​These time-boxed meetings should not exceed four hours and ​they're a good opportunity for the team to practice the Scrum Values of openness and ​respect, as they give feedback about the completed work. ​Often, some of the greatest product ideas come out of the Sprint Review. 
+Play video starting at :2:40 and follow transcript
+2:40
+​Let's look at an example. With the new service, ​the Virtual Verde team needs to launch their new website page featuring home ​office plants. ​Let's imagine that the Scrum Team has a marketing specialist on the team. ​Remember Scrum Teams are cross-functional. ​During the August Sprint Review meeting one of the Sprint Backlog items was to ​create a launch email to send out to their existing Plant Pals ​corporate customers about their brand new adventure. ​During the Sprint Review meeting, the team gets a demo of the email. ​They pull up the email onto the shared screen and ​give the specialist feedback right there in the meeting, ​such as: I love that opening line, it really draws them in; ​let's make the opening image bigger; ​can we make it easier for the recipient to forward this to their friends; ​Can we make this text shorter? 
+Play video starting at :3:28 and follow transcript
+3:28
+​It's a bit long. ​This group inspection of a work product from the team has many benefits that go ​way beyond just a better marketing email. ​First, it makes the feedback as immediate as possible. ​No need to wait for people to review on their own and send in their feedback later ​on. Feedback and adjustments might be made right there in the meeting. ​Second, everyone has a voice, leading to a shared sense of ownership of every aspect ​of their product launch. ​Last, but not least, ​the team learns more about how their marketing teammate does their job, ​leading to greater trust and understanding between team members. 
+Play video starting at :4:6 and follow transcript
+4:06
+​The Sprint Review is a time for the team to demonstrate what they've accomplished. ​The Sprint Review is also where team members unveil what is called the Product ​Increment. ​The Product Increment is what's produced after a given Sprint and ​is considered releasable. ​A product is releasable ​when the team has developed a Minimum Viable Product, which has a set of ​implemented features or requirements. ​A Minimum Viable Product is a version of a product with just enough features to ​satisfy early customers. At the end of each Sprint, only items that have met ​the definition of done are considered part of the Product Increment. ​Anything that is not done goes back to the Product Backlog. 
+Play video starting at :4:48 and follow transcript
+4:48
+​Great work. ​We've now covered the activities that happened during a Sprint to ensure that ​the team is focused and is building valuable solutions. ​In the next video, we'll discuss another important meeting that takes place on ​a Scrum Team: the Sprint Retrospective. ​Meet you there.

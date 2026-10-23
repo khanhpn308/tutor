@@ -1,0 +1,151 @@
+# 🎥 Sue: The importance of understanding customer needs
+
+🔗 **Link xem Video MP4:** [Xem / Tải Video](https://d3c33hcgiwev3.cloudfront.net/uiTbvMhoS_Gk27zIaFvxjA.processed/full/540p/index.mp4?Expires=1792886400&Signature=KYi1AcF9BbqRilyq-mlGPdve4bYaQm6aqYO7bSwlAcgP5dIwrTdVYClOQnjgDQAX2w~3ukUMcogoLLpPVHP~9KYXMR6B7xQa6GAvS4o9sxChZJwR1Kv0j9tGcnjm8h4vFLK1J-T9QqOtIjhEnQlEE9WAMORN7QTECUXaZQQMFJw_&Key-Pair-Id=APKAJLTNE6QMUY6HBC5A)
+
+---
+
+## 📜 Transcript (Lời giảng viên)
+
+​Hi. I'm Sue. ​I'm a technical program manager ​for Google's support platform. ​A technical program manager is responsible ​for making sure the team ​delivers on what it sets out to do. ​That means pulling together ​a lot of different capabilities and ​deliverables coming from across many teams ​to pull together a product ​that we deliver to our customers. ​Without customers, ​there's really no reason to be building anything. ​And what's interesting about building ​projects and working with customers and trying ​to imagine what they want, ​is it puts you in this really unique place ​where you need to put yourself in their shoes ​and imagine the world or ​imagine the product through their eyes.
+
+​Hi. I'm Sue.
+
+​I'm a technical program manager
+
+​for Google's support platform.
+
+​A technical program manager is responsible
+
+​for making sure the team
+
+​delivers on what it sets out to do.
+
+​That means pulling together
+
+​a lot of different capabilities and
+
+​deliverables coming from across many teams
+
+​to pull together a product
+
+​that we deliver to our customers.
+
+​Without customers,
+
+​there's really no reason to be building anything.
+
+​And what's interesting about building
+
+​projects and working with customers and trying
+
+​to imagine what they want,
+
+​is it puts you in this really unique place
+
+​where you need to put yourself in their shoes
+
+​and imagine the world or
+
+​imagine the product through their eyes.
+
+​In a project management role, ​being able to empathize and ​understand how different people in the world will ​interact with your product is really ​important and gives you this amazing perspective. ​Understanding the customer's needs ​is a very difficult job, ​but it's really important. ​I believe it's a skill you can develop over time. ​I actually consider a customer ​just a certain kind of stakeholder. ​I like to take my stakeholders ​and group them into buckets, ​so I have customers, and they are usually ​the end users of a product or ​the ones that are purchasing the product. ​And then I have stakeholders that are sponsors, ​rather—the people that are funding ​the team that's actually building this. ​Those two groups of people are very different, and I like ​to treat a sponsor in a very special way.
+
+​In a project management role,
+
+​being able to empathize and
+
+​understand how different people in the world will
+
+​interact with your product is really
+
+​important and gives you this amazing perspective.
+
+​Understanding the customer's needs
+
+​is a very difficult job,
+
+​but it's really important.
+
+​I believe it's a skill you can develop over time.
+
+​I actually consider a customer
+
+​just a certain kind of stakeholder.
+
+​I like to take my stakeholders
+
+​and group them into buckets,
+
+​so I have customers, and they are usually
+
+​the end users of a product or
+
+​the ones that are purchasing the product.
+
+​And then I have stakeholders that are sponsors,
+
+​rather—the people that are funding
+
+​the team that's actually building this.
+
+​Those two groups of people are very different, and I like
+
+​to treat a sponsor in a very special way.
+
+​They are looking to increase their return on investment, ​and so you always need to be looking for ways to ​quantify, how are you ​generating a return on that investment? ​There's always this little fear ​that they're not going to get what they paid for, ​and giving them information frequently ​and at the right level of detail is ​a really important skill to have as a project manager. ​Sometimes you can overwhelm them with ​too many details and they cannot see the forest ​through the trees, and sometimes you ​don't give them enough detail, and they don't ​trust what you're telling them. And so ​striking that balance is really important. ​I really enjoy seeing a project from ​the very beginning to the very end, when you actually ​get to show it to a customer and ​get their acknowledgment and ​recognition and see their excitement ​at seeing the product actually working; ​something that, when you just started, ​there was nothing—just ideas and maybe some papers. ​Then, however many months ​later you actually have a product that you can show off. ​What I love about project management is it puts you in ​that role, so you can really ​see things from the beginning to the end.
+
+​They are looking to increase their return on investment,
+
+​and so you always need to be looking for ways to
+
+​quantify, how are you
+
+​generating a return on that investment?
+
+​There's always this little fear
+
+​that they're not going to get what they paid for,
+
+​and giving them information frequently
+
+​and at the right level of detail is
+
+​a really important skill to have as a project manager.
+
+​Sometimes you can overwhelm them with
+
+​too many details and they cannot see the forest
+
+​through the trees, and sometimes you
+
+​don't give them enough detail, and they don't
+
+​trust what you're telling them. And so
+
+​striking that balance is really important.
+
+​I really enjoy seeing a project from
+
+​the very beginning to the very end, when you actually
+
+​get to show it to a customer and
+
+​get their acknowledgment and
+
+​recognition and see their excitement
+
+​at seeing the product actually working;
+
+​something that, when you just started,
+
+​there was nothing—just ideas and maybe some papers.
+
+​Then, however many months
+
+​later you actually have a product that you can show off.
+
+​What I love about project management is it puts you in
+
+​that role, so you can really
+
+​see things from the beginning to the end.

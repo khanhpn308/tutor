@@ -1,0 +1,41 @@
+# 🎥 Module 3.7: A few more tips
+
+🔗 **Link xem Video MP4:** [Xem / Tải Video](https://d3c33hcgiwev3.cloudfront.net/ok1PSjJ0EeeLzxKa4kVC8A.processed/full/540p/index.mp4?Expires=1792800000&Signature=g2USbJLmhbevNhwtDr-Gxsv08D54bfYDqu5QgeuXA9PGYG9oxsQebbsfw6FC585nRkdCsTbigkHiQ~Y68RFV07~NoAzOxUA4mtvHRl~XlNcSHt~97E41KkHyu8-~BsaYy2ufLB70VbVXDHSyeced674cynHxLaJCLFhypJBnarQ_&Key-Pair-Id=APKAJLTNE6QMUY6HBC5A) | 💾 [Xem Video Offline (Local MP4)](./videos/15_Module_3.7_A_few_more_tips.mp4)
+
+---
+
+## 📜 Transcript (Lời giảng viên)
+
+Play video starting at ::2 and follow transcript
+0:02
+​In this next module, I'm going to give you some more tips about repetition, keywords, ​and acronyms. ​Have a lute to some of this points already. ​But I think they worth highlighting in their own module. ​I mentioned several times that when you find yourself for ​the thesaurus to avoid repeating a word, this may be a case where you simply don't ​need the second instance of that words at all. ​You're being unnecessarily repetitive. ​We saw a sentence in unit one that had both illustrate and demonstrate. ​As well as challenges and difficulties in the same sentence, and ​we only needed one of the word from each of these pairs. 
+Play video starting at ::40 and follow transcript
+0:40
+​This week, I gave you an example where the authors had teaches clinicians and ​guides clinicians. ​But we only needed one of these. ​So a lot of times, you can just delete the second use of the word altogether. ​But of course, there are some times when you do need to repeat. ​In those cases you're again going to be tempted to reach for ​your thesaurus to find a synonym. ​But ask yourself the question, ​is this synonym really better than just repeating the word? ​In many cases it's preferable to just repeat the word. 
+Play video starting at :1:15 and follow transcript
+1:15
+​Despite what you may have been taught along the way, ​repeating a word is not a cardinal sin. ​In fact when people try too hard to avoid repeating a word, ​that can lead to some amusing sentences, as I'm going to show you in a minute. ​In scientific writing, it's actually essential that you repeat a word. ​You need to repeat keywords. ​Any words that are keywords in your paper, like the names of groups, ​the names of variables, the names of instruments, the names of a disease, ​you absolutely must repeat these terms throughout the manuscript. ​You need to be consistent, do not substitute synonyms for ​this keywords as this will lead to great confusion. ​I see this all the time with my students they change the keywords through out ​the manuscript, because they are worried about repeating themselves but ​this leads to all through trouble. 
+Play video starting at :2:5 and follow transcript
+2:05
+​I've had students come in and they're working on a particular disease and ​they call the disease one thing and one place in the manuscript. ​And then they call is something different in other places in the manuscript. ​And I'm left thinking that they are talking about two different diseases. ​Or imagine if you're comparing groups and ​in one case you call those groups the obese group and the lean group. ​But then elsewhere, because you're afraid to repeat yourself ​you call them the heavier group and the lighter group. ​That's problematic, ​because now as the reader I'm asking myself, are these new groups? ​Have you redefined the groups? 
+Play video starting at :2:39 and follow transcript
+2:39
+​Have you rejiggered the categories? ​It's absolute essential in scientific writing that you be consistent in ​how you name those keywords. ​So I'm going to repeat to you that it's okay to repeat a word. ​Sometimes it's necessary to repeat a word, and sometimes it's actually ​better to repeat that word than to reach for an awkward synonym. ​I'm going to share with you now some fun examples of needless synonyms. ​These are all examples from professional writers from newspapers and ​magazine articles. ​Many professional writers also have this belief drilled ​into them that they shouldn't repeat a word. 
+Play video starting at :3:16 and follow transcript
+3:16
+​So in some cases they get very creative. ​These are real examples that were compiled in an article in Time Magazine and ​I've listed the reference at the bottom there in case you want to read ​the whole article. ​Probably the most famous example of this is, ​there was an article that somebody was writing about a fruit company. ​And they used the word banana several times, ​because it was an article about fruit. ​And they felt like, I've used the word banana too many times. ​So at one point, they started referring to the banana as the elongated yellow fruit. ​And you could say that that's just kind of ridiculous. 
+Play video starting at :3:52 and follow transcript
+3:52
+​It's probably better just to say banana. ​I've got several other cute examples. ​There was a piece in the newspaper where the author was talking about a beaver, and ​the author replaced beaver with the furry, pedal-tailed mammal. ​Another article, mustache was replaced with under nose hair crops. ​In another one, milk from a cow was referred to as, ​the vitamin laden liquid from a bovine milk factory. ​And finally, there was an example where somebody replaced the word skis with ​the beatified barrel staves. ​You can see how amusing it is when you're trying too hard to come up with synonyms. 
+Play video starting at :4:33 and follow transcript
+4:33
+​It would have been better in all those cases to stick with a simple word. ​And Henry Fowler actually coined the term Elegant Variation For ​these kind of needless synonyms. ​And here's a link to his article for those of you who are curious. ​And I just want to emphasize again, that in scientific writing it's not just ​amusing if you replace a keyword with a synonym, it's actually disastrous. ​Because the reader thinks you're talking about something different. ​And this leads me to a final thought on acronyms. ​I think one of the reasons that acronyms have become so wide spread in ​the scientific literature, is that in scientific manuscripts it's inevitable ​that you're going to find yourself writing the same keyword over and over again. 
+Play video starting at :5:21 and follow transcript
+5:21
+​And I think scientists start to feel this angst about the fact that ​they're repeating this keyword so much, so they decide to make up an acronym instead. ​I do want to point out that sometimes people will make a distinction between ​acronyms and initialisms. ​Acronyms actually make a new word, like the word NASA whereas ​initialisms just read off the initials, like CPU or RNA. ​I'm just going to call these all acronyms for simplicity, but ​I wanted to point out this fine distinction. ​My advice is to only use standard, well known acronyms ​that most scientists across many disciplines are going to know, like RNA. ​Don't make up acronyms and ​don't use acronyms that only people in your immediate field are going to know. ​Otherwise, the reader has to stop reading each time they encounter the acronym and ​look it up, like translating a foreign word. 
+Play video starting at :6:15 and follow transcript
+6:15
+​This puts a terrible burden on the reader. ​If there were a few acronyms, that you can't let go off, ​at least make sure that you define them within each section of the paper. ​Because remember readers are not necessarily reading your paper from start ​to finish. ​So defining the acronym once at the beginning is not enough. ​Another suggestion l make to students is, if you want to create an acronym to save ​yourself some typing, to save yourself having to type that keyword over and ​over again when you're drafting your manuscript, that's fine. ​But when you're done, go back and do a replace all and ​replace that made up acronym with the original words. ​Your reader will appreciate it. 
+Play video starting at :6:58 and follow transcript
+6:58
+​Here's an example I pulled from a paper I was recently reviewing. ​It says, spinal muscle fatigue is common in people with LLA, ​because decreased spinal muscle endurance and ​strength has been been reported in persons with TFA and TTA with LBP. ​You can just see how annoying it is when your sentences are all alphabet like this. ​So avoid the use of acronyms other than the most standard ones.

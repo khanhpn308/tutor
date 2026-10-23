@@ -1,0 +1,313 @@
+# 🎥 Presenting data to tell a project's story
+
+🔗 **Link xem Video MP4:** [Xem / Tải Video](https://d3c33hcgiwev3.cloudfront.net/5c6SfrxSSMGOkn68UtjByQ.processed/full/540p/index.mp4?Expires=1792886400&Signature=iUIsiUlpyJvA4BZyp9rqRHBX9o34R47nddhvqJLryOhjsR4QtnBFUfktbIbI3wO1u14i7PI4HCsXhZuurXjwlVW1FA7VlAAkaonSIqtHA3dOmwwexg8lCMaRrCdlnODtw6-7lNbqu17AEcY2rBuLb57eXbQjoccq6UyB~pbxEFE_&Key-Pair-Id=APKAJLTNE6QMUY6HBC5A)
+
+---
+
+## 📜 Transcript (Lời giảng viên)
+
+​Welcome back. In this video, ​we'll discuss how to tell a powerful story using data. ​We'll teach you how to gather and organize ​your project data to present it to ​others within your organization. ​Presenting is a powerful way to communicate ​your ideas and support ​your decisions throughout the project journey. ​Think of presenting as telling the story of your project. ​Storytelling is the process of turning facts ​into narrative to communicate something to your audience. ​Storytelling is how you bring data to life ​and is a useful way to tell stakeholders within ​your organization about your project.
+
+​Welcome back. In this video,
+
+​we'll discuss how to tell a powerful story using data.
+
+​We'll teach you how to gather and organize
+
+​your project data to present it to
+
+​others within your organization.
+
+​Presenting is a powerful way to communicate
+
+​your ideas and support
+
+​your decisions throughout the project journey.
+
+​Think of presenting as telling the story of your project.
+
+​Storytelling is the process of turning facts
+
+​into narrative to communicate something to your audience.
+
+​Storytelling is how you bring data to life
+
+​and is a useful way to tell stakeholders within
+
+​your organization about your project.
+
+​In a way, we're all storytellers using ​information and experiences to share ideas with others. ​Stories usually have a beginning, middle, and end. ​To tell a great story using data, ​we'll go over some best practices to make sure ​your story is complete, accurate, and compelling. ​In general, there are six main steps to storytelling. ​First, define your audience. ​Then, collect the data. ​Next, filter and analyze the data.
+
+​In a way, we're all storytellers using
+
+​information and experiences to share ideas with others.
+
+​Stories usually have a beginning, middle, and end.
+
+​To tell a great story using data,
+
+​we'll go over some best practices to make sure
+
+​your story is complete, accurate, and compelling.
+
+​In general, there are six main steps to storytelling.
+
+​First, define your audience.
+
+​Then, collect the data.
+
+​Next, filter and analyze the data.
+
+​Fourth, choose a visual representation. ​Then, shape the story. ​And finally, gather your feedback. ​Now let's review each one. ​Step 1: define your audience. ​In this first step, ​it's important to know who you're presenting to. ​Are you presenting to project sponsors ​or executives? Or to team members?
+
+​Fourth, choose a visual representation.
+
+​Then, shape the story.
+
+​And finally, gather your feedback.
+
+​Now let's review each one.
+
+​Step 1: define your audience.
+
+​In this first step,
+
+​it's important to know who you're presenting to.
+
+​Are you presenting to project sponsors
+
+​or executives? Or to team members?
+
+​Define your audience and find ​out what matters most to them. ​Begin by asking yourself qualifying questions like: ​What would my audience want to know about the project? ​Or, what are their most urgent concerns? ​Which key data points ​influence the story and project outcome? ​This will set you up to know ​the type of story you want to ​tell and the type of data you should use to tell it. ​For example, years ago, ​I was working on a project for Google Maps. ​Our goal was to apply a label to ​every business in the world: restaurants, ​hotels, gas stations—you name it.
+
+​Define your audience and find
+
+​out what matters most to them.
+
+​Begin by asking yourself qualifying questions like:
+
+​What would my audience want to know about the project?
+
+​Or, what are their most urgent concerns?
+
+​Which key data points
+
+​influence the story and project outcome?
+
+​This will set you up to know
+
+​the type of story you want to
+
+​tell and the type of data you should use to tell it.
+
+​For example, years ago,
+
+​I was working on a project for Google Maps.
+
+​Our goal was to apply a label to
+
+​every business in the world: restaurants,
+
+​hotels, gas stations—you name it.
+
+​There are many, many, ​many businesses in the world, ​and I only had a small team of engineers to work with. ​For this project, we tailored our storytelling to ​an audience of vice presidents ​from Google Maps and Google Search. ​Both were important to consider, ​because we were helping users find and ​connect to businesses through ​the Google Maps app and through Google Search. ​I'll return to this example as I take ​you through the steps of storytelling. ​Next step is Step 2: ​Find the data that connects to ​the question you want to answer. ​You'll need to begin searching for data from ​trustworthy resources to support ​the point you're trying to make. ​Leverage the relevant project resources ​in documents like your project plan or ​work management software to ​download and analyze key data points.
+
+​There are many, many,
+
+​many businesses in the world,
+
+​and I only had a small team of engineers to work with.
+
+​For this project, we tailored our storytelling to
+
+​an audience of vice presidents
+
+​from Google Maps and Google Search.
+
+​Both were important to consider,
+
+​because we were helping users find and
+
+​connect to businesses through
+
+​the Google Maps app and through Google Search.
+
+​I'll return to this example as I take
+
+​you through the steps of storytelling.
+
+​Next step is Step 2:
+
+​Find the data that connects to
+
+​the question you want to answer.
+
+​You'll need to begin searching for data from
+
+​trustworthy resources to support
+
+​the point you're trying to make.
+
+​Leverage the relevant project resources
+
+​in documents like your project plan or
+
+​work management software to
+
+​download and analyze key data points.
+
+​For my Google Maps project, ​the question we were trying to answer was: ​Where should we focus our attention first? ​So to find the right data for this question, ​we turned to the many businesses ​in our internal database and ​the available information about what types ​of businesses users were searching for. ​That brings us to Step 3: ​Filter and analyze the data. ​Now that you've collected your data, ​you'll need to vet it for ​credibility and filter the information. ​For my Maps project, ​we used search queries to determine the types of ​businesses that users searched for most often, ​which included restaurants, cafes, and hotels. ​There were other categories—gas stations, ​museums, etc.—but ​they collectively made up ​a much smaller percentage of geo-specific search traffic. ​Step 4: Choose a visual representation.
+
+​For my Google Maps project,
+
+​the question we were trying to answer was:
+
+​Where should we focus our attention first?
+
+​So to find the right data for this question,
+
+​we turned to the many businesses
+
+​in our internal database and
+
+​the available information about what types
+
+​of businesses users were searching for.
+
+​That brings us to Step 3:
+
+​Filter and analyze the data.
+
+​Now that you've collected your data,
+
+​you'll need to vet it for
+
+​credibility and filter the information.
+
+​For my Maps project,
+
+​we used search queries to determine the types of
+
+​businesses that users searched for most often,
+
+​which included restaurants, cafes, and hotels.
+
+​There were other categories—gas stations,
+
+​museums, etc.—but
+
+​they collectively made up
+
+​a much smaller percentage of geo-specific search traffic.
+
+​Step 4: Choose a visual representation.
+
+​Visualizations are a great way to help people remember ​the information you're presenting and ​are an essential piece of storytelling. ​You can use data in different ways to tell ​a story, like using dashboards, ​charts, infographics, and mappings, ​and we'll go over these examples ​in more detail in the next video. ​For my Maps project, ​we decided on a pie chart to help tell our story, ​which brings me to Step 5: Shape the story. ​After you've analyzed your data and ​know how you'd like to visualize it, ​it's time to tie it all together ​into one cohesive narrative. ​Take some time to think about ​what you're hoping to achieve, ​the points you want to make, ​and the questions and concerns you want to answer. ​For the Maps project, ​we used the pie chart to show that ​most geo-specific search queries are ​covered by a relatively small number of businesses. ​So we built a story about that data.
+
+​Visualizations are a great way to help people remember
+
+​the information you're presenting and
+
+​are an essential piece of storytelling.
+
+​You can use data in different ways to tell
+
+​a story, like using dashboards,
+
+​charts, infographics, and mappings,
+
+​and we'll go over these examples
+
+​in more detail in the next video.
+
+​we decided on a pie chart to help tell our story,
+
+​which brings me to Step 5: Shape the story.
+
+​After you've analyzed your data and
+
+​know how you'd like to visualize it,
+
+​it's time to tie it all together
+
+​into one cohesive narrative.
+
+​Take some time to think about
+
+​what you're hoping to achieve,
+
+​the points you want to make,
+
+​and the questions and concerns you want to answer.
+
+​For the Maps project,
+
+​we used the pie chart to show that
+
+​most geo-specific search queries are
+
+​covered by a relatively small number of businesses.
+
+​So we built a story about that data.
+
+​We wanted agreement from our VPs to work on improving ​the data behind this set of ​categories in a few major markets. ​It needed to illustrate that ​if we improved the category data, ​we'd succeed in improving the search results for ​more than 50% of geo searches. ​Lastly is Step 6: Gather your feedback. ​Similar to how you may ask a friend ​to practice with you before an interview, ​you want to be sure that before you present, ​you do a trial run. ​Try getting feedback from someone ​who's not connected to the project. ​Find out if it was interesting. ​Did it make sense? What questions did they have?
+
+​We wanted agreement from our VPs to work on improving
+
+​the data behind this set of
+
+​categories in a few major markets.
+
+​It needed to illustrate that
+
+​if we improved the category data,
+
+​we'd succeed in improving the search results for
+
+​more than 50% of geo searches.
+
+​Lastly is Step 6: Gather your feedback.
+
+​Similar to how you may ask a friend
+
+​to practice with you before an interview,
+
+​you want to be sure that before you present,
+
+​you do a trial run.
+
+​Try getting feedback from someone
+
+​who's not connected to the project.
+
+​Find out if it was interesting.
+
+​Did it make sense? What questions did they have?
+
+​Their feedback can help you ​identify areas of your story that were ​unclear or unmemorable and ​give you a final chance to make adjustments. ​To recap, you want to define ​your audience, collect the data, ​filter and analyze the data, ​choose a visual representation, ​shape the story, and finally, gather your feedback. ​The key to effective storytelling is to be ​organized, intentional, and prepared. ​Coming up, we'll talk more about Step 4: ​effective visualization. See you there.
+
+​Their feedback can help you
+
+​identify areas of your story that were
+
+​unclear or unmemorable and
+
+​give you a final chance to make adjustments.
+
+​To recap, you want to define
+
+​your audience, collect the data,
+
+​filter and analyze the data,
+
+​choose a visual representation,
+
+​shape the story, and finally, gather your feedback.
+
+​The key to effective storytelling is to be
+
+​organized, intentional, and prepared.
+
+​Coming up, we'll talk more about Step 4:
+
+​effective visualization. See you there.
