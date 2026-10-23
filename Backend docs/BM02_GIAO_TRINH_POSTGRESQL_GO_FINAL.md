@@ -21,81 +21,43 @@
 
 | Thuật ngữ (EN) | English Full Name | Thuật ngữ tiếng Việt | Giải thích kỹ thuật |
 |---|---|---|---|
-
 | **RDBMS** | Relational Database Management System | Hệ quản trị cơ sở dữ liệu quan hệ | Hệ quản trị lưu dữ liệu dưới dạng các bảng quan hệ; cung cấp SQL, ràng buộc toàn vẹn và giao dịch. |
-
 | **Schema** | Database Schema | Lược đồ cơ sở dữ liệu | Cấu trúc logic định nghĩa bảng, kiểu dữ liệu, ràng buộc, index và các đối tượng cơ sở dữ liệu. |
-
 | **Relation** | Relation (Table) | Quan hệ (Bảng dữ liệu) | Bảng quan hệ gồm các hàng và cột có cấu trúc và kiểu dữ liệu xác định. |
-
 | **Row (Tuple)** | Table Row / Tuple | Bản ghi dữ liệu (Dòng) | Một bản ghi chứa các giá trị thuộc tính của một đối tượng hoặc sự kiện. |
-
 | **Column (Attribute)** | Table Column / Field | Cột thuộc tính | Trường dữ liệu có tên và kiểu xác định trong một bảng. |
-
 | **Primary Key (PK)** | Primary Key Constraint | Ràng buộc khóa chính | Định danh duy nhất, không NULL cho mỗi hàng; PostgreSQL tự tạo unique B-tree index cho khóa chính. |
-
 | **Foreign Key (FK)** | Foreign Key Constraint | Ràng buộc khóa ngoại | Ràng buộc tham chiếu giữa bảng con và khóa được phép tham chiếu ở bảng cha; PostgreSQL không tự tạo index trên cột FK. |
-
 | **Unique Constraint** | Unique Integrity Constraint | Ràng buộc duy nhất | Ngăn tổ hợp giá trị bị trùng; mặc định vẫn cho nhiều NULL, trừ khi dùng `NULLS NOT DISTINCT` hoặc cấm NULL. |
-
 | **Check Constraint** | Check Integrity Constraint | Ràng buộc kiểm tra điều kiện logic | Kiểm tra điều kiện cho từng hàng; điều kiện cho kết quả `TRUE` hoặc `UNKNOWN` đều được chấp nhận. Dùng thêm `NOT NULL` để cấm NULL. |
-
 | **Index** | Database Index | Chỉ mục cơ sở dữ liệu | Cấu trúc tìm kiếm bổ trợ để tăng tốc đọc, đánh đổi dung lượng đĩa và chi phí cập nhật khi ghi. |
-
 | **B-Tree** | Balanced Tree Index | Chỉ mục cây cân bằng | Kiểu index mặc định, phù hợp so sánh bằng, phạm vi giá trị và một số truy vấn có sắp xếp. |
-
 | **Composite Index** | Multicolumn Composite Index | Chỉ mục tổ hợp đa cột | Index nhiều cột; thứ tự cột ảnh hưởng hiệu quả lọc và sắp xếp. Không mặc định bỏ cột đầu sẽ vô dụng hoàn toàn. |
-
 | **Seq Scan** | Sequential Table Scan | Quét tuần tự toàn bảng | Quét dữ liệu của bảng theo thứ tự lưu trữ; đôi khi được optimizer chọn vì rẻ hơn dùng index. |
-
 | **Index Scan** | Index Table Scan | Quét qua chỉ mục | Tìm qua index rồi có thể truy cập heap để đọc nội dung hàng. |
-
 | **Index Only Scan** | Index Only Table Scan | Quét chỉ đọc trên chỉ mục | Có thể lấy dữ liệu từ index; đôi khi vẫn phải kiểm tra heap để xác định tính hiển thị theo MVCC. |
-
 | **EXPLAIN** | Query Execution Plan Inspector | Công cụ giải phẫu kế hoạch truy vấn | Hiển thị kế hoạch và chi phí ước lượng của optimizer; thông thường không chạy câu lệnh. |
-
 | **EXPLAIN ANALYZE** | Execution Plan with Real Profiling | Giải phẫu kế hoạch kèm đo lường thời gian thực tế | Chạy thật truy vấn và đo thời gian/hàng xử lý; kết hợp `BUFFERS` khi cần xem truy cập bộ đệm. |
-
 | **Transaction** | Database Transaction | Giao dịch cơ sở dữ liệu | Một nhóm thao tác SQL được quản lý như một đơn vị công việc với các thuộc tính ACID. |
-
 | **ACID** | Atomicity, Consistency, Isolation, Durability | Bốn thuộc tính toàn vẹn giao dịch | Atomicity, Consistency, Isolation, Durability — bốn thuộc tính nền tảng của transaction. |
-
 | **Atomicity** | Transaction Atomicity | Tính nguyên tử | Các thay đổi trong transaction hoặc được commit cùng nhau hoặc bị rollback theo ngữ nghĩa nguyên tử. |
-
 | **Consistency** | Database Consistency | Tính nhất quán | Các ràng buộc toàn vẹn đã khai báo vẫn được duy trì khi transaction hoàn tất hợp lệ. |
-
 | **Isolation** | Transaction Isolation | Tính cô lập | Quy tắc kiểm soát việc các transaction đồng thời nhìn thấy và ảnh hưởng dữ liệu của nhau. |
-
 | **Durability** | Data Durability | Tính bền vững | Khả năng giữ các transaction đã commit trước sự cố, phụ thuộc WAL và cấu hình ghi đồng bộ; không thay thế backup. |
-
 | **WAL** | Write-Ahead Logging | Nhật ký ghi trước | Write-Ahead Log: ghi nhật ký thay đổi trước khi cập nhật các trang dữ liệu chính, phục vụ khôi phục sau crash. |
-
 | **MVCC** | Multi-Version Concurrency Control | Kiểm soát đồng thời đa phiên bản | Multi-Version Concurrency Control: quản lý nhiều phiên bản hàng để đọc/ghi đồng thời; cần vacuum để dọn phiên bản cũ. |
-
 | **Read Committed** | Read Committed Isolation Level | Mức cô lập Đọc bản ghi đã chốt | Mức cô lập mặc định trong PostgreSQL: snapshot mới theo từng câu lệnh, tránh dirty read. |
-
 | **Repeatable Read** | Repeatable Read Isolation Level | Mức cô lập Đọc lặp lại nhất quán | Giữ snapshot nhất quán cho transaction; có thể báo `40001` nếu xung đột cập nhật. |
-
 | **Deadlock** | Database Deadlock | Hiện tượng khóa chết | Các transaction chờ khóa của nhau theo vòng; PostgreSQL phát hiện và hủy một transaction, thường với `40P01`. |
-
 | **Commit** | Transaction Commit | Lệnh chốt giao dịch | Kết thúc transaction thành công; bảo đảm phụ thuộc chính sách WAL/durability của hệ thống. |
-
 | **Rollback** | Transaction Rollback | Lệnh hủy bỏ giao dịch | Hủy thay đổi chưa commit; ứng dụng phải quản lý lỗi và vòng đời transaction. |
-
 | **Connection Pool** | Database Connection Pool | Vùng đệm kết nối cơ sở dữ liệu | Tập kết nối DB được tái sử dụng để giảm chi phí tạo kết nối và giới hạn truy cập đồng thời. |
-
 | **pgxpool** | pgx Connection Pool Package | Thư viện quản lý kết nối pgx trong Go | Bộ quản lý pool của thư viện Go `jackc/pgx/v5`; cần đóng rows và trả kết nối đúng vòng đời. |
-
 | **Parameterized Query** | Parameterized SQL Query | Truy vấn tham số hóa | Truy vấn truyền giá trị riêng khỏi cú pháp SQL (`$1`, `$2`); không dùng placeholder tùy ý cho tên bảng/cột. |
-
 | **SQL Injection (SQLi)** | SQL Injection Vulnerability | Lỗ hổng chèn mã SQL | Nguy cơ dữ liệu đầu vào bị ghép thành câu lệnh SQL; bảo vệ bằng tham số hóa, allowlist định danh và quyền tối thiểu. |
-
 | **UPSERT** | Update or Insert (ON CONFLICT) | Thao tác chèn hoặc cập nhật kết hợp | `INSERT ... ON CONFLICT`; `DO NOTHING` bỏ qua conflict trên unique arbiter được chọn, không chứng minh payload trùng khớp. |
-
 | **Idempotency** | Application Ingestion Idempotency | Tính chất bất biến khi nạp lại dữ liệu | Tiếp nhận lặp cùng một event không tạo nhiều kết quả nghiệp vụ trái phép; cần khóa định danh ổn định và chính sách so sánh payload. |
-
 | **Migration** | Database Schema Migration | Tiến hóa lược đồ cơ sở dữ liệu có phiên bản | Thay đổi schema có quản lý phiên bản; `DOWN` không bảo đảm phục hồi dữ liệu đã bị xóa. |
-
 | **Data Retention** | Data Retention Policy | Chính sách lưu giữ dữ liệu | Chính sách lưu giữ, xóa hoặc lưu trữ dài hạn dữ liệu theo thời gian và nhu cầu sử dụng. |
 
 ## 2. Kiến thức cốt lõi (Core Technical Knowledge)
@@ -460,15 +422,15 @@ if err == nil {
 Luồng xử lý cỗ máy trạng thái tiếp nhận dữ liệu chống trùng lặp:
 ```mermaid
 flowchart TD
-    Start["Gói tin Telemetry từ MQTT"] --> Val{"Thẩm định Schema tầng Go<br>(ValidateTelemetryEvent)"}
-    Val -->|Lỗi Format/Range/UUID| Reject["Từ chối & Drop gói tin rác"]
-    Val -->|Hợp lệ| Insert["Thực thi INSERT ... ON CONFLICT (gw, event_id) DO NOTHING"]
+    Start["Gói tin Telemetry từ MQTT"] --> Val{"Thẩm định Schema tầng Go<br/>(ValidateTelemetryEvent)"}
+    Val -->|"Lỗi Format/Range/UUID"| Reject["Từ chối & Drop gói tin rác"]
+    Val -->|"Hợp lệ"| Insert["Thực thi INSERT ... ON CONFLICT (gw, event_id) DO NOTHING"]
     Insert --> CheckRows{"RowsAffected == 1 ?"}
-    CheckRows -->|Đúng (1 dòng)| Success["IngestNewEvent: Bản tin mới chèn thành công"]
-    CheckRows -->|Sai (0 dòng)| SelectStored["Truy vấn SELECT đọc lại bản ghi cũ trong CSDL"]
-    SelectStored --> Compare{"Đối chiếu Canonical Payload<br>(So sánh 100% thuộc tính vật lý)"}
-    Compare -->|Trùng khớp 100%| AcceptedDup["IngestAcceptedDuplicate:<br>Bản tin phát lại hợp lệ (QoS 1)"]
-    Compare -->|Sai lệch Mask/Version...| Anomaly["IngestDivergentAnomaly:<br>Phát hiện bất thường dữ liệu!"]
+    CheckRows -->|"Đúng (1 dòng)"| Success["IngestNewEvent: Bản tin mới chèn thành công"]
+    CheckRows -->|"Sai (0 dòng)"| SelectStored["Truy vấn SELECT đọc lại bản ghi cũ trong CSDL"]
+    SelectStored --> Compare{"Đối chiếu Canonical Payload<br/>(So sánh 100% thuộc tính vật lý)"}
+    Compare -->|"Trùng khớp 100%"| AcceptedDup["IngestAcceptedDuplicate:<br/>Bản tin phát lại hợp lệ (QoS 1)"]
+    Compare -->|"Sai lệch Mask/Version..."| Anomaly["IngestDivergentAnomaly:<br/>Phát hiện bất thường dữ liệu!"]
     Anomaly --> AuditLog["Ghi Durable Audit Record vào telemetry_anomalies"]
 ```
 
