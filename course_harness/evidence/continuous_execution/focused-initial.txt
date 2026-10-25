@@ -1,0 +1,21 @@
+.......................................................F.....            [100%]
+=================================== FAILURES ===================================
+_______ test_integrity_failure_before_next_group_halts_and_cannot_resume _______
+
+tool = <course_harness.native_tools.NativeTools object at 0x79e9f2a13d10>
+
+    
+    def test_integrity_failure_before_next_group_halts_and_cannot_resume(tool):
+        batch = start(tool, limit=1)
+        complete(tool, batch, 'M01-L01')
+        (tool.source_root / 'Module_01_Practice/02_activity.md').write_text('Changed source')
+        with pytest.raises(ToolError) as error:
+            call(tool, 'advance-batch', batch=batch)
+        assert error.value.code == 'SOURCE_CHECKSUM_MISMATCH' and error.value.fatal
+>       assert tool.batch(batch)['status'] == 'HALTED'
+E       Failed: DID NOT RAISE ToolError
+
+course_harness/tests/test_native_continuous.py:224: Failed
+=========================== short test summary info ============================
+FAILED course_harness/tests/test_native_continuous.py::test_integrity_failure_before_next_group_halts_and_cannot_resume
+1 failed, 60 passed in 93.37s (0:01:33)

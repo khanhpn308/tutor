@@ -1,0 +1,307 @@
+--- /tmp/course-continuous-before-native_tools.py	2026-10-26 00:35:09.930242753 +0700
++++ course_harness/native_tools.py	2026-10-26 00:46:02.981768067 +0700
+@@ -29,10 +29,11 @@
+ )
+ 
+ VERSION = "2.0"
++UPGRADE_SNAPSHOT_SHA256 = "83099a8520aa6a387380051f40b1551ad13cc3b515e4b30cd1a99e21a3dd2a06"
+ TERMINAL = {"PASS", "HUMAN_ACCEPTED", "BLOCKED", "NEEDS_HUMAN_REVIEW"}
+ OPERATIONS = ("preflight", "list-lessons", "start-batch", "prepare-lesson", "record-attempt",
+               "process-visuals", "validate-draft", "validate-audit", "record-failure",
+-              "publish", "report-batch", "resume")
++              "publish", "report-batch", "resume", "advance-batch", "suspend", "upgrade-continuous")
+ 
+ 
+ def now():
+@@ -195,6 +196,9 @@
+             raise ToolError("SCHEMA_INVALID", exc.message)
+ 
+     def save(self, chk):
++        if chk["policy_sha256"] != self.policy_sha:
++            require(self.prior_checkpoint(chk), "CHECKPOINT_INTEGRITY", "Unrecognized prior contract", True)
++            chk["policy_sha256"] = self.policy_sha
+         self.schema("native-checkpoint.schema.json", chk)
+         # Reuse the legacy atomic writer, in a separate namespace and without legacy invalidation.
+         manager = StateManager(str(self.path(self.root / "checkpoints")), self.policy_sha,
+@@ -205,7 +209,8 @@
+ 
+     def check_bindings(self, chk):
+         meta, _, _ = self.source(chk["lesson_id"])
+-        require(chk["source_sha256"] == meta["source_sha256"] and chk["policy_sha256"] == self.policy_sha,
++        require(chk["source_sha256"] == meta["source_sha256"] and
++                (chk["policy_sha256"] == self.policy_sha or self.prior_checkpoint(chk)),
+                 "CHECKPOINT_INTEGRITY", "Source or tool/agent contract changed; preserve state for review", True)
+         for attempt in chk["attempts"]:
+             for name in ("artifact", "runtime", "candidate", "visual_manifest", "validation", "audit_validation", "packet"):
+@@ -217,6 +222,52 @@
+                 require(self.draft_check(chk, attempt)["valid"], "EVIDENCE_INTEGRITY",
+                         "Previously validated visual assets are no longer valid", True)
+ 
++    def upgrade_snapshot(self):
++        path = self.workspace / "course_harness/evidence/continuous_execution/upgrade-snapshot.json"
++        require(path.is_file() and calculate_sha256(path) == UPGRADE_SNAPSHOT_SHA256,
++                "UPGRADE_INTEGRITY", "The reviewed pre-upgrade evidence snapshot differs or is missing", True)
++        snapshot = json.loads(path.read_text())
++        require(snapshot["course_id"] == self.course and snapshot["manifest_sha256"] == self.manifest_sha,
++                "UPGRADE_INTEGRITY", "The reviewed snapshot belongs to another course/manifest", True)
++        return snapshot
++
++    def prior_checkpoint(self, chk):
++        # Only byte-identical checkpoints verified before this migration retain their old contract.
++        snapshot = self.upgrade_snapshot()
++        path = self.path(self.root / "checkpoints" / (chk["lesson_id"] + ".json"))
++        return (chk["policy_sha256"] == snapshot["policy_sha256"] and path.is_file() and
++                snapshot["files"].get(self.ref(path)) == calculate_sha256(path))
++
++    def upgrade_continuous(self, request):
++        snapshot = self.upgrade_snapshot()
++        require(request["batch"] == snapshot["batch_id"], "UPGRADE_INTEGRITY", "Batch was not reviewed", True)
++        batch_path = self.path(self.root / "batches" / (request["batch"] + ".json"))
++        batch = self.load(batch_path)
++        if batch["policy_sha256"] == self.policy_sha and batch.get("mode") == "continuous":
++            return self.report(self.batch(batch["batch_id"]))
++        require(batch["status"] == "ACTIVE" and batch["policy_sha256"] == snapshot["policy_sha256"],
++                "UPGRADE_INTEGRITY", "Do not reopen critical halts or unreviewed contracts", True)
++        existing = {self.ref(p): calculate_sha256(p) for p in self.root.rglob("*")
++                    if p.is_file() and p.name != ".lock" and not p.is_relative_to(self.root / "migrations")}
++        require(existing == snapshot["files"], "UPGRADE_INTEGRITY", "State changed since pre-upgrade verification", True)
++        scope = request.get("lessons") or sorted(self.manifest["lessons"])
++        require(set(batch["lessons"]).issubset(scope), "UPGRADE_SCOPE", "Retain the current batch in scope")
++        self.list_lessons(scope)  # Recheck sources, raw evidence, audits, visuals and published PASSes.
++        directory = self.root / "migrations/continuous-v1"
++        before = self.archive(directory / "batch-before.json", batch_path.read_bytes())
++        checkpoints = [self.archive(directory / p.name, p.read_bytes())
++                       for p in sorted((self.root / "checkpoints").glob("*.json"))]
++        self.archive(directory / "receipt.json", json.dumps({
++            "task_id": "COURSE-HARNESS-V2-CONTINUOUS-EXECUTION", "previous_batch": before,
++            "checkpoint_snapshots": checkpoints, "reviewed_snapshot_sha256": UPGRADE_SNAPSHOT_SHA256,
++            "new_policy_sha256": self.policy_sha,
++            "change": "Continuous scheduling only; preserve all attempts, decisions and PASS checkpoint bytes"
++        }, ensure_ascii=False, indent=2).encode())
++        batch.update(mode="continuous", scope=scope, batch_size=5, policy_sha256=self.policy_sha,
++                     max_runtime_seconds=None, max_dispatches=None, max_known_tokens=None)
++        self.save_batch(batch)
++        return self.report(batch)
++
+     def batch(self, batch_id):
+         require(bool(re.fullmatch(r"batch-[a-f0-9]{16}", batch_id or "")), "INVALID_BATCH", "Invalid batch ID")
+         batch = self.load(self.root / "batches" / (batch_id + ".json"))
+@@ -256,7 +307,7 @@
+                 "effort_requested": "high", "baselines": self.baseline_check(),
+                 "manifest_sha256": self.manifest_sha, "policy_sha256": self.policy_sha,
+                 "renderer_available": bool(shutil.which("mmdc")), "concurrency": 1,
+-                "default_batch_size": 5, "gemini_api": "DISABLED"}
++                "default_batch_size": 5, "default_mode": "continuous", "gemini_api": "DISABLED"}
+ 
+     def list_lessons(self, lessons=None):
+         ids = lessons or sorted(self.manifest["lessons"])
+@@ -274,23 +325,78 @@
+                          "status": status, "eligible": meta["status"] in ("AVAILABLE", "INCOMPLETE") and status not in TERMINAL})
+         return {"lessons": rows}
+ 
+-    def start_batch(self, request):
++    def start_batch(self, request, batch_id=None, previous=None):
+         limit = request.get("limit", 5)
+-        rows = self.list_lessons(request.get("lessons"))["lessons"]
++        scope = request.get("lessons") or sorted(self.manifest["lessons"])
++        rows = self.list_lessons(scope)["lessons"]
+         active = self.root / "active_batch.json"
+         if active.exists():
+             prior = self.batch(self.load(active)["batch_id"])
+             require(prior["status"] == "COMPLETED", "BATCH_ACTIVE", "Resume the existing batch: " + prior["batch_id"])
+-        batch = {"schema_version": VERSION, "batch_id": "batch-" + uuid.uuid4().hex[:16],
++        mode = request.get("mode", "continuous")
++        batch = {"schema_version": VERSION, "batch_id": batch_id or "batch-" + uuid.uuid4().hex[:16],
+                  "course_id": self.course, "lessons": [r["lesson_id"] for r in rows if r["eligible"]][:limit],
++                 "mode": mode, "scope": scope, "batch_size": limit,
+                  "selection": rows, "manifest_sha256": self.manifest_sha, "policy_sha256": self.policy_sha,
+                  "status": "ACTIVE", "started_at": now(), "started_epoch": time.time(), "dispatches": 0,
+-                 "max_dispatches": 40, "max_runtime_seconds": 1800, "max_known_tokens": 500000}
++                 "max_dispatches": 40 if mode == "bounded" else None,
++                 "max_runtime_seconds": 1800 if mode == "bounded" else None,
++                 "max_known_tokens": 500000 if mode == "bounded" else None}
++        if previous:
++            batch["previous_batch_id"] = previous
++        if mode == "bounded":
++            batch["scope"] = batch["lessons"]
+         self.archive(self.root / "manifest.json", json.dumps(self.manifest, ensure_ascii=False, indent=2).encode())
+         self.save_batch(batch)
+         atomic_json(active, {"batch_id": batch["batch_id"]})
+         return self.report(batch)
+ 
++    def advance_batch(self, batch):
++        require(batch.get("mode") == "continuous", "BOUNDED_SCOPE", "A bounded batch does not advance automatically")
++        seen = set()
++        while batch.get("next_batch_id"):
++            require(batch["batch_id"] not in seen, "BATCH_INTEGRITY", "Batch chain contains a cycle", True)
++            seen.add(batch["batch_id"])
++            child = self.batch(batch["next_batch_id"])
++            require(child.get("previous_batch_id") == batch["batch_id"] and child.get("scope") == batch["scope"] and
++                    child.get("mode") == "continuous" and child.get("batch_size") == batch["batch_size"],
++                    "BATCH_INTEGRITY", "Batch chain or scope differs", True)
++            batch = child
++        result = self.report(batch)
++        if batch["status"] != "COMPLETED" or result["next_action"] != "advance-batch":
++            return result
++        # A deterministic successor ID recovers a crash between child creation and linking.
++        successor = "batch-" + digest((batch["batch_id"] + ":next").encode())[:16]
++        path = self.root / "batches" / (successor + ".json")
++        if path.exists():
++            child = self.batch(successor)
++            require(child.get("previous_batch_id") == batch["batch_id"] and child.get("scope") == batch["scope"],
++                    "BATCH_INTEGRITY", "Unexpected successor batch", True)
++        else:
++            self.archive(self.root / "reports" / batch["batch_id"] / "completed.json",
++                         json.dumps(result, ensure_ascii=False, indent=2).encode())
++            self.start_batch({"lessons": batch["scope"], "limit": batch["batch_size"], "mode": "continuous"},
++                             batch_id=successor, previous=batch["batch_id"])
++            child = self.batch(successor)
++        batch["next_batch_id"] = successor
++        self.save_batch(batch)
++        atomic_json(self.root / "active_batch.json", {"batch_id": successor})
++        return self.report(child)
++
++    def suspend(self, request):
++        batch = self.batch(request["batch"])
++        require(batch["status"] == "ACTIVE" or
++                (batch["status"] == "PAUSED" and request["category"] == "cancelled"),
++                "BATCH_NOT_ACTIVE", "Cannot suspend a halted or finished batch")
++        reason = {"category": request["category"], "message": request["diagnostic"], "timestamp": now()}
++        require(reason["category"] in ("runtime", "cancelled"), "INVALID_SUSPENSION", "Use runtime or cancelled")
++        self.archive(self.root / "reports" / batch["batch_id"] / (uuid.uuid4().hex + "-suspension.json"),
++                     json.dumps(reason, ensure_ascii=False).encode())
++        batch["status"] = "CANCELLED" if reason["category"] == "cancelled" else "PAUSED"
++        batch["halt_reason"] = reason
++        self.save_batch(batch)
++        return self.report(batch)
++
+     def prepare(self, request):
+         batch = self.batch(request.get("batch"))
+         lesson = request.get("lesson")
+@@ -304,22 +410,23 @@
+                    "status": "PENDING", "next_action": "worker", "source_sha256": meta["source_sha256"],
+                    "policy_sha256": self.policy_sha, "repair_rounds": 0, "attempts": [], "active_attempt": None}
+         self.check_bindings(chk)
++        require(batch["status"] == "ACTIVE", "BATCH_HALTED", "Batch is halted, suspended, cancelled or finished")
+         if chk["next_action"] not in ("worker", "auditor", "repair"):
+             return {"checkpoint": chk, "next_action": chk["next_action"]}
+         if chk.get("active_attempt"):
+             attempt = next(a for a in chk["attempts"] if a["attempt_id"] == chk["active_attempt"])
+             return {"checkpoint": chk, "packet": self.load(attempt["packet"]["path"]),
+                     "packet_path": attempt["packet"]["path"], "next_action": "recover_existing_native_invocation"}
+-        require(batch["status"] == "ACTIVE", "BATCH_HALTED", "Resolve the recorded batch halt before dispatch")
+         for other in batch["lessons"]:
+             state = self.checkpoint(other)
+             require(other == lesson or not state or state["status"] in TERMINAL,
+                     "CONCURRENCY_LIMIT", "Finish the current lesson before starting another")
+-        require(batch["dispatches"] < batch["max_dispatches"] and
+-                time.time() - batch["started_epoch"] < batch["max_runtime_seconds"],
+-                "SAFE_BOUNDARY_LIMIT", "Batch execution bound reached; no new AI dispatch")
+-        report = self.report(batch)
+-        require(report["known_total_tokens"] < batch["max_known_tokens"], "TOKEN_BOUNDARY_LIMIT", "Known token bound reached")
++        if batch.get("mode", "bounded") == "bounded":
++            require(batch["dispatches"] < batch["max_dispatches"] and
++                    time.time() - batch["started_epoch"] < batch["max_runtime_seconds"],
++                    "SAFE_BOUNDARY_LIMIT", "Explicit bounded batch limit reached; no new AI dispatch")
++            require(self.report(batch)["known_total_tokens"] < batch["max_known_tokens"],
++                    "TOKEN_BOUNDARY_LIMIT", "Known token bound reached")
+         role = chk["next_action"]
+         attempt_id = f"{role}-{uuid.uuid4().hex[:16]}"
+         directory = self.root / "attempts" / lesson / attempt_id
+@@ -512,6 +619,8 @@
+         batch, chk = self.lesson_state(request)
+         require(chk["status"] not in TERMINAL, "TERMINAL_LESSON", "Terminal evidence cannot be reset")
+         category = request["category"]
++        require(category in ("transient", "integrity", "authentication", "budget", "lesson"),
++                "INVALID_FAILURE", "Runtime suspension/cancellation does not fail a lesson")
+         fatal = category in ("integrity", "authentication", "budget")
+         diagnostic = {"category": category, "message": request["diagnostic"], "timestamp": now()}
+         self.archive(self.root / "diagnostics" / chk["lesson_id"] / (uuid.uuid4().hex + ".json"),
+@@ -592,17 +701,40 @@
+                         known_tokens += value
+                     elif a["status"] in ("RECORDED", "FAILED"):
+                         unknown_usage += 1
+-            rows.append({"lesson_id": lesson, "status": chk["status"] if chk else "PENDING",
+-                         "next_action": chk["next_action"] if chk else "prepare-lesson"})
++            row = {"lesson_id": lesson, "status": chk["status"] if chk else "PENDING",
++                   "next_action": chk["next_action"] if chk else "prepare-lesson"}
++            if chk and chk["status"] in ("BLOCKED", "NEEDS_HUMAN_REVIEW"):
++                row["diagnostic_checkpoint"] = self.ref(self.root / "checkpoints" / (lesson + ".json"))
++                failure = next((a["failure"] for a in reversed(chk["attempts"]) if a.get("failure")), None)
++                row["reason"] = failure or "See checkpoint validation/audit findings; publication was not granted"
++            rows.append(row)
+         pending = next((r["lesson_id"] for r in rows if r["status"] not in TERMINAL), None)
+         if pending is None and batch["status"] == "ACTIVE":
+             batch["status"] = "COMPLETED"
+             self.save_batch(batch)
++        mode = batch.get("mode", "bounded")
++        action = "prepare-lesson" if pending else "done"
++        scope_status = "ACTIVE" if pending else "COMPLETED"
++        summary = {}
++        if batch["status"] == "COMPLETED":
++            scope_rows = self.list_lessons(batch.get("scope", batch["lessons"]))["lessons"]
++            for row in scope_rows:
++                summary[row["status"]] = summary.get(row["status"], 0) + 1
++            remaining = any(row["eligible"] for row in scope_rows)
++            if remaining and mode == "continuous":
++                action, scope_status = "advance-batch", "ACTIVE"
++            elif any(row["status"] in ("BLOCKED", "NEEDS_HUMAN_REVIEW") for row in scope_rows):
++                scope_status = "COMPLETED_WITH_FAILURES"
++        if batch["status"] in ("HALTED", "PAUSED", "CANCELLED"):
++            action, scope_status = "stop", batch["status"]
+         return {"batch_id": batch["batch_id"], "status": batch["status"], "lessons": rows,
++                "mode": mode, "scope": batch.get("scope", batch["lessons"]),
++                "scope_status": scope_status, "scope_summary": summary, "next_action": action,
++                "halt_reason": batch.get("halt_reason"),
+                 "next_lesson": pending, "known_total_tokens": known_tokens,
+                 "unreported_usage_attempts": unknown_usage, "monetary_cost": "NOT_VERIFIED",
+                 "dispatches": batch["dispatches"], "concurrency": 1,
+-                "resume_instruction": f"Sử dụng Coursera Producer tiếp tục batch {batch['batch_id']} của khóa {self.course}. Đọc checkpoint trên đĩa, không gọi lại phần việc đã ghi nhận."}
++                "resume_instruction": f"Sử dụng Coursera Producer khôi phục batch {batch['batch_id']} của khóa {self.course} từ checkpoint và tự tiếp tục toàn bộ phạm vi đã lưu. Không gọi lại phần việc đã ghi nhận; không chờ xác nhận sau mỗi batch."}
+ 
+     def execute(self, request):
+         self.schema("native-request.schema.json", request)
+@@ -630,14 +762,27 @@
+         if op == "list-lessons":
+             return self.list_lessons(request.get("lessons"))
+         with self.locked():
++            if op == "upgrade-continuous":
++                return self.upgrade_continuous(request)
+             if op == "start-batch":
+                 return self.start_batch(request)
+-            if op in ("report-batch", "resume"):
+-                result = self.report(self.batch(request.get("batch")))
++            if op in ("report-batch", "resume", "advance-batch"):
++                batch = self.batch(request.get("batch"))
++                require(op != "advance-batch" or batch.get("mode") == "continuous", "BOUNDED_SCOPE",
++                        "A bounded batch does not advance automatically")
++                if op in ("resume", "advance-batch") and batch.get("mode") == "continuous":
++                    result = self.advance_batch(batch)
++                    batch = self.batch(result["batch_id"])
++                if op == "resume" and batch["status"] == "PAUSED":
++                    batch["status"] = "ACTIVE"
++                    self.save_batch(batch)
++                result = self.report(batch)
+                 artifact = self.archive(self.root / "reports" / result["batch_id"] / (uuid.uuid4().hex + ".json"),
+                                         json.dumps(result, ensure_ascii=False, indent=2).encode())
+                 result["report_path"] = artifact["path"]
+                 return result
++            if op == "suspend":
++                return self.suspend(request)
+             if op == "prepare-lesson":
+                 return self.prepare(request)
+             if op == "record-attempt":
+@@ -670,11 +815,12 @@
+         parser.add_argument("--lesson")
+         parser.add_argument("--lessons", nargs="+")
+         parser.add_argument("--limit", type=int, default=5)
++        parser.add_argument("--mode", choices=("continuous", "bounded"))
+         parser.add_argument("--batch")
+         parser.add_argument("--attempt")
+         parser.add_argument("--artifact")
+         parser.add_argument("--runtime-evidence")
+-        parser.add_argument("--category", choices=("transient", "integrity", "authentication", "budget", "lesson"))
++        parser.add_argument("--category", choices=("transient", "integrity", "authentication", "budget", "lesson", "runtime", "cancelled"))
+         parser.add_argument("--diagnostic")
+         request = {k: v for k, v in vars(parser.parse_args(argv)).items() if v is not None}
+         operation = request["operation"]

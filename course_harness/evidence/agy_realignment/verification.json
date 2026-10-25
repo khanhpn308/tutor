@@ -1,0 +1,107 @@
+{
+  "task_id": "COURSE-HARNESS-V1-AGY-CLI-AUTOMATION-REALIGNMENT",
+  "verified_at": "2026-10-25T15:05:52.563705+00:00",
+  "status": "POLICY_CLARIFICATION_REQUIRED",
+  "intended_provider": {
+    "provider": "agy",
+    "model": "gemini-3.8-flash-high",
+    "effort": "high",
+    "default_config_unchanged": true
+  },
+  "direct_scripting": "Documented CLI primitives verified with mocked subprocess; no new live wrapper or shell bypass enabled",
+  "policy_assessment": "Official FAQ permits direct scripting/CI but does not support third-party agent/application wrappers. Course Harness application classification requires provider clarification.",
+  "batch_scheduler_integration": "Offline plans and existing checkpoints retained; all automated_cli bulk entrypoints blocked before CLI verification/invocation",
+  "worker_auditor_repair": "Existing single-lesson integration verified offline, independent CLI sessions and up to 2 repairs with fresh Auditor",
+  "metadata": "Original raw CLI stdout, model/session when provided, usage, response/prompt/raw hashes and timestamps retained per invocation; missing fields remain unverified or null",
+  "api_inactive": true,
+  "api_keys_requested_or_created": false,
+  "authentication": "NOT_CHECKED",
+  "quota": "NOT_CHECKED",
+  "live_agy_calls": 0,
+  "live_api_calls": 0,
+  "files_modified": [
+    "course_harness/requirements.txt",
+    "course_harness/README.md",
+    "course_harness/gemini_api.yaml",
+    "course_harness/run.py",
+    "course_harness/AUTOMATION.md",
+    "course_harness/gemini_adapter.py",
+    "course_harness/batch.py",
+    "course_harness/cli_adapter.py",
+    "course_harness/tests/test_gemini_automation.py"
+  ],
+  "files_created": [
+    "course_harness/provider_policy.py",
+    "course_harness/requirements-gemini-api.txt",
+    "course_harness/tests/test_agy_realignment.py",
+    "course_harness/evidence/agy_realignment/preservation.json",
+    "course_harness/evidence/agy_realignment/batch_5_dry_run.json",
+    "course_harness/evidence/agy_realignment/readiness.json",
+    "course_harness/evidence/provider_r1/AUTOMATION-historical.md",
+    "course_harness/evidence/agy_realignment/verification.json"
+  ],
+  "tests": {
+    "new_focused": {
+      "command": "course_harness/.venv/bin/python -m pytest -q course_harness/tests/test_agy_realignment.py",
+      "passed": 17,
+      "seconds": 0.71
+    },
+    "full": {
+      "command": "course_harness/.venv/bin/python -m pytest -q",
+      "passed": 353,
+      "seconds": 63.53
+    }
+  },
+  "dry_run": {
+    "status": "DRY_RUN_COMPLETED",
+    "provider_calls": 0,
+    "policy_status": "POLICY_CLARIFICATION_REQUIRED",
+    "lessons": [
+      "M01-L01",
+      "M01-L02",
+      "M01-L03",
+      "M01-L04",
+      "M01-L05"
+    ]
+  },
+  "preservation": {
+    "task_id": "COURSE-HARNESS-V1-AGY-CLI-AUTOMATION-REALIGNMENT",
+    "raw_source_files_checked": 783,
+    "historical_generated_files_checked": 95,
+    "protected_files_checked": 886,
+    "changed_files": [],
+    "before_sha256": "1cbadfd913e893527923976c3c86c229f60988f26a2c1bb7386c298175f0aaab",
+    "after_sha256": "1cbadfd913e893527923976c3c86c229f60988f26a2c1bb7386c298175f0aaab",
+    "config_and_prompts_unchanged": true,
+    "prior_evidence_unchanged": true,
+    "approved_baselines": [
+      "M02-L11",
+      "M03-L08"
+    ]
+  },
+  "git_commit_push_merge": "NONE",
+  "operator_command": "course_harness/.venv/bin/python -m course_harness.batch --readiness",
+  "live_operator_command": null,
+  "remaining_blockers": [
+    "Provider clarification for Course Harness consumer application orchestration",
+    "AGY authentication/model access/quota not checked; no live execution authorized in this task"
+  ],
+  "implementation_sha256": {
+    "course_harness/requirements.txt": "9e4e1f7039cf8075723238edd5dd10accb8d066b8e1bb04e020b02ccf1077f2d",
+    "course_harness/README.md": "d1db6c825ecdaf10a9c500c36f5fa19489939264f85e05f8e342b4c6911aff7f",
+    "course_harness/gemini_api.yaml": "57b62179ea96c807050db6a37eca1b1751cfd82cba41ca36ff09b1f774e57a1f",
+    "course_harness/run.py": "7912c98f1babb6215f8e5a59e1fa131d61184b7279183d6b3c72fcb5c2b73ace",
+    "course_harness/AUTOMATION.md": "4df2893428e405862ef061083a07311b5b0f84027ee80ddf4496ebf801d89101",
+    "course_harness/gemini_adapter.py": "e979c5ab4d21dac03e4bbfdafa283df30b688ab194e8b09015d44723d24dde9b",
+    "course_harness/batch.py": "04c704e8e367b613e8195f4b306c31d0d8020d88f12b38ac5ca55a429b9ea079",
+    "course_harness/cli_adapter.py": "23016de1209fd77e46acda0aa97b0f0cbb1852d96aa31bbb482e7096e3f53f12",
+    "course_harness/tests/test_gemini_automation.py": "c7fddd73e5bc4689cdd10ec0fbe2f303f28c384095a183dcb4e16ccd96855e3b",
+    "course_harness/provider_policy.py": "e20e4e3a71147ba71291648a9f2b366928f9bc8274724edf619bfb94c063167d",
+    "course_harness/requirements-gemini-api.txt": "3d17c72a3a361053ff7185c7f6d803d003539d0c593355b5149e51a18d955684",
+    "course_harness/tests/test_agy_realignment.py": "40bd286f989a905edb56d893d078aa48b9123f047fc8e06e3cd4d9a00199da88",
+    "course_harness/evidence/agy_realignment/preservation.json": "44c6e1f69e8272289ca1b453a13e47bd233f32b6cd743c7db6326d6291fda104",
+    "course_harness/evidence/agy_realignment/batch_5_dry_run.json": "af7da7f3411942eb9fbc2674cd0da501301d0f0c7ee5b2a648433dc75757e95f",
+    "course_harness/evidence/agy_realignment/readiness.json": "ab4562ede82a04d08c3b8a1b1a98b6116e683c84238afea48c7a738be04e5f41",
+    "course_harness/evidence/provider_r1/AUTOMATION-historical.md": "4e5695152ba064e47942197532bf51e34140356fb348dfb522d13b2e201cc73c"
+  }
+}

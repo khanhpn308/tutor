@@ -1,0 +1,31 @@
+{
+  "lesson_id": "M01-L07",
+  "verdict": "PASS",
+  "summary": "Bản giáo trình hiệu chỉnh M01-L07 đạt chuẩn chất lượng giáo dục cao và trung thực tuyệt đối với nguồn video transcript. Hai sơ đồ F01 (đối chiếu 4 cặp giá trị) và F02 (vòng lặp phản hồi thích ứng kế hoạch) được tối ưu trực quan, đã được render và thẩm định layout thực tế. Các ví dụ giảng viên và thuật ngữ Working software được chuẩn hóa chính xác, loại bỏ các chi tiết hư cấu số lượng chuyên gia và overstatement không có trong bài giảng gốc.",
+  "dimension_scores": {
+    "SOURCE_FIDELITY": "MET",
+    "CONTENT_COMPLETENESS": "MET",
+    "PEDAGOGICAL_QUALITY": "MET",
+    "VISUAL_PEDAGOGY": "MET",
+    "TERMINOLOGY_CONSISTENCY": "MET",
+    "SOURCE_TRACEABILITY": "MET",
+    "CLARITY_ORGANIZATION": "MET",
+    "FORMATTING": "MET"
+  },
+  "quality_score": 100.0,
+  "quality_rubric_version": "2.0-visual-first",
+  "content_quality_accepted": true,
+  "visual_figures_audited": 2,
+  "visual_acceptance_stages": {
+    "spec_valid": true,
+    "render_verified": true,
+    "visual_reviewed": true,
+    "content_quality_accepted": true
+  },
+  "findings": [],
+  "limitations": [
+    "STATIC_CALIBRATION_EVIDENCE: Hồ sơ kiểm định hiệu chuẩn tĩnh (deterministic calibration fixture), không phải kết quả live AI audit độc lập.",
+    "Kiểm định đối chiếu trực tiếp trên video transcript mốc thời gian 00:01-06:44 không chứa chi tiết ngoài nguồn.",
+    "Giới hạn hiển thị: Nhãn foreignObject trong SVG Mermaid tương thích tốt với trình duyệt web hiện đại; có thể cần chuyển đổi PNG fallback đối với một số công cụ xuất PDF cũ."
+  ]
+}

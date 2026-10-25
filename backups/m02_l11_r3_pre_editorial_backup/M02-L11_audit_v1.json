@@ -1,0 +1,56 @@
+{
+  "lesson_id": "M02-L11",
+  "verdict": "PASS",
+  "quality_rubric_version": "2.0-visual-first",
+  "summary": "Bản dự thảo (Draft) đạt chất lượng xuất sắc, tuân thủ chặt chẽ tài liệu gốc (Raw Source) và đạt điểm chuẩn hóa cao (98.5/100). Nội dung bài học phản ánh trung thực toàn bộ định nghĩa, trích dẫn Scrum Guide, nhiệm vụ và phẩm chất của ba vai trò (Scrum Master, Product Owner, Developers) cũng như các so sánh then chốt với Project Manager truyền thống và bối cảnh Google. Hệ thống ba sơ đồ Mermaid (Hình F01, F02, F03) có sư phạm trực quan tốt, cú pháp hợp lệ, chú thích và alt text đầy đủ. Không phát hiện bất kỳ lỗi hư cấu số liệu, gán mốc thời gian giả mạo hay vi phạm Hard Gate nào. Hai phát hiện nhỏ ở mức LOW thuộc về hoàn thiện liên kết logic trong sơ đồ F02 và bổ sung vòng lặp phản hồi cho F03 để đồng bộ tuyệt đối với lời giải thích.",
+  "dimension_scores": {
+    "SOURCE_FIDELITY": "MET",
+    "CONTENT_COMPLETENESS": "MET",
+    "PEDAGOGICAL_QUALITY": "MET",
+    "VISUAL_PEDAGOGY": "MINOR_ISSUES",
+    "TERMINOLOGY_CONSISTENCY": "MET",
+    "SOURCE_TRACEABILITY": "MET",
+    "CLARITY_ORGANIZATION": "MET",
+    "FORMATTING": "MET"
+  },
+  "findings": [
+    {
+      "finding_id": "F-001",
+      "severity": "LOW",
+      "category": "VISUAL_PEDAGOGY",
+      "source_locator": "Scrum Master vs. project manager, Product Owner vs. project manager",
+      "draft_locator": "Mục 3.5 - Hình F02 (Liên kết PM3 -> SM2)",
+      "description": "Trong sơ đồ Hình F02, mũi tên từ PM3 ('Quản lý Hiệu suất & Giao việc cho Nhân sự') trỏ tới SM2 ('Xóa bỏ rào cản tiến độ') với nhãn 'Thay thế bằng Tự quản lý; SM hỗ trợ khai thông'. Về mặt sư phạm trực quan, việc phân bổ công việc truyền thống của PM được chuyển giao chủ yếu cho tính Tự quản lý của Developers (nút DEV1), trong khi Scrum Master đóng vai trò bảo trợ quy trình và khai thông cản trở. Việc mũi tên trỏ vào SM2 chưa hoàn toàn khớp với nhãn và bản chất chuyển dịch quyền hạn.",
+      "required_action": "Điều chỉnh mũi tên từ PM3 trỏ trực tiếp sang DEV1 ('Tự ước lượng & phân bổ công việc') với chú giải 'Thay thế bằng Developers tự quản lý', hoặc thêm nhánh liên kết phụ từ SM1 ('Huấn luyện tự quản lý') để tối ưu tính chính xác trực quan."
+    },
+    {
+      "finding_id": "F-002",
+      "severity": "LOW",
+      "category": "VISUAL_PEDAGOGY",
+      "source_locator": "The roles working together, Necessary traits for each role",
+      "draft_locator": "Mục 3.7 - Hình F03 (Quy trình phối hợp các vai trò)",
+      "description": "Đoạn giải thích trực quan dưới Hình F03 mô tả sơ đồ là 'quy trình tương tác tuần hoàn', tuy nhiên sơ đồ Mermaid F03 hiện tại là một luồng tuyến tính 4 giai đoạn kết thúc tại STAGE4 (Review & Increment), chưa có mũi tên nét đứt phản hồi (feedback loop) thể hiện tính chu kỳ liên tục của các Sprint tiếp theo.",
+      "required_action": "Bổ sung liên kết nét đứt phản hồi từ PO_ACT2 hoặc STAGE4 quay trở lại STAGE1 / STAGE2 (ví dụ: 'Phản hồi & Cập nhật Backlog cho Sprint mới') để sơ đồ trực quan thể hiện đầy đủ tính tuần hoàn như phần diễn giải sư phạm."
+    },
+    {
+      "finding_id": "F-003",
+      "severity": "LOW",
+      "category": "SOURCE_FIDELITY",
+      "source_locator": "Phần 4.2 (Tình huống thực hành)",
+      "draft_locator": "Mục 4.2 - Tiêu đề đề mục",
+      "description": "Mục 4.2 đã gắn nhãn rõ ràng '[Tình huống mô phỏng sư phạm]' và không gán mốc thời gian nguồn giả mạo. Tuy nhiên, theo tiêu chuẩn chất lượng Unified Quality Standard 2.0, nhãn chuẩn hóa khuyến nghị là `AI_GENERATED_EXAMPLE` để bảo đảm tính thống nhất và nhận diện tối ưu trong hệ thống kiểm định tự động.",
+      "required_action": "Cập nhật nhãn tại tiêu đề mục 4.2 thành '### 4.2 Tình huống Thực hành Giả định [AI_GENERATED_EXAMPLE / Tình huống mô phỏng sư phạm]' nhằm bảo đảm chuẩn hóa tuyệt đối."
+    }
+  ],
+  "limitations": [
+    "Auditor chia sẻ cùng họ mô hình Gemini 3.8 Flash High với Worker.",
+    "Kiểm định dựa trên đối chiếu văn bản bài đọc (Reading) và mã nguồn Mermaid; chất lượng hiển thị đồ họa SVG thực tế phụ thuộc vào renderer của nền tảng LMS triển khai."
+  ],
+  "quality_score": 95.5,
+  "content_quality_accepted": true,
+  "audited_final_sha256": "2961e0e17d7a615678452ab6ddf83689698e42e145e40175b4b7a4372ce1ff65",
+  "audit_invocation_id": "inv-auditor-M02-L11-att1-097179286878",
+  "model_verification": "VERIFIED",
+  "visual_manifest_sha256": "e180848582fc9944cc0cbb9c21307d366d52cabdec2a898096615453304298d5",
+  "visual_figures_audited": 3
+}

@@ -1,0 +1,42 @@
+models:
+  worker:
+    cli: agy
+    model: gemini-3.8-flash-high
+    role: draft
+    effort: high
+
+  auditor:
+    cli: agy
+    model: gemini-3.8-flash-high
+    role: independent_audit
+    fresh_session: true
+    read_only: true
+    effort: high
+
+  repair:
+    cli: agy
+    model: gemini-3.8-flash-high
+    role: repair
+    effort: high
+
+workflow:
+  unit: lesson
+  max_repair_rounds: 2
+  model_fallback: false
+  resumable: true
+  source_grounded: true
+  audit_required: true
+
+execution:
+  mode: automated_cli
+  agy_binary: /home/khanh/.local/bin/agy
+  timeout_seconds: 180
+  require_model_verification: true
+
+paths:
+  course_id: Agile_Project_Management
+  source_dir: output_course/Agile_Project_Management
+  output_dir: generated_course/Agile_Project_Management
+  manifest_path: generated_course/Agile_Project_Management/manifest.json
+  schema_path: course_harness/schemas/audit.schema.json
+  prompts_dir: course_harness/prompts

@@ -1,0 +1,21 @@
+flowchart LR
+    subgraph LeftSide["VẾ TRÁI: ĐƯỢC COI TRỌNG HƠN"]
+        direction TB
+        L1["Cá nhân và sự tương tác<br/>(Individuals and interactions)"]
+        L2["Phần mềm chạy tốt<br/>(Working software)"]
+        L3["Cộng tác với khách hàng<br/>(Customer collaboration)"]
+        L4["Phản hồi với thay đổi<br/>(Responding to change)"]
+    end
+
+    subgraph RightSide["VẾ PHẢI: VẪN CÓ GIÁ TRỊ"]
+        direction TB
+        R1["Quy trình và công cụ<br/>(Processes and tools)"]
+        R2["Tài liệu toàn diện<br/>(Comprehensive documentation)"]
+        R3["Đàm phán hợp đồng<br/>(Contract negotiation)"]
+        R4["Bám sát một kế hoạch<br/>(Following a plan)"]
+    end
+
+    L1 --- R1
+    L2 --- R2
+    L3 --- R3
+    L4 --- R4

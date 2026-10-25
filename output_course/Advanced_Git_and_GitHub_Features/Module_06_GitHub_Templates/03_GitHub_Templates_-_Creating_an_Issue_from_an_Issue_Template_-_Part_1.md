@@ -1,0 +1,62 @@
+# 🎥 GitHub Templates - Creating an Issue from an Issue Template - Part 1
+
+🔗 **Link Video MP4:** [Xem / Tải Video](https://d3c33hcgiwev3.cloudfront.net/fb8f1673-1c6d-41e8-85bc-e1049a163c6f_df40f1b1aa984770b0af21bda8cfdfcb_video24_3.mp4.mediaconvert/full/fb8f1673-1c6d-41e8-85bc-e1049a163c6f_df40f1b1aa984770b0af21bda8cfdfcb_video24_3_WEBM_540.webm?Expires=1793059200&Signature=GdxBHgIWALuyC1QunbZY9mCR2yXsp5AV3c2F5pQFDPzVtsMOHSoEWn9Vj3xrGE5BR-fTaPDUJhMZJY82Xfwr6iXO6hewNKWPXUw-HfVNRRJP1F5RbEaLgFmIq7a5hC0VfdF-wwuwhanBS2nwmm-yldlXCn01afU02MsS93GrZSw_&Key-Pair-Id=APKAJLTNE6QMUY6HBC5A)
+
+---
+
+## 📜 Transcript (Lời giảng viên)
+
+Play video starting at :: and follow transcript
+0:00
+​Hey, welcome back. So in this video, we'll be discussing and working on ​issue templates. ​So I've seen earlier repository template ​and then the pull request template. ​Likewise, we have also issue templates. ​And the goal of template as usual is to make things easy, ​provide a structure or a format ​or a framework ​to create certain things. ​It could be an issue, it could be a pull request or it could, it could be a repository, ​right? ​So we'll just start with creating a new repository ​and then we'll go ahead with creating issue templates. 
+Play video starting at ::41 and follow transcript
+0:41
+​So let's create the repository name GH ​issue ​template ​demo. ​OK? ​So ​the name is OK? ​Right. ​So let's now ​initialize it with a readme file. It will be a public repository ​as usual and will create the repository. ​OK? So the depository got created. 
+Play video starting at :1:13 and follow transcript
+1:13
+​Now, if we go to the issues tab, ​you don't see any templates over here. It just says welcome to issues ​because this repository is a new one. So it doesn't have any issues. ​Otherwise the issues would have been listed here. ​And when you click on new issue, ​we have a blank title and a blank description which you need to fill up. ​So there is no template copy over here, right? ​So you don't see anything you need to write the description from scratch. 
+Play video starting at :1:48 and follow transcript
+1:48
+​But what about a template? Had there been a template? ​Then there would have been a specific guideline, ​how to create an issue, what things you need to put in there ​so that it is part of a good collaborative process ​so that everybody can understand ​the meaning of the issue and the goal of the issue that has been created. ​So github does provide certain issues out of the ​box or issue templates out of the box. ​But these are not visible by default, ​you need to make them visible and there are two ways you can do that. ​So if you go to settings ​and if you scroll down ​and go to the features section, ​there is issues. So here the issues has been enabled ​but you need to set up the templates. 
+Play video starting at :2:38 and follow transcript
+2:38
+​So if you click on set up template, we'll have this page ​and here it says add template select. ​Now if you select there are three templates that ​are provided out of the box by github, ​the bug report, feature request and custom template. ​So let's click on bug report ​and you can preview and edit, let's click on preview and edit ​and here you can see ​the preview and if you click on this pencil icon, then it will allow us to edit. ​So we will not edit at this point. But let's have a look, ​it says describe the bug, a clear and concise description of what the bug is ​to reproduce steps, to reproduce the behavior. ​Go to somewhere, click on somewhere, scroll down to somewhere ​and see here. ​Then you need to mention the expected behavior. 
+Play video starting at :3:34 and follow transcript
+3:34
+​You need it at screenshots ​or videos, whatever is applicable to explain the problem. ​Then you need to mention what your desktop os what kind of os it is ​operating system, ​browser version. ​If the browser is applicable, let's say if it is a web application, ​then the browser version ​or the browser type ​or the browser name makes sense. ​Then the smartphone, what kind of device it is if it is kind of an app ​and then ​browser version, additional content ​and optional additional items. ​So you pretty much understand that it's a kind of a template ​that provides a general guideline about how to go about creating an issue. ​So I'll close up with you ​and ​this has been added already ​because it is selected when this a ​template dropdown came over here. ​Next is feature request. We can add this one also ​and you can preview and edit also, ​right? 
+Play video starting at :4:41 and follow transcript
+4:41
+​We can edit letter when the files get created in our repository ​and we can edit here also now ​and there is something else which is custom template or blank template. ​So leave this one, we'll select this to bug report and feature request ​and you need to click on propose changes, ​right. As soon as you do that, ​you have a commit, message, update, issue template ​and commit changes. ​So this is the way you can do ​uh or ​bring in front ​the default ​issue templates provided by github out of the box. ​Now, ​we will not do this because we want to ​show you another way you can choose these templates. ​So let's delete this, let's delete this ​and we'll move away from this page ​and we'll go to this tab which is insights. ​Now, if you come to sites, you click on community standards ​and here if you scroll down, ​you have something called issue templates, then the add button. 
+Play video starting at :5:49 and follow transcript
+5:49
+​If you click on the add button, ​the similar interface appears where you can add the templates, ​let's say bug report and feature request. ​So these are the two ways you can bring this ​standard templates which GTA provides us into the issues tab. ​OK? ​So let's start from here only and we'll propose the changes now, ​we'll update the issue template, we'll accept the default commit message ​and commit the changes. So this is basically a version control commit. ​And if you go to the code tab, you are in the code tab already ​and you can see ​github ​issue template. ​So a folder called github has been a folder called dot ​github has been created. 
+Play video starting at :6:35 and follow transcript
+6:35
+​And ​within that there is a sub folder which is issue underscore template ​and these two files, bug report dot MD has been created for the bug report, ​issue template ​and feature request dot MD has been created for the feature request template. ​Now, this is the preview, you can open the raw code, ​which is a markdown code because it's a dot MD file, right? ​And here you can see, let's check the feature request MD only. ​And here you can see it says name. ​Now before you see this, you need to take care of this. ​One thing is that when you create AMD file ​or dot MD file for a ​issue template, you need to have this first which is three dash ​and there are three dash over here, it starts with three dash ​and ends with three dash. ​And there are certain specific things which you need to mention, ​which is a name about these two are mandatory. 
+Play video starting at :7:35 and follow transcript
+7:35
+​You need to provide a name ​which is feature request here and about which is suggest an idea for this project. ​And then optionally you can have titles, labels and assignees. ​And this entire thing, ​all these ​fields enclosed within this three dash starting with ​three dash and ending with three dash. ​This is called front matter ​and front matter is basically a metadata for this particular markdown file. ​And if you don't have this front matter, then things will not work, right? ​And now let's check out the template itself. ​It says is your feature request related to a problem. 
+Play video starting at :8:17 and follow transcript
+8:17
+​Please describe and then you need to give a ​clear and concise description of what the problem is. ​Next, you have described the solution, ​you would like a clear and concise description of what you want ​to happen. ​So you can pretty much understand this is a nice template which ​can serve as an issue template for the type feature request. ​So let's get back to the code tab. ​And what I would like to say is that ​here when he ​added the issue templates. So the issue default issue templates from github, ​this dot ​github ​folder and issue ​and issue underscore templates. ​Soder was created automatically. 
+Play video starting at :9: and follow transcript
+9:00
+​Now ​you don't need to really approach things in this manner. ​What you could have done is you could have manually created this dot ​gi ​folder and the issue underscore underscore template subfolder under it. ​So, ​but this is mandatory, you need to create a dot data ​folder and you need to create an issue underscore templates ​folder and then you need to have the issue templates in the form of markdown files and ​it could be a bug report, ​it could be a feature request or it could be some other type of issue templates. ​And another thing I would like to say is that ​apart from dot MD ​files dot YAML ​files or dot Y ML files will also work. ​I'll demonstrate this to you in this lesson or maybe the next lesson. ​So now let's go to the issues tab and actually ​show you the result of adding this default issue templates. ​So when I come to the issues tab, we don't have any issue in the in this repository. 
+Play video starting at :10:5 and follow transcript
+10:05
+​So it says welcome to issues. Now, when you click on this new issue here, you can see ​previously, we are not able to see these things, right? ​When there are no when there were no issue templates. ​But this time when I have added the issue templates, ​you can see it starts with this listing of the default templates, ​bug report and feature request. ​And once you click on this get started, ​you can start creating an issue based on this template. ​So let's start with this only let's click on this get started for bug report. ​So here you can see in previous lessons when he started, when he created the issue, ​we have been getting a blank description filled. 
+Play video starting at :10:49 and follow transcript
+10:49
+​But here at this time, ​this is filled with the Markdown copy and it gives us a template. ​So let's create an issue. ​So let's end this issue. ​That's a test issue one, right? ​And then ​we can add certain things here. Let's say the clear concise description is ​this issue ​is related ​to the ​new feature ​request. ​Four, ​two fa which is two factor ​authentication, ​two factor authentication ​for the login page. 
+Play video starting at :11:35 and follow transcript
+11:35
+​So that's the issue. So in this way, you need to utilize the template ​and follow the guidelines given in the template. ​And further you can do certain things like if it is kind of an error ​and that needs to be reproduced, ​then you can provide the steps to reproduce the behavior. ​This is not really applicable for a new feature request, right? ​And then this is also the same, this is for something which is a kind of bug. ​Did you choose bug? OK. Sorry. 
+Play video starting at :12:5 and follow transcript
+12:05
+​So this issue is not related, ​this is not a new feature request. So let's say we need to write. ​This issue is related to the ​login page bug ​whereby ​the ​two factor authentication ​does not work. ​So this is a bug report. So for this bug report, this issue is pretty much, ​this issue template is pretty much appropriate. ​So you need to add how to reproduce the problem or how to ​reproduce the bug because this is very important in case of a bug report ​and then you can add expected behavior, you can attach screenshots. ​So you will not do all these things because that it doesn't make sense. 
+Play video starting at :12:52 and follow transcript
+12:52
+​This is just a demonstration. ​So we'll just submit the new issue. ​So once you click this, ​the test issue one has been created with issue number ​one because this is the first issue of the repository. ​So in this manner, you can create issues from the issue templates. ​So we'll stop here. And in our next lesson, we'll create a couple of issue templates. ​One will be a dot MD file and the other will be a dot ​YML or dot ​YAML file, both are same. 
+Play video starting at :13:28 and follow transcript
+13:28
+​And finally, we'll create a config dot ​YML file and we'll discuss what is the purpose of a config dot ​YML file in our next lesson.

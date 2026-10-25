@@ -1,0 +1,23 @@
+{
+  "task_id": "COURSE-HARNESS-V1-FULL-AUTOMATION-PROVIDER-R1",
+  "protected_files_checked": 827,
+  "raw_source_files_checked": 783,
+  "approved_baseline_related_files_checked": 44,
+  "changed_files": [],
+  "before_hash_manifest_sha256": "db705c1f6e144c81c0ddf4cfa57012d99e1a3ac39e2d03f035ca3b43153c8e72",
+  "after_hash_manifest_sha256": "db705c1f6e144c81c0ddf4cfa57012d99e1a3ac39e2d03f035ca3b43153c8e72",
+  "baselines": {
+    "M02-L11": {
+      "status": "VERIFIED_INTACT",
+      "final_sha256": "e923d81138a29fbae7295221d0d99fa5954c3554d8f13cc2a060dad9014221cf",
+      "acceptance_sha256": "15d2e637faa0328cc697336df4d798a18f2698e1d9685bb3daea5b0ba111777e"
+    },
+    "M03-L08": {
+      "status": "VERIFIED_INTACT",
+      "final_sha256": "5df3b377944fb7d16dc50b0c0c1dd267c046beefcae5e30928bda3fb921bd48d",
+      "acceptance_sha256": "269b7e72aa2823b5d6c9b69df2f72d445ed1410ac9b8366af0fd9723b88bf1c1"
+    }
+  },
+  "historical_canary_draft_sha256": "c50c81928cbfc4d17813c0e24976776ee1853ab31f73b06db63b14b9d3fc2f3b",
+  "live_api_calls": 0
+}

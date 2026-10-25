@@ -1,0 +1,10 @@
+flowchart TD
+    Plan["Thiết lập kế hoạch định hướng"]
+    Feedback["Cộng tác & Phản hồi khách hàng"]
+    Adapt["Thích ứng và điều chỉnh"]
+    Value["Tối đa hóa giá trị khách hàng"]
+
+    Plan -->|"Thực thi & thử nghiệm"| Feedback
+    Feedback -->|"Đáp ứng đúng nhu cầu"| Value
+    Feedback -.->|"Khi phát sinh thay đổi"| Adapt
+    Adapt -.->|"Cập nhật kế hoạch"| Plan

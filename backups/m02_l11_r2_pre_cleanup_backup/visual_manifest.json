@@ -1,0 +1,84 @@
+{
+  "lesson_id": "M02-L11",
+  "total_figures": 3,
+  "renderer_available": true,
+  "renderer_binary": "/home/khanh/.gemini/antigravity/bin/mmdc",
+  "quality_rubric_version": "2.0-visual-first",
+  "visual_acceptance_summary": {
+    "spec_valid": true,
+    "render_verified": true,
+    "visual_reviewed": false,
+    "content_quality_accepted": false
+  },
+  "figures": [
+    {
+      "figure_id": "F01",
+      "title": "Mô hình Tam giác Ba Vai trò Nòng cốt trong Nhóm Scrum",
+      "visual_type": "FLOWCHART",
+      "educational_purpose": "Làm rõ nội dung cho Mô hình Tam giác Ba Vai trò Nòng cốt trong Nhóm Scrum",
+      "related_learning_objective": "Nắm vững nguyên lý trọng tâm",
+      "source_locators": [
+        "00:01"
+      ],
+      "provenance_class": "PEDAGOGICAL_RECONSTRUCTION",
+      "alt_text": "Hình F01: Sơ đồ khái niệm thể hiện mối quan hệ cộng tác giữa Product Owner, Scrum Master và Developers cùng hướng tới Usable Increment đạt Definition of Done",
+      "caption": "Hình F01: Mô hình cấu trúc tam giác vai trò trong Nhóm Scrum và luồng tạo tác phẩm bàn giao [Nguồn gốc: PEDAGOGICAL",
+      "mermaid_code": "flowchart TD\n    subgraph SCRUM_TEAM [\"Nhóm Scrum (The Scrum Team)\"]\n        direction TB\n        \n        PO[\"Product Owner<br/>(Chủ sở hữu Sản phẩm)<br/>• Tối đa hóa giá trị sản phẩm<br/>• Tiếng nói của khách hàng\"]\n        SM[\"Scrum Master<br/>(Người bảo trợ Scrum)<br/>• Thiết lập lý thuyết & thực hành<br/>• Khai thông rào cản tiến độ\"]\n        DEV[\"Developers<br/>(Nhóm Phát triển)<br/>• Trực tiếp xây dựng sản phẩm<br/>• Liên chức năng & Tự quản lý\"]\n    end\n\n    GOAL[(\"Mục tiêu Sản phẩm<br/>(Product Goal)\")] -->|\"Định hướng\"| PO\n    PO -->|\"Quản lý & Minh bạch hóa\"| PBL[\"Danh mục Sản phẩm<br/>(Product Backlog)\"]\n    \n    SM -->|\"Huấn luyện tự quản lý\"| DEV\n    SM -->|\"Hỗ trợ tối ưu hóa giá trị\"| PO\n    \n    PBL -->|\"Chọn lựa hạng mục\"| DEV\n    DEV -->|\"Lập kế hoạch thực hiện\"| SBL[\"Danh mục Sprint<br/>(Sprint Backlog)\"]\n    \n    DEV -->|\"Bàn giao mỗi Sprint\"| INC[\"Phần tăng trưởng Sử dụng được<br/>(Usable Increment)\"]\n    INC -.->|\"Tuân thủ nghiêm ngặt\"| DOD[\"Định nghĩa Hoàn thành<br/>(Definition of Done)\"]",
+      "rendering_status": "RENDER_VERIFIED",
+      "is_untracked": false,
+      "rendered_asset_path": "assets/M02-L11/F01_m_h_nh_tam_gi_c_ba_vai_tr_n_ng_c_t_trong.svg",
+      "spec_status": "SPEC_VALID",
+      "source_spec_path": "assets/M02-L11/F01_m_h_nh_tam_gi_c_ba_vai_tr_n_ng_c_t_trong.mmd",
+      "source_spec_sha256": "16f7271d39e1bb41a640fd12a6b71436f8660020ff38c78bd958b6561ac2d0ec",
+      "rendered_asset_sha256": "70d070cc77b34604594a3b0a648c6789f747c4977c3689b0aea17eeeef103ac1",
+      "visual_review_status": "VISUAL_LAYOUT_NOT_VERIFIED",
+      "visual_review_notes": "Requires visual layout inspection of rendered SVG asset."
+    },
+    {
+      "figure_id": "F02",
+      "title": "Ma trận Phân định Trách nhiệm giữa Project Manager, Scrum Master và Product Owner",
+      "visual_type": "FLOWCHART",
+      "educational_purpose": "Làm rõ nội dung cho Ma trận Phân định Trách nhiệm giữa Project Manager, Scrum Master và Product Owner",
+      "related_learning_objective": "Nắm vững nguyên lý trọng tâm",
+      "source_locators": [
+        "00:01"
+      ],
+      "provenance_class": "PEDAGOGICAL_RECONSTRUCTION",
+      "alt_text": "Hình F02: Bảng so sánh trực quan về sự phân chia trách nhiệm của Quản lý dự án truyền thống sang Product Owner và Scrum Master trong Scrum",
+      "caption": "Hình F02: Ma trận so sánh sự dịch chuyển trách nhiệm từ Quản lý Dự án truyền thống sang Product Owner, Scrum Master và Developers [Nguồn gốc: PEDAGOGICAL",
+      "mermaid_code": "flowchart LR\n    subgraph TRAD_PM [\"Quản lý Dự án Truyền thống (Project Manager)\"]\n        direction TB\n        PM1[\"Quản lý Phạm vi & Thay đổi (Scope)\"]\n        PM2[\"Giám sát Tiến độ qua Biểu đồ Gantt\"]\n        PM3[\"Quản lý Hiệu suất & Giao việc cho Nhân sự\"]\n        PM4[\"Quản lý Giao tiếp với Bên liên quan\"]\n    end\n\n    subgraph SCRUM_SPLIT [\"Phân bổ Trách nhiệm trong Scrum\"]\n        direction TB\n        \n        subgraph PO_AREA [\"Product Owner (PO)\"]\n            PO1[\"Toàn quyền định nghĩa & quản lý Phạm vi\"]\n            PO2[\"Ưu tiên Product Backlog tối đa hóa giá trị\"]\n            PO4[\"Đại diện Khách hàng & Quản lý Bên liên quan\"]\n            PO_NOT[\"KHÔNG quản lý con người / hiệu suất\"]\n        end\n\n        subgraph SM_AREA [\"Scrum Master (SM)\"]\n            SM1[\"Huấn luyện thực hành lý thuyết Scrum\"]\n            SM2[\"Xóa bỏ rào cản tiến độ (Impediments)\"]\n            SM3[\"Duy trì Khung thời gian (Timebox) & Sự kiện\"]\n            SM_NOT[\"KHÔNG duy trì Gantt, KHÔNG đổi phạm vi\"]\n        end\n\n        subgraph DEV_AREA [\"Developers\"]\n            DEV1[\"Tự ước lượng & phân bổ công việc (Self-managing)\"]\n        end\n    end\n\n    PM1 ==>|\"Chuyển giao toàn bộ sang\"| PO1\n    PM4 <==>|\"Kỹ năng tương đồng chia sẻ với\"| PO4\n    PM2 -.->|\"Thay thế bằng Sprint Backlog do Nhóm tự lập\"| DEV1\n    PM3 -.->|\"Thay thế bằng Tự quản lý; SM hỗ trợ khai thông\"| SM2",
+      "rendering_status": "RENDER_VERIFIED",
+      "is_untracked": false,
+      "rendered_asset_path": "assets/M02-L11/F02_ma_tr_n_ph_n_nh_tr_ch_nhi_m_gi_a_project.svg",
+      "spec_status": "SPEC_VALID",
+      "source_spec_path": "assets/M02-L11/F02_ma_tr_n_ph_n_nh_tr_ch_nhi_m_gi_a_project.mmd",
+      "source_spec_sha256": "b5fa409c52d7c9d739e33315091a5f203c88ba2d37035b2c0f2dbbcfcc06f6f8",
+      "rendered_asset_sha256": "e568ded1940268d89dadab6f5f53f1a399ee0c5fd865ab70b409cf8dc5e84f5b",
+      "visual_review_status": "VISUAL_LAYOUT_NOT_VERIFIED",
+      "visual_review_notes": "Requires visual layout inspection of rendered SVG asset."
+    },
+    {
+      "figure_id": "F03",
+      "title": "Chu trình Phối hợp Tác nghiệp Giữa Ba Vai trò Xuyên suốt Sprint",
+      "visual_type": "FLOWCHART",
+      "educational_purpose": "Làm rõ nội dung cho Chu trình Phối hợp Tác nghiệp Giữa Ba Vai trò Xuyên suốt Sprint",
+      "related_learning_objective": "Nắm vững nguyên lý trọng tâm",
+      "source_locators": [
+        "00:01"
+      ],
+      "provenance_class": "PEDAGOGICAL_RECONSTRUCTION",
+      "alt_text": "Hình F03: Lưu đồ quy trình tương tác phối hợp giữa Product Owner, Scrum Master và Developers từ khâu lập kế hoạch đến bàn giao Increment",
+      "caption": "Hình F03: Lưu đồ quy trình phối hợp nhịp nhàng giữa ba vai trò trong các giai đoạn của một Sprint [Nguồn gốc: PEDAGOGICAL",
+      "mermaid_code": "flowchart TD\n    subgraph STAGE1 [\"1. Thiết lập Mục tiêu & Định hướng\"]\n        PO_ACT1[\"Product Owner:<br/>• Truyền đạt Product Goal<br/>• Làm rõ & Sắp xếp Product Backlog\"]\n    end\n\n    subgraph STAGE2 [\"2. Lập kế hoạch Sprint (Sprint Planning)\"]\n        SM_ACT1[\"Scrum Master:<br/>• Điều phối cuộc họp<br/>• Kiểm soát Timebox\"]\n        DEV_ACT1[\"Developers:<br/>• Thấu hiểu yêu cầu từ PO<br/>• Tự lập Sprint Backlog & Cam kết Sprint Goal\"]\n        PO_ACT1 --> DEV_ACT1\n        SM_ACT1 -.->|\"Hỗ trợ môi trường\"| DEV_ACT1\n    end\n\n    subgraph STAGE3 [\"3. Thực thi & Thích ứng Hàng ngày (Daily Execution)\"]\n        DEV_ACT2[\"Developers:<br/>• Thiết kế, Xây dựng, Kiểm thử<br/>• Họp Daily Scrum thích ứng tiến độ\"]\n        SM_ACT2[\"Scrum Master:<br/>• Loại bỏ chướng ngại (Impediments)<br/>• Bảo vệ nhóm khỏi gián đoạn\"]\n        DEV_ACT2 <-->|\"Báo cáo & Tháo gỡ cản trở\"| SM_ACT2\n    end\n\n    subgraph STAGE4 [\"4. Bàn giao & Đánh giá (Review & Increment)\"]\n        DEV_ACT3[\"Developers:<br/>• Bàn giao Usable Increment<br/>• Đáp ứng Definition of Done\"]\n        PO_ACT2[\"Product Owner:<br/>• Kiểm tra giá trị bàn giao<br/>• Thu thập phản hồi khách hàng\"]\n        DEV_ACT3 -->|\"Trình diễn sản phẩm\"| PO_ACT2\n    end\n\n    STAGE1 --> STAGE2 --> STAGE3 --> STAGE4",
+      "rendering_status": "RENDER_VERIFIED",
+      "is_untracked": false,
+      "rendered_asset_path": "assets/M02-L11/F03_chu_tr_nh_ph_i_h_p_t_c_nghi_p_gi_a_ba_va.svg",
+      "spec_status": "SPEC_VALID",
+      "source_spec_path": "assets/M02-L11/F03_chu_tr_nh_ph_i_h_p_t_c_nghi_p_gi_a_ba_va.mmd",
+      "source_spec_sha256": "cc067ef1b966594352d3f420441702fcd071149d52ce01b6f1e426d283d12c31",
+      "rendered_asset_sha256": "26b8d4d8da0ff906a6ff19c78a94a5e5b8297575403c0f6473da9d0476a2fb8d",
+      "visual_review_status": "VISUAL_LAYOUT_NOT_VERIFIED",
+      "visual_review_notes": "Requires visual layout inspection of rendered SVG asset."
+    }
+  ]
+}

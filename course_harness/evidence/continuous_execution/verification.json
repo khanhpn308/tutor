@@ -1,0 +1,94 @@
+{
+  "task_id": "COURSE-HARNESS-V2-CONTINUOUS-EXECUTION",
+  "observed_at": "2026-10-25T17:55:59.619310+00:00",
+  "status": "IMPLEMENTED_AND_OFFLINE_VERIFIED",
+  "policy_sha256": "7a346570fdb0b0d4df0de893eeeda4da39e9fa4b1bcdb8e256cd866b25465809",
+  "focused_tests": {
+    "passed": 62,
+    "seconds": 73.67
+  },
+  "full_tests": {
+    "passed": 415,
+    "seconds": 192.85
+  },
+  "prior_398_tests_preserved": true,
+  "continuous_defaults": {
+    "batch_size": 5,
+    "concurrency": 1,
+    "wall_time_stop": null,
+    "dispatch_stop": null,
+    "known_token_stop": null,
+    "educational_repairs_per_lesson": 2,
+    "failed_dispatches_per_lesson": 3
+  },
+  "simulation": {
+    "lessons": 12,
+    "groups": [
+      5,
+      5,
+      2
+    ],
+    "pass": 10,
+    "blocked": 2,
+    "result": "COMPLETED_WITH_FAILURES",
+    "live_ai": false
+  },
+  "runtime": {
+    "agy_version": "1.4.7",
+    "producer_discovery": "VERIFIED_IN_TUI",
+    "goal_command": "VERIFIED_IN_COMPLETION_WITHOUT_SUBMISSION",
+    "continue_flags": "VERIFIED_IN_HELP",
+    "automatic_context_compaction": "OFFICIAL_DOCUMENTATION_ONLY_NOT_LIVE_EXERCISED",
+    "long_running_goal": "NOT_LIVE_EXERCISED",
+    "automatic_session_relaunch": "NOT_IMPLEMENTED_OR_CLAIMED",
+    "quota_authentication_for_model_calls": "NOT_CHECKED"
+  },
+  "runtime_sources": [
+    "https://antigravity.google/docs/commands/goal",
+    "https://antigravity.google/docs/cli/commands/context/",
+    "https://antigravity.google/docs/cli/commands/resume/"
+  ],
+  "live_ai_calls_initiated_by_this_task": 0,
+  "external_production_activity_observed": true,
+  "external_state_observation": {
+    "reviewed_original_policy": "dde5d500d86505767ca4549365623fd68a74d4061aefe2753d705b21aab03804",
+    "first_observed_migration_receipt_policy": "7b9c6c6f88b3f7701108c0582e50ae66dbaca4e9669f08d6e368cffa6b731e21",
+    "later_observed_migration_receipt_policy": "7a346570fdb0b0d4df0de893eeeda4da39e9fa4b1bcdb8e256cd866b25465809",
+    "this_task_upgrade_result": "REJECTED_UPGRADE_INTEGRITY_AND_HALTED_NO_RESET",
+    "later_external_state": "ACTIVE_AND_MATCHES_FINAL_POLICY",
+    "note": "Receipt, batch and M01-L03 changed outside this task commands during implementation. No further production state writes by this task after detection."
+  },
+  "current_batch": {
+    "batch_id": "batch-4354c79d8f424ec3",
+    "mode": "continuous",
+    "status": "ACTIVE",
+    "dispatches": 7,
+    "max_runtime_seconds": null,
+    "max_dispatches": null,
+    "max_known_tokens": null
+  },
+  "scope_count": 105,
+  "current_lesson": {
+    "lesson_id": "M01-L03",
+    "status": "PASS",
+    "next_action": "done",
+    "active_attempt": null,
+    "recovery": "Recover existing native invocation/output; do not repeat Worker"
+  },
+  "verified_preserved": {
+    "M01-L01": "PASS_CHECKPOINT_BYTES_UNCHANGED_AND_PUBLICATION_VALID",
+    "M01-L02": "PASS_CHECKPOINT_BYTES_UNCHANGED_AND_PUBLICATION_VALID",
+    "M02-L11": "VERIFIED_INTACT",
+    "M03-L08": "VERIFIED_INTACT"
+  },
+  "original_source_files_unchanged": 783,
+  "unrelated_source_changes_observed": [
+    "output_course/Introduction_to_Git_and_GitHub/Module_01_Introduction_to_Version_Control/03_Intro_to_Module_1_Version_Control.md"
+  ],
+  "initial_focused_test_failure": {
+    "count": 1,
+    "reason": "New test expected resume on HALTED to raise; actual supported contract returns next_action=stop. Corrected the test expectation; final 62 focused and all 415 tests pass.",
+    "evidence": "focused-initial.txt"
+  },
+  "no_commit_push_merge": true
+}

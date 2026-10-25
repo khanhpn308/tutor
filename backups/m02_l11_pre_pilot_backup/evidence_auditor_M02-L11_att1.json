@@ -1,0 +1,20 @@
+{
+  "mode": "automated_cli",
+  "role": "auditor",
+  "lesson_id": "M02-L11",
+  "attempt": 1,
+  "model": "gemini-3.8-flash-high",
+  "effort": "high",
+  "conversation_id": "9e9202ec-5860-44ac-8e47-f5f490edc20d",
+  "fresh_session": true,
+  "duration_seconds": 62.77,
+  "usage": {
+    "input_tokens": 16796,
+    "output_tokens": 6250,
+    "thinking_tokens": 5446,
+    "cache_read_tokens": 0,
+    "total_tokens": 23046
+  },
+  "prompt_path": "generated_course/Agile_Project_Management/evidence/prompt_auditor_M02-L11_att1.md",
+  "timestamp": "2026-10-23T10:16:01Z"
+}

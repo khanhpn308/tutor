@@ -1,0 +1,326 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AGY native lesson checkpoint, separate from legacy",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "course_id",
+    "lesson_id",
+    "status",
+    "next_action",
+    "source_sha256",
+    "policy_sha256",
+    "repair_rounds",
+    "attempts",
+    "active_attempt"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "2.0"
+    },
+    "course_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,99}$"
+    },
+    "lesson_id": {
+      "type": "string",
+      "pattern": "^M[0-9]{2,}-L[0-9]{2,}$"
+    },
+    "status": {
+      "enum": [
+        "PENDING",
+        "DRAFTED",
+        "AUDITED",
+        "REPAIRING",
+        "PASS",
+        "BLOCKED",
+        "NEEDS_HUMAN_REVIEW"
+      ]
+    },
+    "next_action": {
+      "enum": [
+        "worker",
+        "auditor",
+        "repair",
+        "process-visuals",
+        "validate-audit",
+        "publish",
+        "done"
+      ]
+    },
+    "source_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "policy_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "repair_rounds": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 2
+    },
+    "attempts": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "attempt_id",
+          "role",
+          "status",
+          "packet"
+        ],
+        "properties": {
+          "attempt_id": {
+            "type": "string",
+            "pattern": "^(worker|auditor|repair)-[a-f0-9]{16}$"
+          },
+          "role": {
+            "enum": [
+              "worker",
+              "auditor",
+              "repair"
+            ]
+          },
+          "status": {
+            "enum": [
+              "DISPATCHED",
+              "RECORDED",
+              "FAILED"
+            ]
+          },
+          "packet": {
+            "type": "object",
+            "required": [
+              "path",
+              "sha256"
+            ],
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            },
+            "additionalProperties": false
+          },
+          "artifact": {
+            "type": "object",
+            "required": [
+              "path",
+              "sha256"
+            ],
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            },
+            "additionalProperties": false
+          },
+          "runtime": {
+            "type": "object",
+            "required": [
+              "path",
+              "sha256"
+            ],
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            },
+            "additionalProperties": false
+          },
+          "candidate": {
+            "type": "object",
+            "required": [
+              "path",
+              "sha256"
+            ],
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            },
+            "additionalProperties": false
+          },
+          "visual_manifest": {
+            "type": "object",
+            "required": [
+              "path",
+              "sha256"
+            ],
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            },
+            "additionalProperties": false
+          },
+          "validation": {
+            "type": "object",
+            "required": [
+              "path",
+              "sha256"
+            ],
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            },
+            "additionalProperties": false
+          },
+          "audit_validation": {
+            "type": "object",
+            "required": [
+              "path",
+              "sha256"
+            ],
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[a-f0-9]{64}$"
+              }
+            },
+            "additionalProperties": false
+          },
+          "candidate_root": {
+            "type": "string"
+          },
+          "provenance": {
+            "type": "object"
+          },
+          "recorded_at": {
+            "type": "string"
+          },
+          "failure": {
+            "type": "object"
+          }
+        },
+        "additionalProperties": false,
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "status": {
+                  "const": "RECORDED"
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "artifact",
+                "runtime",
+                "provenance",
+                "recorded_at"
+              ]
+            }
+          },
+          {
+            "if": {
+              "required": [
+                "candidate"
+              ]
+            },
+            "then": {
+              "required": [
+                "candidate_root",
+                "visual_manifest",
+                "validation"
+              ]
+            }
+          }
+        ]
+      }
+    },
+    "active_attempt": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "history": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "updated_at": {
+      "type": "string"
+    },
+    "publication_path": {
+      "type": "string"
+    },
+    "final_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "evidence_class": {
+      "const": "AGY_NATIVE_RUNTIME_REPORTED"
+    },
+    "publication_files": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^[a-f0-9]{64}$"
+      }
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "PASS"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "publication_path",
+          "final_sha256",
+          "publication_files",
+          "evidence_class"
+        ],
+        "properties": {
+          "next_action": {
+            "const": "done"
+          }
+        }
+      }
+    }
+  ]
+}

@@ -1,0 +1,47 @@
+{
+  "lesson_id": "M02-L11",
+  "verdict": "PASS",
+  "quality_rubric_version": "2.0-visual-first",
+  "summary": "Bản dự thảo M02-L11 đạt chất lượng sư phạm xuất sắc và tính chuẩn xác cao, đối chiếu trung thực với toàn bộ tài liệu gốc 'Understanding Scrum Team roles' (READING). Cả ba vai trò nòng cốt của Nhóm Scrum (Product Owner, Scrum Master, Developers), ranh giới phân định với Project Manager truyền thống và thực tiễn mô hình Product Manager tại Google đều được phân tích sâu sắc, bám sát Hướng dẫn Scrum (Scrum Guide). Dự thảo được trực quan hóa hiệu quả với 3 sơ đồ Mermaid hợp lệ 100%, bố cục sư phạm mạch lạc, đầy đủ chú thích (caption), văn bản thay thế (alt text) và phân loại xuất xứ (provenance). Các ví dụ của giảng viên được dẫn chứng nguyên vẹn; tình huống mô phỏng được gắn nhãn minh bạch [AI_GENERATED_EXAMPLE] không mang timestamp giả mạo. Bản draft vượt qua toàn bộ Hard Gates và không có bất kỳ lỗi nào ở mức HIGH hoặc BLOCKING.",
+  "dimension_scores": {
+    "SOURCE_FIDELITY": "MET",
+    "CONTENT_COMPLETENESS": "MET",
+    "PEDAGOGICAL_QUALITY": "MET",
+    "VISUAL_PEDAGOGY": "MINOR_ISSUES",
+    "TERMINOLOGY_CONSISTENCY": "MINOR_ISSUES",
+    "SOURCE_TRACEABILITY": "MET",
+    "CLARITY_ORGANIZATION": "MET",
+    "FORMATTING": "MET"
+  },
+  "findings": [
+    {
+      "finding_id": "F-001",
+      "severity": "LOW",
+      "category": "TERMINOLOGY_CONSISTENCY",
+      "source_locator": "The Scrum Master",
+      "draft_locator": "Mục 3.1 (Hình F01) và Mục 5 (Bảng thuật ngữ)",
+      "description": "Thuật ngữ 'Scrum Master' được dịch kèm chú giải tiếng Việt là 'Người bảo trợ Scrum'. Mặc dù nội dung bài học phân tích chính xác vai trò huấn luyện và dỡ bỏ rào cản tiến độ, từ 'bảo trợ' trong tiếng Việt có thể gây liên tưởng nhầm lẫn tới vai trò 'Project Sponsor' (Nhà tài trợ dự án). Trong thực hành Agile chuyên nghiệp, 'Scrum Master' thường được giữ nguyên hoặc dùng kèm định danh 'Huấn luyện viên Scrum'.",
+      "required_action": "Ưu tiên giữ nguyên thuật ngữ gốc 'Scrum Master', hoặc dùng chú giải kép chuẩn hóa 'Scrum Master (Huấn luyện viên Scrum)' để tránh bất kỳ sự hiểu nhầm nào sang vai trò Sponsor."
+    },
+    {
+      "finding_id": "F-002",
+      "severity": "LOW",
+      "category": "VISUAL_PEDAGOGY",
+      "source_locator": "Scrum Master vs. project manager, Product Owner vs. project manager",
+      "draft_locator": "Mục 3.5 - Hình F02 (Sơ đồ ma trận phân bổ trách nhiệm)",
+      "description": "Trong sơ đồ F02, mũi tên liên kết 'PM3 -.-> SM2' kết nối trực tiếp 'Quản lý Hiệu suất & Giao việc cho Nhân sự' (PM3) tới 'Xóa bỏ rào cản tiến độ' (SM2). Dù nhãn mũi tên có chú thích 'Thay thế bằng Tự quản lý; SM hỗ trợ khai thông', việc luồng trực quan chỉ hướng vào SM2 thay vì trỏ về khối Developers (tự quản lý) có thể làm giảm bớt tính trực quan của cơ chế chuyển giao quyền tự quản lý cho đội ngũ kỹ thuật.",
+      "required_action": "Điều chỉnh mũi tên từ PM3 phân nhánh trỏ trực tiếp tới DEV1 (Tự ước lượng & phân bổ công việc) kết hợp nhánh hỗ trợ của SM2, nhằm thể hiện trực quan rõ ràng hơn nguyên lý 'tự quản lý thay thế cho quản lý giao việc'."
+    }
+  ],
+  "limitations": [
+    "Auditor chia sẻ cùng họ mô hình Gemini 3.8 Flash High với Worker.",
+    "Kiểm định đối chiếu dựa trên tài liệu đọc (Reading material) kèm bản ghi audio 7:50; hình ảnh đính kèm trong nguồn là hình minh họa hai lập trình viên làm việc tại máy tính, không chứa sơ đồ kỹ thuật gốc nên 3 sơ đồ trong draft được xác thực hợp lệ dưới dạng PEDAGOGICAL_RECONSTRUCTION."
+  ],
+  "quality_score": 92.5,
+  "content_quality_accepted": true,
+  "audited_final_sha256": "75f03e0f67375c87f75d2bd5061274becb2435422ceb473dfb3b49600fbd64e3",
+  "audit_invocation_id": "inv-auditor-M02-L11-att1-5003b5edecae",
+  "model_verification": "NOT_VERIFIED",
+  "visual_manifest_sha256": "8ad410f23accf861738d72f204b3dceee8383151f0b5e8048f2c34ffda44e8bd",
+  "visual_figures_audited": 3
+}

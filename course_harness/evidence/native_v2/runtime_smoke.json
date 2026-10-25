@@ -1,0 +1,35 @@
+{
+  "agy_version": "1.4.7",
+  "binary": "/home/khanh/.local/bin/agy",
+  "model_invocation_performed": false,
+  "commands_observed": [
+    "agy --version",
+    "agy --help",
+    "agy agents --help",
+    "agy agents",
+    "agy --agent coursera-producer --model gemini-3.8-flash-high --effort high"
+  ],
+  "agent_list_stdout": "coursera-producer\n",
+  "interactive_observations": {
+    "active_agent": "coursera-producer",
+    "agents_panel_workspace_path": ".agents/agents/{agent_name}/agent.md",
+    "skill_completion": "/coursera-harness",
+    "model_setting_display": "Gemini 3.8 Flash (High)",
+    "effort_setting_display": "high",
+    "cached_sign_in_displayed": true,
+    "natural_language_prompt_sent": false,
+    "skill_executed": false,
+    "exited_without_ai_prompt": true
+  },
+  "native_subagent_discovery_and_invocation": "NOT_VERIFIED",
+  "actual_native_return_shape": "NOT_VERIFIED",
+  "model_access_and_quota": "NOT_CHECKED",
+  "billing_readiness": "NOT_CHECKED",
+  "sensitive_account_display": "OMITTED",
+  "sources": [
+    "https://antigravity.google/docs/subagents/",
+    "https://antigravity.google/docs/skills/",
+    "https://antigravity.google/docs/cli/commands/agents/",
+    "https://antigravity.google/docs/cli/reference/"
+  ]
+}

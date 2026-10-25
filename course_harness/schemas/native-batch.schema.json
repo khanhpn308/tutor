@@ -1,0 +1,173 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Native checkpoint/report batch within a continuous or bounded scope",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "batch_id",
+    "course_id",
+    "lessons",
+    "selection",
+    "manifest_sha256",
+    "policy_sha256",
+    "status",
+    "started_at",
+    "started_epoch",
+    "dispatches",
+    "max_dispatches",
+    "max_runtime_seconds",
+    "max_known_tokens"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "2.0"
+    },
+    "batch_id": {
+      "type": "string",
+      "pattern": "^batch-[a-f0-9]{16}$"
+    },
+    "course_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,99}$"
+    },
+    "lessons": {
+      "type": "array",
+      "uniqueItems": true,
+      "maxItems": 5,
+      "items": {
+        "type": "string",
+        "pattern": "^M[0-9]{2,}-L[0-9]{2,}$"
+      }
+    },
+    "selection": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "manifest_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "policy_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "status": {
+      "enum": [
+        "ACTIVE",
+        "HALTED",
+        "COMPLETED",
+        "PAUSED",
+        "CANCELLED"
+      ]
+    },
+    "started_at": {
+      "type": "string"
+    },
+    "started_epoch": {
+      "type": "number"
+    },
+    "dispatches": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "max_dispatches": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 1,
+      "maximum": 40
+    },
+    "max_runtime_seconds": {
+      "type": [
+        "number",
+        "null"
+      ],
+      "exclusiveMinimum": 0
+    },
+    "max_known_tokens": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 1
+    },
+    "halt_reason": {
+      "type": "object"
+    },
+    "mode": {
+      "enum": [
+        "continuous",
+        "bounded"
+      ]
+    },
+    "scope": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^M[0-9]{2,}-L[0-9]{2,}$"
+      }
+    },
+    "batch_size": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5
+    },
+    "previous_batch_id": {
+      "type": "string",
+      "pattern": "^batch-[a-f0-9]{16}$"
+    },
+    "next_batch_id": {
+      "type": "string",
+      "pattern": "^batch-[a-f0-9]{16}$"
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "required": [
+          "mode"
+        ],
+        "properties": {
+          "mode": {
+            "const": "continuous"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "scope",
+          "batch_size"
+        ],
+        "properties": {
+          "max_dispatches": {
+            "type": "null"
+          },
+          "max_runtime_seconds": {
+            "type": "null"
+          },
+          "max_known_tokens": {
+            "type": "null"
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "max_dispatches": {
+            "type": "number"
+          },
+          "max_runtime_seconds": {
+            "type": "number"
+          },
+          "max_known_tokens": {
+            "type": "number"
+          }
+        }
+      }
+    }
+  ]
+}

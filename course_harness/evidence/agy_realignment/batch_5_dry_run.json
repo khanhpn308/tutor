@@ -1,0 +1,141 @@
+{
+  "batch_id": "batch-20261025-f573c83e",
+  "status": "DRY_RUN_COMPLETED",
+  "plan": {
+    "batch_id": "batch-20261025-f573c83e",
+    "course_id": "Agile_Project_Management",
+    "manifest_sha256": "4f90a9cb37b4347b7b906bcbda6657639ae566b66cd7f668b4afb35f8bdb882d",
+    "prompt_config_hash": "5083a574cc6ceb51",
+    "candidate_count": 5,
+    "candidates": [
+      {
+        "lesson_id": "M01-L01",
+        "module_id": "M01",
+        "title": "🎥 Introduction to Course 5",
+        "source_type": "VIDEO_TRANSCRIPT",
+        "source_status": "AVAILABLE",
+        "source_rel_path": "Module_01_The_fundamentals_of_Agile/01_Introduction_to_Course_5.md",
+        "source_full_path": "output_course/Agile_Project_Management/Module_01_The_fundamentals_of_Agile/01_Introduction_to_Course_5.md",
+        "source_sha256": "1d9f0b5020138cb86f7d122dff71dbc05db7c7d31379eb022ebca04a7ff11a3d",
+        "is_eligible": true,
+        "eligibility_reason": "EXPLICITLY_REQUESTED_AND_VALIDATED",
+        "known_limitations": [],
+        "prior_checkpoint_status": "NEEDS_HUMAN_REVIEW"
+      },
+      {
+        "lesson_id": "M01-L02",
+        "module_id": "M01",
+        "title": "📖 Course 5 overview",
+        "source_type": "READING",
+        "source_status": "AVAILABLE",
+        "source_rel_path": "Module_01_The_fundamentals_of_Agile/02_Course_5_overview.md",
+        "source_full_path": "output_course/Agile_Project_Management/Module_01_The_fundamentals_of_Agile/02_Course_5_overview.md",
+        "source_sha256": "b7608bbd84d91a8248dc416d5707a3ddb6ef30abe7c9511a84ea4f0658b266c3",
+        "is_eligible": true,
+        "eligibility_reason": "EXPLICITLY_REQUESTED_AND_VALIDATED",
+        "known_limitations": [],
+        "prior_checkpoint_status": null
+      },
+      {
+        "lesson_id": "M01-L03",
+        "module_id": "M01",
+        "title": "📖 Helpful resources to get started",
+        "source_type": "READING",
+        "source_status": "AVAILABLE",
+        "source_rel_path": "Module_01_The_fundamentals_of_Agile/03_Helpful_resources_to_get_started.md",
+        "source_full_path": "output_course/Agile_Project_Management/Module_01_The_fundamentals_of_Agile/03_Helpful_resources_to_get_started.md",
+        "source_sha256": "386fee354b8d156923acc1203239d7d05c62f0607462238131624bed2d679085",
+        "is_eligible": true,
+        "eligibility_reason": "EXPLICITLY_REQUESTED_AND_VALIDATED",
+        "known_limitations": [],
+        "prior_checkpoint_status": null
+      },
+      {
+        "lesson_id": "M01-L04",
+        "module_id": "M01",
+        "title": "🎥 A brief history of Agile",
+        "source_type": "VIDEO_TRANSCRIPT",
+        "source_status": "AVAILABLE",
+        "source_rel_path": "Module_01_The_fundamentals_of_Agile/04_A_brief_history_of_Agile.md",
+        "source_full_path": "output_course/Agile_Project_Management/Module_01_The_fundamentals_of_Agile/04_A_brief_history_of_Agile.md",
+        "source_sha256": "002e72bd31296df4a738e12d7d9cd2aa91aeb647709dac8eb1666902428fef61",
+        "is_eligible": true,
+        "eligibility_reason": "EXPLICITLY_REQUESTED_AND_VALIDATED",
+        "known_limitations": [],
+        "prior_checkpoint_status": null
+      },
+      {
+        "lesson_id": "M01-L05",
+        "module_id": "M01",
+        "title": "🎥 Distinguishing Agile from Waterfall",
+        "source_type": "VIDEO_TRANSCRIPT",
+        "source_status": "AVAILABLE",
+        "source_rel_path": "Module_01_The_fundamentals_of_Agile/05_Distinguishing_Agile_from_Waterfall.md",
+        "source_full_path": "output_course/Agile_Project_Management/Module_01_The_fundamentals_of_Agile/05_Distinguishing_Agile_from_Waterfall.md",
+        "source_sha256": "09ed18afbfa8fd136783a15496bacd20494847395c86e90911886bfb6813beb3",
+        "is_eligible": true,
+        "eligibility_reason": "EXPLICITLY_REQUESTED_AND_VALIDATED",
+        "known_limitations": [],
+        "prior_checkpoint_status": null
+      }
+    ],
+    "excluded_count": 16,
+    "resource_limits": {
+      "max_lessons": 5,
+      "max_concurrency": 1,
+      "max_repairs_per_lesson": 2,
+      "max_provider_invocations": 15,
+      "max_batch_tokens": 500000,
+      "max_batch_runtime_seconds": 1800.0,
+      "monetary_budget_enabled": false
+    },
+    "estimated_usage": {
+      "invocations": 10,
+      "worker_invocations": 5,
+      "auditor_invocations": 5,
+      "repair_invocations": 0,
+      "input_tokens": 140000,
+      "output_tokens": 85000,
+      "thinking_tokens": 55000,
+      "total_tokens": 225000,
+      "wall_clock_seconds": 550.0,
+      "repair_rounds": 0,
+      "usage_class": "ESTIMATED_USAGE",
+      "missing_usage_invocations": 0,
+      "monetary_cost": null,
+      "currency": null,
+      "model_verification_counts": {
+        "NOT_EXECUTED": 10
+      }
+    },
+    "human_review_required": true,
+    "created_at": "2026-10-25T15:03:21Z"
+  },
+  "executed_lessons": [],
+  "provider_calls": 0,
+  "provider_readiness": {
+    "intended_provider": "agy",
+    "model_requested": "gemini-3.8-flash-high",
+    "effort_requested": "high",
+    "execution_mode": "automated_cli",
+    "status": "POLICY_CLARIFICATION_REQUIRED",
+    "direct_scripting_and_ci": "DOCUMENTED",
+    "course_harness_live_batch_supported": false,
+    "third_party_agent_or_application_wrapper": "NOT_SUPPORTED_UNDER_CONSUMER_PLANS",
+    "manual_handoff": "DEBUG_FALLBACK_ONLY",
+    "gemini_api": "INACTIVE_NOT_AUTHORIZED",
+    "model_verification": "NOT_CHECKED",
+    "authentication": "NOT_CHECKED",
+    "quota": "NOT_CHECKED",
+    "provider_calls": 0,
+    "policy_sources": [
+      "https://antigravity.google/docs/cli/headless/",
+      "https://antigravity.google/docs/faq",
+      "https://antigravity.google/terms",
+      "https://discuss.ai.google.dev/t/clarification-on-consumer-plan-policy-for-invoking-official-agy-via-local-subprocess/189905"
+    ]
+  },
+  "workflow": "SOURCE -> WORKER -> VISUAL RENDER -> STRUCTURAL VALIDATION -> INDEPENDENT AUDITOR -> REPAIR (max 2) -> FRESH AUDITOR -> FINAL QUALITY GATE -> PUBLISH -> CHECKPOINT",
+  "manual_steps": [],
+  "human_acceptance": "NEVER_AUTOMATIC"
+}

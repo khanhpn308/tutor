@@ -1,0 +1,111 @@
+{
+  "lesson_id": "M03-L08",
+  "status": "PASS",
+  "source_sha256": "9fab873f24792e1edd0907a1168eae9fd142ccbbc29061b28f696583ecfc28bc",
+  "prompt_config_hash": "5083a574cc6ceb51",
+  "model_id": "gemini-3.8-flash-high",
+  "effort": "high",
+  "draft_version": 1,
+  "audit_version": 1,
+  "repair_attempts": 0,
+  "verdict": "PASS",
+  "draft_path": "generated_course/Agile_Project_Management/drafts/M03-L08_draft_v1.md",
+  "final_path": "generated_course/Agile_Project_Management/modules/M03/M03-L08___Activity__Create_a_Product_Backlog__Due__Oct_27__11_59_PM_PDT.md",
+  "final_sha256": "c8b2af556888ccc0081372762a8e17fa4cc38c0e1874c59d96d14739b0d22ea1",
+  "audit_path": "generated_course/Agile_Project_Management/audits/M03-L08_audit_v1.json",
+  "audit_sha256": "f090a156f710e54a45e3b35a52d19073f79654819339203d72c2eabe988d44e9",
+  "historical_audit_path": "generated_course/Agile_Project_Management/audits/M03-L08_audit_v1.json",
+  "historical_audit_sha256": "a83d59f83ae57665a618d8e812fe416c0aea15362fdecbc18c4a444673f1b15c",
+  "error_category": null,
+  "history": [
+    {
+      "from_status": "PENDING",
+      "to_status": "DRAFTED",
+      "timestamp": "2026-10-23T10:19:06Z",
+      "details": {
+        "draft_path": "generated_course/Agile_Project_Management/drafts/M03-L08_draft_v1.md",
+        "draft_version": 1
+      }
+    },
+    {
+      "from_status": "DRAFTED",
+      "to_status": "AUDITED",
+      "timestamp": "2026-10-23T10:20:00Z",
+      "details": {
+        "audit_path": "generated_course/Agile_Project_Management/audits/M03-L08_audit_v1.json",
+        "audit_version": 1,
+        "verdict": "PASS"
+      }
+    },
+    {
+      "from_status": "AUDITED",
+      "to_status": "PASS",
+      "timestamp": "2026-10-23T10:20:00Z",
+      "details": {
+        "final_path": "generated_course/Agile_Project_Management/modules/M03/M03-L08___Activity__Create_a_Product_Backlog__Due__Oct_27__11_59_PM_PDT.md",
+        "draft_path": "generated_course/Agile_Project_Management/drafts/M03-L08_draft_v1.md",
+        "audit_path": "generated_course/Agile_Project_Management/audits/M03-L08_audit_v1.json",
+        "repair_attempts": 0
+      }
+    },
+    {
+      "from_status": "PASS",
+      "to_status": "NEEDS_REAUDIT",
+      "timestamp": "2026-10-23T12:00:00Z",
+      "details": {
+        "reason": "POST_AUDIT_MODIFICATION_REVOCATION",
+        "note": "Lesson M03-L08 was modified post-audit to fix the 70% plant mortality claim and INVEST criteria wording. Historical audit_v1.json is preserved as evidence, but old PASS verdict is revoked. Re-audit or explicit human approval required to bind verdict to corrected final SHA-256 (c8b2af556888ccc0081372762a8e17fa4cc38c0e1874c59d96d14739b0d22ea1).",
+        "corrected_final_sha256": "c8b2af556888ccc0081372762a8e17fa4cc38c0e1874c59d96d14739b0d22ea1"
+      }
+    },
+    {
+      "from_status": "PENDING",
+      "to_status": "DRAFTED",
+      "timestamp": "2026-10-25T06:34:10Z",
+      "details": {
+        "draft_path": "generated_course/Agile_Project_Management/drafts/M03-L08_draft_v1.md",
+        "draft_version": 1,
+        "evidence_class": "REAL_AGY_VERIFIED",
+        "visual_manifest_sha256": null
+      }
+    },
+    {
+      "from_status": "DRAFTED",
+      "to_status": "AUDITED",
+      "timestamp": "2026-10-25T06:35:13Z",
+      "details": {
+        "audit_path": "generated_course/Agile_Project_Management/audits/M03-L08_audit_v1.json",
+        "audit_version": 1,
+        "verdict": "PASS"
+      }
+    },
+    {
+      "from_status": "AUDITED",
+      "to_status": "PASS",
+      "timestamp": "2026-10-25T06:35:13Z",
+      "details": {
+        "action": "AUDIT_VERDICT_BOUND",
+        "verdict": "PASS",
+        "audit_path": "generated_course/Agile_Project_Management/audits/M03-L08_audit_v1.json",
+        "audit_sha256": "f090a156f710e54a45e3b35a52d19073f79654819339203d72c2eabe988d44e9",
+        "final_sha256": "c8b2af556888ccc0081372762a8e17fa4cc38c0e1874c59d96d14739b0d22ea1",
+        "audit_invocation_id": "inv-auditor-M03-L08-att1-b2db669fa1f8",
+        "notes": "Automated production PASS finalization"
+      }
+    }
+  ],
+  "created_at": "2026-10-23T10:16:39Z",
+  "updated_at": "2026-10-25T06:35:13Z",
+  "lesson_type": "ACTIVITY",
+  "source_status": "INCOMPLETE",
+  "visual_manifest_sha256": null,
+  "evidence_class": "REAL_AGY_VERIFIED",
+  "audit_invocation_id": "inv-auditor-M03-L08-att1-b2db669fa1f8",
+  "audit_receipt_path": "generated_course/Agile_Project_Management/evidence/receipts/inv-auditor-M03-L08-att1-b2db669fa1f8.json",
+  "model_verified": "VERIFIED",
+  "visual_figures": [],
+  "visual_figures_audited": 0,
+  "quality_rubric_version": "2.0-visual-first",
+  "quality_score": 95.5,
+  "content_quality_accepted": true
+}

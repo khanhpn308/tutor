@@ -2,3 +2,18 @@ chrome_profile/
 */.venv
 */__pycache__/
 coursera/
+
+# Generated lesson outputs and runtime evidence
+generated_course/
+
+# Review bundles and acceptance archives
+review_bundle/
+acceptance_bundle/
+*.zip
+
+# Temporary logs
+*.log
+
+# API secrets
+.env
+.env.*

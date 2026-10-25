@@ -1,0 +1,85 @@
+{
+  "batch_id": "batch-20261025-23d172ab",
+  "status": "DRY_RUN_COMPLETED",
+  "plan": {
+    "batch_id": "batch-20261025-23d172ab",
+    "course_id": "Agile_Project_Management",
+    "manifest_sha256": "4f90a9cb37b4347b7b906bcbda6657639ae566b66cd7f668b4afb35f8bdb882d",
+    "prompt_config_hash": "53a0d7e4bbd47ce4",
+    "candidate_count": 1,
+    "candidates": [
+      {
+        "lesson_id": "M01-L01",
+        "module_id": "M01",
+        "title": "🎥 Introduction to Course 5",
+        "source_type": "VIDEO_TRANSCRIPT",
+        "source_status": "AVAILABLE",
+        "source_rel_path": "Module_01_The_fundamentals_of_Agile/01_Introduction_to_Course_5.md",
+        "source_full_path": "output_course/Agile_Project_Management/Module_01_The_fundamentals_of_Agile/01_Introduction_to_Course_5.md",
+        "source_sha256": "1d9f0b5020138cb86f7d122dff71dbc05db7c7d31379eb022ebca04a7ff11a3d",
+        "is_eligible": true,
+        "eligibility_reason": "EXPLICITLY_REQUESTED_AND_VALIDATED",
+        "known_limitations": [],
+        "prior_checkpoint_status": "NEEDS_HUMAN_REVIEW"
+      }
+    ],
+    "excluded_count": 16,
+    "resource_limits": {
+      "max_lessons": 10000,
+      "max_concurrency": 1,
+      "max_repairs_per_lesson": 2,
+      "max_provider_invocations": 60,
+      "max_batch_tokens": 500000,
+      "max_batch_runtime_seconds": 3600,
+      "monetary_budget_enabled": false
+    },
+    "estimated_usage": {
+      "invocations": 2,
+      "worker_invocations": 1,
+      "auditor_invocations": 1,
+      "repair_invocations": 0,
+      "input_tokens": 28000,
+      "output_tokens": 17000,
+      "thinking_tokens": 11000,
+      "total_tokens": 45000,
+      "wall_clock_seconds": 110.0,
+      "repair_rounds": 0,
+      "usage_class": "ESTIMATED_USAGE",
+      "missing_usage_invocations": 0,
+      "monetary_cost": null,
+      "currency": null,
+      "model_verification_counts": {
+        "NOT_EXECUTED": 2
+      }
+    },
+    "human_review_required": true,
+    "created_at": "2026-10-25T14:03:00Z"
+  },
+  "executed_lessons": [],
+  "provider_calls": 0,
+  "workflow": "SOURCE -> WORKER -> VISUAL RENDER -> STRUCTURAL VALIDATION -> INDEPENDENT AUDITOR -> REPAIR (max 2) -> FRESH AUDITOR -> FINAL QUALITY GATE -> PUBLISH -> CHECKPOINT",
+  "manual_steps": [],
+  "human_acceptance": "NEVER_AUTOMATIC",
+  "local_readiness": {
+    "status": "LOCAL_CHECK_ONLY",
+    "sdk_version": "2.33.0",
+    "api_key_present": false,
+    "authentication": "NOT_CHECKED",
+    "billing": "NOT_CHECKED",
+    "model_requested": "gemini-3.8-flash",
+    "thinking_level": "high"
+  },
+  "renderer_available": true,
+  "seed_drafts": {
+    "M01-L01": {
+      "path": "generated_course/Agile_Project_Management/drafts/M01-L01_draft_v1.md",
+      "sha256": "c50c81928cbfc4d17813c0e24976776ee1853ab31f73b06db63b14b9d3fc2f3b",
+      "source_sha256": "1d9f0b5020138cb86f7d122dff71dbc05db7c7d31379eb022ebca04a7ff11a3d",
+      "visual_manifest_path": "generated_course/Agile_Project_Management/assets/M01-L01/visual_manifest.json",
+      "visual_manifest_sha256": "97f91f3767b8bdc48c51e5535d540702e5515f160aacfb2055d808dc5ff5c518",
+      "structural_check": "PASS",
+      "warnings": [],
+      "use": "Input to fresh API Worker; historical evidence preserved"
+    }
+  }
+}

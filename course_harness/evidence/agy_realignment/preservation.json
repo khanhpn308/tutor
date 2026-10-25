@@ -1,0 +1,15 @@
+{
+  "task_id": "COURSE-HARNESS-V1-AGY-CLI-AUTOMATION-REALIGNMENT",
+  "raw_source_files_checked": 783,
+  "historical_generated_files_checked": 95,
+  "protected_files_checked": 886,
+  "changed_files": [],
+  "before_sha256": "1cbadfd913e893527923976c3c86c229f60988f26a2c1bb7386c298175f0aaab",
+  "after_sha256": "1cbadfd913e893527923976c3c86c229f60988f26a2c1bb7386c298175f0aaab",
+  "config_and_prompts_unchanged": true,
+  "prior_evidence_unchanged": true,
+  "approved_baselines": [
+    "M02-L11",
+    "M03-L08"
+  ]
+}

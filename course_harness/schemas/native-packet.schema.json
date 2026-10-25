@@ -1,0 +1,189 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Immutable native subagent dispatch packet",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "attempt_id",
+    "role",
+    "agent",
+    "course_id",
+    "lesson_id",
+    "source_path",
+    "source_sha256",
+    "source_type",
+    "source_status",
+    "locators",
+    "prompt_spec",
+    "metadata",
+    "artifact_output_path",
+    "runtime_evidence_output_path",
+    "fresh_context_required",
+    "read_only_candidate"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "2.0"
+    },
+    "attempt_id": {
+      "type": "string",
+      "pattern": "^(worker|auditor|repair)-[a-f0-9]{16}$"
+    },
+    "role": {
+      "enum": [
+        "worker",
+        "auditor",
+        "repair"
+      ]
+    },
+    "agent": {
+      "enum": [
+        "coursera-worker",
+        "coursera-auditor",
+        "coursera-repair"
+      ]
+    },
+    "course_id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,99}$"
+    },
+    "lesson_id": {
+      "type": "string",
+      "pattern": "^M[0-9]{2,}-L[0-9]{2,}$"
+    },
+    "source_path": {
+      "type": "string"
+    },
+    "source_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$"
+    },
+    "source_type": {
+      "type": "string"
+    },
+    "source_status": {
+      "enum": [
+        "AVAILABLE",
+        "INCOMPLETE"
+      ]
+    },
+    "locators": {
+      "type": "array"
+    },
+    "prompt_spec": {
+      "type": "string"
+    },
+    "metadata": {
+      "type": "object"
+    },
+    "artifact_output_path": {
+      "type": "string"
+    },
+    "runtime_evidence_output_path": {
+      "type": "string"
+    },
+    "fresh_context_required": {
+      "const": true
+    },
+    "read_only_candidate": {
+      "type": "boolean"
+    },
+    "candidate": {
+      "type": "object",
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "visual_manifest": {
+      "type": "object",
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "candidate_root": {
+      "type": "string"
+    },
+    "draft_validation": {
+      "type": "object",
+      "required": [
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "path": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        }
+      },
+      "additionalProperties": false
+    },
+    "verified_findings_path": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "role": {
+            "enum": [
+              "auditor",
+              "repair"
+            ]
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "candidate",
+          "visual_manifest",
+          "candidate_root",
+          "draft_validation"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "role": {
+            "const": "repair"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "verified_findings_path"
+        ]
+      }
+    }
+  ]
+}

@@ -1,0 +1,149 @@
+{
+  "lesson_id": "M02-L11",
+  "status": "NEEDS_HUMAN_REVIEW",
+  "source_sha256": "7f8a37da723746c0d85fc41bc7705b2846030fd1be27b449d11d63f10fe68fe5",
+  "prompt_config_hash": "25c84b01a1c0c403",
+  "model_id": "gemini-3.8-flash-high",
+  "effort": "high",
+  "draft_version": 1,
+  "audit_version": 1,
+  "repair_attempts": 0,
+  "verdict": "PASS",
+  "draft_path": "generated_course/Agile_Project_Management/drafts/M02-L11_draft_v1.md",
+  "audit_path": "generated_course/Agile_Project_Management/audits/M02-L11_audit_v1.json",
+  "final_path": "generated_course/Agile_Project_Management/modules/M02/M02-L11___Understanding_Scrum_Team_roles.md",
+  "final_sha256": "75f03e0f67375c87f75d2bd5061274becb2435422ceb473dfb3b49600fbd64e3",
+  "audit_sha256": "2e88840b88d28dcf8f33ba4b67f7ba0300cfe89a74496d445de253f8d10baeb2",
+  "error_category": "BLOCKING_DRAFT_INTEGRITY_FAILURES: Student-facing markdown exposes machine-facing enum: 'AI_GENERATED_EXAMPLE'",
+  "history": [
+    {
+      "from_status": "PENDING",
+      "to_status": "DRAFTED",
+      "timestamp": "2026-10-23T10:14:58Z",
+      "details": {
+        "draft_path": "generated_course/Agile_Project_Management/drafts/M02-L11_draft_v1.md",
+        "draft_version": 1
+      }
+    },
+    {
+      "from_status": "DRAFTED",
+      "to_status": "AUDITED",
+      "timestamp": "2026-10-23T10:16:01Z",
+      "details": {
+        "audit_path": "generated_course/Agile_Project_Management/audits/M02-L11_audit_v1.json",
+        "audit_version": 1,
+        "verdict": "PASS"
+      }
+    },
+    {
+      "from_status": "AUDITED",
+      "to_status": "PASS",
+      "timestamp": "2026-10-23T10:16:01Z",
+      "details": {
+        "final_path": "generated_course/Agile_Project_Management/modules/M02/M02-L11___Understanding_Scrum_Team_roles.md",
+        "draft_path": "generated_course/Agile_Project_Management/drafts/M02-L11_draft_v1.md",
+        "audit_path": "generated_course/Agile_Project_Management/audits/M02-L11_audit_v1.json",
+        "repair_attempts": 0
+      }
+    },
+    {
+      "from_status": "PASS",
+      "to_status": "INVALIDATED",
+      "timestamp": "2026-10-23T12:00:00Z",
+      "details": {
+        "invalidation_reason": "LEGACY_CHECKPOINT_MISSING_ARTIFACT_HASHES",
+        "note": "Legacy PASS checkpoint omitted final_sha256 and audit_sha256. Invalidated under fail-closed integrity policy pending revalidation."
+      }
+    },
+    {
+      "from_status": "PENDING",
+      "to_status": "DRAFTED",
+      "timestamp": "2026-10-25T04:23:15Z",
+      "details": {
+        "draft_path": "generated_course/Agile_Project_Management/drafts/M02-L11_draft_v1.md",
+        "draft_version": 1,
+        "evidence_class": "MANUAL_UNVERIFIED"
+      }
+    },
+    {
+      "from_status": "PENDING",
+      "to_status": "DRAFTED",
+      "timestamp": "2026-10-25T04:46:01Z",
+      "details": {
+        "draft_path": "generated_course/Agile_Project_Management/drafts/M02-L11_draft_v1.md",
+        "draft_version": 1,
+        "evidence_class": "REAL_AGY_VERIFIED"
+      }
+    },
+    {
+      "from_status": "DRAFTED",
+      "to_status": "AUDITED",
+      "timestamp": "2026-10-25T04:48:34Z",
+      "details": {
+        "audit_path": "generated_course/Agile_Project_Management/audits/M02-L11_audit_v1.json",
+        "audit_version": 1,
+        "verdict": "PASS"
+      }
+    },
+    {
+      "from_status": "AUDITED",
+      "to_status": "NEEDS_HUMAN_REVIEW",
+      "timestamp": "2026-10-25T04:48:34Z",
+      "details": {
+        "error_category": "MODEL_NOT_VERIFIED_FOR_PASS",
+        "final_path": "generated_course/Agile_Project_Management/modules/M02/M02-L11___Understanding_Scrum_Team_roles.md",
+        "final_sha256": "75f03e0f67375c87f75d2bd5061274becb2435422ceb473dfb3b49600fbd64e3",
+        "audit_path": "generated_course/Agile_Project_Management/audits/M02-L11_audit_v1.json",
+        "audit_sha256": "923e80c55cfc018d5b411da9e2d1a39bbb6d59ca250436cd476ff3026f39e19c",
+        "unverified_roles": [
+          "auditor:NOT_VERIFIED"
+        ]
+      }
+    },
+    {
+      "from_status": "NEEDS_HUMAN_REVIEW",
+      "to_status": "AUDITED",
+      "timestamp": "2026-10-25T04:58:04Z",
+      "details": {
+        "audit_path": "generated_course/Agile_Project_Management/audits/M02-L11_audit_v1.json",
+        "audit_version": 1,
+        "verdict": "PASS"
+      }
+    },
+    {
+      "from_status": "AUDITED",
+      "to_status": "NEEDS_HUMAN_REVIEW",
+      "timestamp": "2026-10-25T04:58:04Z",
+      "details": {
+        "error_category": "BLOCKING_DRAFT_INTEGRITY_FAILURES: Student-facing markdown exposes machine-facing enum: 'AI_GENERATED_EXAMPLE'",
+        "final_path": "generated_course/Agile_Project_Management/modules/M02/M02-L11___Understanding_Scrum_Team_roles.md",
+        "final_sha256": "75f03e0f67375c87f75d2bd5061274becb2435422ceb473dfb3b49600fbd64e3",
+        "draft_path": "generated_course/Agile_Project_Management/drafts/M02-L11_draft_v1.md",
+        "audit_path": "generated_course/Agile_Project_Management/audits/M02-L11_audit_v1.json",
+        "audit_sha256": "2e88840b88d28dcf8f33ba4b67f7ba0300cfe89a74496d445de253f8d10baeb2",
+        "blocking_draft_issues": [
+          "Student-facing markdown exposes machine-facing enum: 'AI_GENERATED_EXAMPLE'",
+          "Student-facing markdown exposes machine-facing enum: 'PEDAGOGICAL_RECONSTRUCTION'",
+          "Broken relative image path: 'assets/M02-L11/F01_scrum_team_roles_triad.svg' does not exist on disk",
+          "Broken relative image path: 'assets/M02-L11/F02_scrum_roles_vs_project_manager.svg' does not exist on disk",
+          "Broken relative image path: 'assets/M02-L11/F03_scrum_roles_collaboration_workflow.svg' does not exist on disk"
+        ]
+      }
+    }
+  ],
+  "created_at": "2026-10-23T10:13:40Z",
+  "updated_at": "2026-10-25T04:58:04Z",
+  "lesson_type": "READING",
+  "source_status": "AVAILABLE",
+  "evidence_class": "REAL_AGY_VERIFIED",
+  "unverified_roles": [
+    "auditor:NOT_VERIFIED"
+  ],
+  "blocking_draft_issues": [
+    "Student-facing markdown exposes machine-facing enum: 'AI_GENERATED_EXAMPLE'",
+    "Student-facing markdown exposes machine-facing enum: 'PEDAGOGICAL_RECONSTRUCTION'",
+    "Broken relative image path: 'assets/M02-L11/F01_scrum_team_roles_triad.svg' does not exist on disk",
+    "Broken relative image path: 'assets/M02-L11/F02_scrum_roles_vs_project_manager.svg' does not exist on disk",
+    "Broken relative image path: 'assets/M02-L11/F03_scrum_roles_collaboration_workflow.svg' does not exist on disk"
+  ]
+}

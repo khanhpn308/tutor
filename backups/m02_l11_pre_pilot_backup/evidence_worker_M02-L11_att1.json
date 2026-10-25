@@ -1,0 +1,20 @@
+{
+  "mode": "automated_cli",
+  "role": "worker",
+  "lesson_id": "M02-L11",
+  "attempt": 1,
+  "model": "gemini-3.8-flash-high",
+  "effort": "high",
+  "conversation_id": "e72869be-3d4e-46e3-936a-39713698eb5e",
+  "fresh_session": true,
+  "duration_seconds": 77.878,
+  "usage": {
+    "input_tokens": 11735,
+    "output_tokens": 7975,
+    "thinking_tokens": 2883,
+    "cache_read_tokens": 0,
+    "total_tokens": 19710
+  },
+  "prompt_path": "generated_course/Agile_Project_Management/evidence/prompt_worker_M02-L11_att1.md",
+  "timestamp": "2026-10-23T10:14:58Z"
+}

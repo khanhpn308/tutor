@@ -1,0 +1,217 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CourseLessonAuditReport",
+  "type": "object",
+  "required": [
+    "lesson_id",
+    "verdict",
+    "summary",
+    "findings",
+    "limitations"
+  ],
+  "properties": {
+    "lesson_id": {
+      "type": "string",
+      "description": "Unique identifier of the lesson being audited, e.g. M01-L07"
+    },
+    "verdict": {
+      "type": "string",
+      "enum": ["PASS", "FAIL", "INCONCLUSIVE"],
+      "description": "Overall audit verdict"
+    },
+    "summary": {
+      "type": "string",
+      "description": "Executive summary of the audit findings and quality assessment"
+    },
+    "dimension_scores": {
+      "type": "object",
+      "properties": {
+        "SOURCE_FIDELITY": { "type": "string", "enum": ["MET", "MINOR_ISSUES", "FAILED", "NOT_APPLICABLE"] },
+        "COMPLETENESS": { "type": "string", "enum": ["MET", "MINOR_ISSUES", "FAILED", "NOT_APPLICABLE"] },
+        "CONTENT_COMPLETENESS": { "type": "string", "enum": ["MET", "MINOR_ISSUES", "FAILED", "NOT_APPLICABLE"] },
+        "TECHNICAL_ACCURACY": { "type": "string", "enum": ["MET", "MINOR_ISSUES", "FAILED", "NOT_APPLICABLE"] },
+        "TERMINOLOGY": { "type": "string", "enum": ["MET", "MINOR_ISSUES", "FAILED", "NOT_APPLICABLE"] },
+        "TERMINOLOGY_CONSISTENCY": { "type": "string", "enum": ["MET", "MINOR_ISSUES", "FAILED", "NOT_APPLICABLE"] },
+        "PEDAGOGICAL_QUALITY": { "type": "string", "enum": ["MET", "MINOR_ISSUES", "FAILED", "NOT_APPLICABLE"] },
+        "VISUAL_PEDAGOGY": { "type": "string", "enum": ["MET", "MINOR_ISSUES", "FAILED", "NOT_APPLICABLE"] },
+        "STRUCTURE": { "type": "string", "enum": ["MET", "MINOR_ISSUES", "FAILED", "NOT_APPLICABLE"] },
+        "CLARITY_ORGANIZATION": { "type": "string", "enum": ["MET", "MINOR_ISSUES", "FAILED", "NOT_APPLICABLE"] },
+        "TRACEABILITY": { "type": "string", "enum": ["MET", "MINOR_ISSUES", "FAILED", "NOT_APPLICABLE"] },
+        "SOURCE_TRACEABILITY": { "type": "string", "enum": ["MET", "MINOR_ISSUES", "FAILED", "NOT_APPLICABLE"] },
+        "FORMATTING": { "type": "string", "enum": ["MET", "MINOR_ISSUES", "FAILED", "NOT_APPLICABLE"] }
+      },
+      "additionalProperties": false
+    },
+    "findings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "finding_id",
+          "severity",
+          "category",
+          "source_locator",
+          "draft_locator",
+          "description",
+          "required_action"
+        ],
+        "properties": {
+          "finding_id": {
+            "type": "string",
+            "description": "Unique identifier for the finding (e.g. F-001)"
+          },
+          "severity": {
+            "type": "string",
+            "enum": ["LOW", "MEDIUM", "HIGH", "BLOCKING"],
+            "description": "Severity level. HIGH or BLOCKING prevents PASS verdict."
+          },
+          "category": {
+            "type": "string",
+            "enum": [
+              "SOURCE_FIDELITY",
+              "COMPLETENESS",
+              "CONTENT_COMPLETENESS",
+              "TECHNICAL_ACCURACY",
+              "TERMINOLOGY",
+              "TERMINOLOGY_CONSISTENCY",
+              "PEDAGOGICAL_QUALITY",
+              "VISUAL_PEDAGOGY",
+              "STRUCTURE",
+              "CLARITY_ORGANIZATION",
+              "TRACEABILITY",
+              "SOURCE_TRACEABILITY",
+              "FORMATTING"
+            ]
+          },
+          "source_locator": {
+            "type": "string",
+            "description": "Locator in source file (e.g., timestamp '01:51', section heading, or line reference)"
+          },
+          "draft_locator": {
+            "type": "string",
+            "description": "Locator in draft document (e.g., section title, heading, paragraph)"
+          },
+          "description": {
+            "type": "string",
+            "description": "Detailed explanation of the discrepancy, error, or omission"
+          },
+          "required_action": {
+            "type": "string",
+            "description": "Concrete, actionable instruction for Repair to resolve this finding"
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Known audit boundaries or constraints (e.g., shared model family, missing source answers)"
+    },
+    "audited_final_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "SHA-256 hash of the audited lesson final or draft content"
+    },
+    "audit_invocation_id": {
+      "type": "string",
+      "description": "Recorded invocation ID or conversation ID of the audit execution"
+    },
+    "model_verification": {
+      "type": "string",
+      "description": "Verification status of the inference model (e.g. VERIFIED, NOT_VERIFIED)"
+    },
+    "audit_report_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "SHA-256 hash of the audit report itself"
+    },
+    "quality_score": {
+      "type": "number",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Calculated score under Unified Quality Standard weighted rubric"
+    },
+    "quality_rubric_version": {
+      "type": "string",
+      "description": "Version of the quality rubric applied, e.g. 2.0-visual-first"
+    },
+    "visual_figures_audited": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Count of visual figures evaluated in this audit"
+    },
+    "visual_manifest_sha256": {
+      "type": "string",
+      "pattern": "^[a-f0-9]{64}$",
+      "description": "SHA-256 hash of visual_manifest.json for the lesson"
+    },
+    "content_quality_accepted": {
+      "type": "boolean",
+      "description": "Whether source fidelity and educational quality have passed all hard gates"
+    },
+    "visual_acceptance_stages": {
+      "type": "object",
+      "properties": {
+        "spec_valid": { "type": "boolean" },
+        "render_verified": { "type": "boolean" },
+        "visual_reviewed": { "type": "boolean" },
+        "content_quality_accepted": { "type": "boolean" }
+      },
+      "additionalProperties": false,
+      "description": "Separate status indicators for each visual acceptance stage"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "verdict": { "const": "PASS" }
+        }
+      },
+      "then": {
+        "required": ["dimension_scores"]
+      }
+    },
+    {
+      "if": {
+        "required": ["quality_rubric_version"],
+        "properties": {
+          "quality_rubric_version": { "const": "2.0-visual-first" }
+        }
+      },
+      "then": {
+        "required": ["dimension_scores"],
+        "properties": {
+          "dimension_scores": {
+            "required": [
+              "SOURCE_FIDELITY",
+              "CONTENT_COMPLETENESS",
+              "PEDAGOGICAL_QUALITY",
+              "VISUAL_PEDAGOGY",
+              "TERMINOLOGY_CONSISTENCY",
+              "SOURCE_TRACEABILITY",
+              "CLARITY_ORGANIZATION",
+              "FORMATTING"
+            ],
+            "propertyNames": {
+              "enum": [
+                "SOURCE_FIDELITY",
+                "CONTENT_COMPLETENESS",
+                "PEDAGOGICAL_QUALITY",
+                "VISUAL_PEDAGOGY",
+                "TERMINOLOGY_CONSISTENCY",
+                "SOURCE_TRACEABILITY",
+                "CLARITY_ORGANIZATION",
+                "FORMATTING"
+              ]
+            }
+          }
+        }
+      }
+    }
+  ],
+  "additionalProperties": false
+}

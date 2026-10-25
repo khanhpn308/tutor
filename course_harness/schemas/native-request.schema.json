@@ -1,0 +1,172 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Native deterministic tool request",
+  "type": "object",
+  "required": [
+    "operation",
+    "course"
+  ],
+  "properties": {
+    "operation": {
+      "enum": [
+        "preflight",
+        "list-lessons",
+        "start-batch",
+        "prepare-lesson",
+        "record-attempt",
+        "process-visuals",
+        "validate-draft",
+        "validate-audit",
+        "record-failure",
+        "publish",
+        "report-batch",
+        "resume",
+        "advance-batch",
+        "suspend",
+        "upgrade-continuous"
+      ]
+    },
+    "course": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]{0,99}$"
+    },
+    "lesson": {
+      "type": "string",
+      "pattern": "^M[0-9]{2,}-L[0-9]{2,}$"
+    },
+    "lessons": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "pattern": "^M[0-9]{2,}-L[0-9]{2,}$"
+      }
+    },
+    "limit": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 5
+    },
+    "batch": {
+      "type": "string",
+      "pattern": "^batch-[a-f0-9]{16}$"
+    },
+    "attempt": {
+      "type": "string",
+      "pattern": "^(worker|auditor|repair)-[a-f0-9]{16}$"
+    },
+    "artifact": {
+      "type": "string",
+      "minLength": 1
+    },
+    "runtime_evidence": {
+      "type": "string",
+      "minLength": 1
+    },
+    "category": {
+      "enum": [
+        "transient",
+        "integrity",
+        "authentication",
+        "budget",
+        "lesson",
+        "runtime",
+        "cancelled"
+      ]
+    },
+    "diagnostic": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4000
+    },
+    "mode": {
+      "enum": [
+        "continuous",
+        "bounded"
+      ]
+    }
+  },
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "enum": [
+              "prepare-lesson",
+              "record-attempt",
+              "process-visuals",
+              "validate-draft",
+              "validate-audit",
+              "record-failure",
+              "publish"
+            ]
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "batch",
+          "lesson"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "enum": [
+              "resume",
+              "report-batch",
+              "advance-batch",
+              "suspend",
+              "upgrade-continuous"
+            ]
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "batch"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "enum": [
+              "record-attempt"
+            ]
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "attempt",
+          "artifact",
+          "runtime_evidence"
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "operation": {
+            "enum": [
+              "record-failure",
+              "suspend"
+            ]
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "category",
+          "diagnostic"
+        ]
+      }
+    }
+  ]
+}

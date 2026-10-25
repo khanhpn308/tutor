@@ -1,0 +1,837 @@
+"""Deterministic tools called by AGY native agents. Never dispatches an AI request."""
+
+import argparse
+from contextlib import contextmanager
+from datetime import datetime, timezone
+import fcntl
+import hashlib
+import json
+import os
+from pathlib import Path
+import re
+import shutil
+import sys
+import time
+import uuid
+
+import jsonschema
+
+from course_harness.ingest import calculate_sha256, ingest_course
+from course_harness.quality_policy import APPROVED_BASELINES, scan_for_prohibited_instructor_images
+from course_harness.state import StateManager
+from course_harness.validator import (
+    AuditValidator, ValidationError, classify_draft_issues,
+    is_production_quality_eligible, validate_draft_structure,
+)
+from course_harness.visual import (
+    VisualAssetManager, extract_figures_from_markdown, normalize_markdown_asset_paths,
+    validate_automatic_visuals, validate_figure_semantic_binding,
+)
+
+VERSION = "2.0"
+UPGRADE_SNAPSHOT_SHA256 = "83099a8520aa6a387380051f40b1551ad13cc3b515e4b30cd1a99e21a3dd2a06"
+TERMINAL = {"PASS", "HUMAN_ACCEPTED", "BLOCKED", "NEEDS_HUMAN_REVIEW"}
+OPERATIONS = ("preflight", "list-lessons", "start-batch", "prepare-lesson", "record-attempt",
+              "process-visuals", "validate-draft", "validate-audit", "record-failure",
+              "publish", "report-batch", "resume", "advance-batch", "suspend", "upgrade-continuous")
+
+
+def now():
+    return datetime.now(timezone.utc).isoformat()
+
+
+def digest(data):
+    return hashlib.sha256(data).hexdigest()
+
+
+class ToolError(ValueError):
+    def __init__(self, code, message, fatal=False):
+        super().__init__(message)
+        self.code, self.fatal = code, fatal
+
+
+def require(condition, code, message, fatal=False):
+    if not condition:
+        raise ToolError(code, message, fatal)
+
+
+def confined(path, root):
+    resolved = Path(path).resolve()
+    require(resolved.is_relative_to(root.resolve()), "UNSAFE_PATH", "Path escapes its allowed directory", True)
+    return resolved
+
+
+def atomic_json(path, data):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    temporary = path.with_name(path.name + "." + uuid.uuid4().hex + ".tmp")
+    try:
+        with temporary.open("x", encoding="utf-8") as stream:
+            json.dump(data, stream, ensure_ascii=False, indent=2)
+            stream.flush()
+            os.fsync(stream.fileno())
+        temporary.replace(path)
+    finally:
+        temporary.unlink(missing_ok=True)
+
+
+def immutable_bytes(path, data):
+    path.parent.mkdir(parents=True, exist_ok=True)
+    if path.exists():
+        require(path.read_bytes() == data, "EVIDENCE_COLLISION", "Historical evidence cannot be overwritten", True)
+        return
+    with path.open("xb") as stream:
+        stream.write(data)
+        stream.flush()
+        os.fsync(stream.fileno())
+
+
+class NativeTools:
+    def __init__(self, workspace, course):
+        self.workspace = Path(workspace).resolve()
+        require(bool(re.fullmatch(r"[A-Za-z0-9][A-Za-z0-9_-]{0,99}", course)), "INVALID_COURSE", "Unsafe course ID")
+        self.course = course
+        self.source_root = confined(self.workspace / "output_course" / course, self.workspace / "output_course")
+        self.output = confined(self.workspace / "generated_course" / course, self.workspace / "generated_course")
+        self.root = confined(self.output / "native_v2", self.output)
+        self.manifest_path = confined(self.output / "manifest.json", self.output)
+        if not self.manifest_path.exists() and (self.root / "manifest.json").exists():
+            self.manifest_path = self.path(self.root / "manifest.json")
+        if self.manifest_path.exists():
+            self.manifest = json.loads(self.manifest_path.read_text())
+        else:
+            self.manifest = ingest_course(str(self.source_root))
+        require(isinstance(self.manifest, dict) and isinstance(self.manifest.get("lessons"), dict),
+                "MANIFEST_INVALID", "Manifest must contain a lesson mapping", True)
+        require(self.manifest.get("course_id") == course, "MANIFEST_MISMATCH", "Manifest course differs", True)
+        self.manifest_sha = digest(json.dumps(self.manifest, sort_keys=True, ensure_ascii=False).encode())
+        policy_paths = [*self.workspace.glob(".agents/agents/*/agent.md"),
+                        *self.workspace.glob(".agents/skills/coursera-harness/**/*.md"),
+                        *self.workspace.glob("course_harness/prompts/*.md"),
+                        *self.workspace.glob("course_harness/schemas/*.json"),
+                        *(self.workspace / "course_harness" / name for name in
+                          ("native_tools.py", "ingest.py", "validator.py", "visual.py", "state.py", "quality_policy.py"))]
+        self.policy_sha = digest(b"".join(str(p.relative_to(self.workspace)).encode() + p.read_bytes()
+                                        for p in sorted(policy_paths) if p.is_file()))
+        self.validator = AuditValidator(str(self.workspace / "course_harness/schemas/audit.schema.json"))
+
+    @contextmanager
+    def locked(self):
+        self.root.mkdir(parents=True, exist_ok=True)
+        with (self.root / ".lock").open("a") as stream:
+            try:
+                fcntl.flock(stream, fcntl.LOCK_EX | fcntl.LOCK_NB)
+            except BlockingIOError:
+                raise ToolError("CONCURRENT_UPDATE", "Another deterministic command is updating state")
+            try:
+                yield
+            finally:
+                fcntl.flock(stream, fcntl.LOCK_UN)
+
+    def path(self, path):
+        path = Path(path)
+        return confined(path if path.is_absolute() else self.workspace / path, self.root)
+
+    def ref(self, path):
+        return str(Path(path).relative_to(self.workspace))
+
+    def load(self, path):
+        return json.loads(self.path(path).read_text(encoding="utf-8"))
+
+    def source(self, lesson):
+        require(bool(re.fullmatch(r"M\d{2,}-L\d{2,}", lesson)), "INVALID_LESSON", "Unsafe lesson ID")
+        meta = self.manifest.get("lessons", {}).get(lesson)
+        require(isinstance(meta, dict), "UNKNOWN_LESSON", f"Lesson {lesson} is absent from manifest")
+        require(meta.get("lesson_id") == lesson, "MANIFEST_MISMATCH", "Manifest lesson ID differs", True)
+        source = confined(self.source_root / meta["relative_path"], self.source_root)
+        require(source.is_file() and calculate_sha256(source) == meta["source_sha256"],
+                "SOURCE_CHECKSUM_MISMATCH", f"Immutable source differs for {lesson}", True)
+        return meta, source.read_text(encoding="utf-8"), source
+
+    def legacy(self, lesson):
+        path = self.output / "evidence/checkpoints" / (lesson + ".json")
+        return json.loads(path.read_text()) if path.exists() else None
+
+    def baseline_check(self):
+        results = {}
+        if self.course != "Agile_Project_Management":
+            return results
+        for lesson, expected in APPROVED_BASELINES.items():
+            chk = self.legacy(lesson)
+            require(chk and chk.get("status") == "HUMAN_ACCEPTED", "BASELINE_INTEGRITY", f"Missing accepted {lesson}", True)
+            for key, sha in (("final_path", expected["approved_final_sha256"]),
+                             ("acceptance_path", chk.get("acceptance_sha256"))):
+                p = confined(self.workspace / chk[key], self.output)
+                require(p.is_file() and calculate_sha256(p) == sha, "BASELINE_INTEGRITY", f"Changed {lesson} {key}", True)
+            if expected.get("visual_manifest_sha256"):
+                p = self.output / "assets" / lesson / "visual_manifest.json"
+                require(p.is_file() and calculate_sha256(p) == expected["visual_manifest_sha256"],
+                        "BASELINE_INTEGRITY", f"Changed {lesson} visuals", True)
+            results[lesson] = "VERIFIED_INTACT"
+        return results
+
+    def protected(self, lesson):
+        chk = self.legacy(lesson)
+        if chk and chk.get("status") == "HUMAN_ACCEPTED":
+            final = confined(self.workspace / chk["final_path"], self.output)
+            require(final.is_file() and calculate_sha256(final) == chk.get("final_sha256"),
+                    "ACCEPTANCE_INTEGRITY", f"Accepted artifact differs for {lesson}", True)
+            return True
+        return self.course == "Agile_Project_Management" and lesson in APPROVED_BASELINES
+
+    def checkpoint(self, lesson):
+        path = self.root / "checkpoints" / (lesson + ".json")
+        if not path.exists():
+            return None
+        chk = self.load(path)
+        self.schema("native-checkpoint.schema.json", chk)
+        require(chk["lesson_id"] == lesson and chk["course_id"] == self.course,
+                "CHECKPOINT_INTEGRITY", "Checkpoint identity differs", True)
+        return chk
+
+    def schema(self, name, data):
+        schema = json.loads((self.workspace / "course_harness/schemas" / name).read_text())
+        try:
+            jsonschema.validate(data, schema)
+        except jsonschema.ValidationError as exc:
+            raise ToolError("SCHEMA_INVALID", exc.message)
+
+    def save(self, chk):
+        if chk["policy_sha256"] != self.policy_sha:
+            require(self.prior_checkpoint(chk), "CHECKPOINT_INTEGRITY", "Unrecognized prior contract", True)
+            chk["policy_sha256"] = self.policy_sha
+        self.schema("native-checkpoint.schema.json", chk)
+        # Reuse the legacy atomic writer, in a separate namespace and without legacy invalidation.
+        manager = StateManager(str(self.path(self.root / "checkpoints")), self.policy_sha,
+                               schema_path=str(self.workspace / "course_harness/schemas/audit.schema.json"))
+        event = {"timestamp": now(), "status": chk["status"], "next_action": chk["next_action"]}
+        chk.setdefault("history", []).append(event)
+        manager.save_checkpoint(chk["lesson_id"], chk)
+
+    def check_bindings(self, chk):
+        meta, _, _ = self.source(chk["lesson_id"])
+        require(chk["source_sha256"] == meta["source_sha256"] and
+                (chk["policy_sha256"] == self.policy_sha or self.prior_checkpoint(chk)),
+                "CHECKPOINT_INTEGRITY", "Source or tool/agent contract changed; preserve state for review", True)
+        for attempt in chk["attempts"]:
+            for name in ("artifact", "runtime", "candidate", "visual_manifest", "validation", "audit_validation", "packet"):
+                if attempt.get(name):
+                    p = self.path(attempt[name]["path"])
+                    require(p.is_file() and calculate_sha256(p) == attempt[name]["sha256"],
+                            "EVIDENCE_INTEGRITY", f"Changed {name} for {attempt['attempt_id']}", True)
+            if attempt.get("candidate") and self.load(attempt["validation"]["path"])["valid"]:
+                require(self.draft_check(chk, attempt)["valid"], "EVIDENCE_INTEGRITY",
+                        "Previously validated visual assets are no longer valid", True)
+
+    def upgrade_snapshot(self):
+        path = self.workspace / "course_harness/evidence/continuous_execution/upgrade-snapshot.json"
+        require(path.is_file() and calculate_sha256(path) == UPGRADE_SNAPSHOT_SHA256,
+                "UPGRADE_INTEGRITY", "The reviewed pre-upgrade evidence snapshot differs or is missing", True)
+        snapshot = json.loads(path.read_text())
+        require(snapshot["course_id"] == self.course and snapshot["manifest_sha256"] == self.manifest_sha,
+                "UPGRADE_INTEGRITY", "The reviewed snapshot belongs to another course/manifest", True)
+        return snapshot
+
+    def prior_checkpoint(self, chk):
+        # Only byte-identical checkpoints verified before this migration retain their old contract.
+        snapshot = self.upgrade_snapshot()
+        path = self.path(self.root / "checkpoints" / (chk["lesson_id"] + ".json"))
+        return (chk["policy_sha256"] == snapshot["policy_sha256"] and path.is_file() and
+                snapshot["files"].get(self.ref(path)) == calculate_sha256(path))
+
+    def upgrade_continuous(self, request):
+        snapshot = self.upgrade_snapshot()
+        require(request["batch"] == snapshot["batch_id"], "UPGRADE_INTEGRITY", "Batch was not reviewed", True)
+        batch_path = self.path(self.root / "batches" / (request["batch"] + ".json"))
+        batch = self.load(batch_path)
+        if batch["policy_sha256"] == self.policy_sha and batch.get("mode") == "continuous":
+            return self.report(self.batch(batch["batch_id"]))
+        require(batch["status"] == "ACTIVE" and batch["policy_sha256"] == snapshot["policy_sha256"],
+                "UPGRADE_INTEGRITY", "Do not reopen critical halts or unreviewed contracts", True)
+        existing = {self.ref(p): calculate_sha256(p) for p in self.root.rglob("*")
+                    if p.is_file() and p.name != ".lock" and not p.is_relative_to(self.root / "migrations")}
+        require(existing == snapshot["files"], "UPGRADE_INTEGRITY", "State changed since pre-upgrade verification", True)
+        scope = request.get("lessons") or sorted(self.manifest["lessons"])
+        require(set(batch["lessons"]).issubset(scope), "UPGRADE_SCOPE", "Retain the current batch in scope")
+        self.list_lessons(scope)  # Recheck sources, raw evidence, audits, visuals and published PASSes.
+        directory = self.root / "migrations/continuous-v1"
+        before = self.archive(directory / "batch-before.json", batch_path.read_bytes())
+        checkpoints = [self.archive(directory / p.name, p.read_bytes())
+                       for p in sorted((self.root / "checkpoints").glob("*.json"))]
+        self.archive(directory / "receipt.json", json.dumps({
+            "task_id": "COURSE-HARNESS-V2-CONTINUOUS-EXECUTION", "previous_batch": before,
+            "checkpoint_snapshots": checkpoints, "reviewed_snapshot_sha256": UPGRADE_SNAPSHOT_SHA256,
+            "new_policy_sha256": self.policy_sha,
+            "change": "Continuous scheduling only; preserve all attempts, decisions and PASS checkpoint bytes"
+        }, ensure_ascii=False, indent=2).encode())
+        batch.update(mode="continuous", scope=scope, batch_size=5, policy_sha256=self.policy_sha,
+                     max_runtime_seconds=None, max_dispatches=None, max_known_tokens=None)
+        self.save_batch(batch)
+        return self.report(batch)
+
+    def batch(self, batch_id):
+        require(bool(re.fullmatch(r"batch-[a-f0-9]{16}", batch_id or "")), "INVALID_BATCH", "Invalid batch ID")
+        batch = self.load(self.root / "batches" / (batch_id + ".json"))
+        self.schema("native-batch.schema.json", batch)
+        require(batch["manifest_sha256"] == self.manifest_sha and batch["policy_sha256"] == self.policy_sha,
+                "BATCH_INTEGRITY", "Manifest or agent/tool contract changed since batch start", True)
+        return batch
+
+    def save_batch(self, batch):
+        self.schema("native-batch.schema.json", batch)
+        atomic_json(self.path(self.root / "batches" / (batch["batch_id"] + ".json")), batch)
+
+    def lesson_state(self, request):
+        lesson = request.get("lesson")
+        self.source(lesson or "")
+        require(not self.protected(lesson), "HUMAN_ACCEPTED_PROTECTED", "Accepted lessons cannot be changed", True)
+        batch = self.batch(request.get("batch"))
+        require(lesson in batch["lessons"], "LESSON_NOT_SELECTED", "Lesson is not in this batch")
+        chk = self.checkpoint(lesson)
+        require(chk is not None, "NOT_PREPARED", "Call prepare-lesson first")
+        self.check_bindings(chk)
+        return batch, chk
+
+    def archive(self, path, data):
+        path = self.path(path)
+        immutable_bytes(path, data)
+        return {"path": self.ref(path), "sha256": digest(data)}
+
+    def preflight(self):
+        definitions = {}
+        for name in ("producer", "worker", "auditor", "repair"):
+            p = self.workspace / ".agents/agents" / ("coursera-" + name) / "agent.md"
+            require(p.is_file(), "AGENT_MISSING", str(p))
+            definitions[name] = {"path": self.ref(p), "sha256": calculate_sha256(p)}
+        return {"provider_calls": 0, "execution_boundary": "AGY_NATIVE_ONLY", "agents": definitions,
+                "native_invocation": "NOT_VERIFIED", "model_requested": "gemini-3.8-flash-high",
+                "effort_requested": "high", "baselines": self.baseline_check(),
+                "manifest_sha256": self.manifest_sha, "policy_sha256": self.policy_sha,
+                "renderer_available": bool(shutil.which("mmdc")), "concurrency": 1,
+                "default_batch_size": 5, "default_mode": "continuous", "gemini_api": "DISABLED"}
+
+    def list_lessons(self, lessons=None):
+        ids = lessons or sorted(self.manifest["lessons"])
+        require(len(ids) == len(set(ids)), "DUPLICATE_LESSON", "Duplicate lesson IDs")
+        rows = []
+        for lesson in ids:
+            meta, _, _ = self.source(lesson)
+            chk = self.checkpoint(lesson)
+            if chk:
+                self.check_bindings(chk)
+                if chk["status"] == "PASS":
+                    self.verify_published(chk)
+            status = "HUMAN_ACCEPTED" if self.protected(lesson) else chk["status"] if chk else "PENDING"
+            rows.append({"lesson_id": lesson, "source_type": meta["source_type"], "source_status": meta["status"],
+                         "status": status, "eligible": meta["status"] in ("AVAILABLE", "INCOMPLETE") and status not in TERMINAL})
+        return {"lessons": rows}
+
+    def start_batch(self, request, batch_id=None, previous=None):
+        limit = request.get("limit", 5)
+        scope = request.get("lessons") or sorted(self.manifest["lessons"])
+        rows = self.list_lessons(scope)["lessons"]
+        active = self.root / "active_batch.json"
+        if active.exists():
+            prior = self.batch(self.load(active)["batch_id"])
+            require(prior["status"] == "COMPLETED", "BATCH_ACTIVE", "Resume the existing batch: " + prior["batch_id"])
+        mode = request.get("mode", "continuous")
+        batch = {"schema_version": VERSION, "batch_id": batch_id or "batch-" + uuid.uuid4().hex[:16],
+                 "course_id": self.course, "lessons": [r["lesson_id"] for r in rows if r["eligible"]][:limit],
+                 "mode": mode, "scope": scope, "batch_size": limit,
+                 "selection": rows, "manifest_sha256": self.manifest_sha, "policy_sha256": self.policy_sha,
+                 "status": "ACTIVE", "started_at": now(), "started_epoch": time.time(), "dispatches": 0,
+                 "max_dispatches": 40 if mode == "bounded" else None,
+                 "max_runtime_seconds": 1800 if mode == "bounded" else None,
+                 "max_known_tokens": 500000 if mode == "bounded" else None}
+        if previous:
+            batch["previous_batch_id"] = previous
+        self.archive(self.root / "manifest.json", json.dumps(self.manifest, ensure_ascii=False, indent=2).encode())
+        self.save_batch(batch)
+        atomic_json(active, {"batch_id": batch["batch_id"]})
+        return self.report(batch)
+
+    def advance_batch(self, batch):
+        require(batch.get("mode") == "continuous", "BOUNDED_SCOPE", "A bounded batch does not advance automatically")
+        seen = set()
+        while batch.get("next_batch_id"):
+            require(batch["batch_id"] not in seen, "BATCH_INTEGRITY", "Batch chain contains a cycle", True)
+            seen.add(batch["batch_id"])
+            child = self.batch(batch["next_batch_id"])
+            require(child.get("previous_batch_id") == batch["batch_id"] and child.get("scope") == batch["scope"] and
+                    child.get("mode") == "continuous" and child.get("batch_size") == batch["batch_size"],
+                    "BATCH_INTEGRITY", "Batch chain or scope differs", True)
+            batch = child
+        result = self.report(batch)
+        if batch["status"] != "COMPLETED" or result["next_action"] != "advance-batch":
+            return result
+        # A deterministic successor ID recovers a crash between child creation and linking.
+        successor = "batch-" + digest((batch["batch_id"] + ":next").encode())[:16]
+        path = self.root / "batches" / (successor + ".json")
+        if path.exists():
+            child = self.batch(successor)
+            require(child.get("previous_batch_id") == batch["batch_id"] and child.get("scope") == batch["scope"],
+                    "BATCH_INTEGRITY", "Unexpected successor batch", True)
+        else:
+            self.archive(self.root / "reports" / batch["batch_id"] / "completed.json",
+                         json.dumps(result, ensure_ascii=False, indent=2).encode())
+            self.start_batch({"lessons": batch["scope"], "limit": batch["batch_size"], "mode": "continuous"},
+                             batch_id=successor, previous=batch["batch_id"])
+            child = self.batch(successor)
+        batch["next_batch_id"] = successor
+        self.save_batch(batch)
+        atomic_json(self.root / "active_batch.json", {"batch_id": successor})
+        return self.report(child)
+
+    def suspend(self, request):
+        batch = self.batch(request["batch"])
+        require(batch["status"] == "ACTIVE", "BATCH_NOT_ACTIVE", "Cannot suspend a halted or finished batch")
+        reason = {"category": request["category"], "message": request["diagnostic"], "timestamp": now()}
+        require(reason["category"] in ("runtime", "cancelled"), "INVALID_SUSPENSION", "Use runtime or cancelled")
+        self.archive(self.root / "reports" / batch["batch_id"] / (uuid.uuid4().hex + "-suspension.json"),
+                     json.dumps(reason, ensure_ascii=False).encode())
+        batch["status"] = "CANCELLED" if reason["category"] == "cancelled" else "PAUSED"
+        batch["halt_reason"] = reason
+        self.save_batch(batch)
+        return self.report(batch)
+
+    def prepare(self, request):
+        batch = self.batch(request.get("batch"))
+        lesson = request.get("lesson")
+        require(lesson in batch["lessons"], "LESSON_NOT_SELECTED", "Lesson is not selected")
+        require(not self.protected(lesson), "HUMAN_ACCEPTED_PROTECTED", "Accepted lesson cannot be prepared", True)
+        meta, _, source_path = self.source(lesson)
+        require(meta["status"] in ("AVAILABLE", "INCOMPLETE"), "SOURCE_UNAVAILABLE", "Source cannot support production")
+        chk = self.checkpoint(lesson)
+        if chk is None:
+            chk = {"schema_version": VERSION, "course_id": self.course, "lesson_id": lesson,
+                   "status": "PENDING", "next_action": "worker", "source_sha256": meta["source_sha256"],
+                   "policy_sha256": self.policy_sha, "repair_rounds": 0, "attempts": [], "active_attempt": None}
+        self.check_bindings(chk)
+        require(batch["status"] == "ACTIVE", "BATCH_HALTED", "Batch is halted, suspended, cancelled or finished")
+        if chk["next_action"] not in ("worker", "auditor", "repair"):
+            return {"checkpoint": chk, "next_action": chk["next_action"]}
+        if chk.get("active_attempt"):
+            attempt = next(a for a in chk["attempts"] if a["attempt_id"] == chk["active_attempt"])
+            return {"checkpoint": chk, "packet": self.load(attempt["packet"]["path"]),
+                    "packet_path": attempt["packet"]["path"], "next_action": "recover_existing_native_invocation"}
+        for other in batch["lessons"]:
+            state = self.checkpoint(other)
+            require(other == lesson or not state or state["status"] in TERMINAL,
+                    "CONCURRENCY_LIMIT", "Finish the current lesson before starting another")
+        if batch.get("mode", "bounded") == "bounded":
+            require(batch["dispatches"] < batch["max_dispatches"] and
+                    time.time() - batch["started_epoch"] < batch["max_runtime_seconds"],
+                    "SAFE_BOUNDARY_LIMIT", "Explicit bounded batch limit reached; no new AI dispatch")
+            require(self.report(batch)["known_total_tokens"] < batch["max_known_tokens"],
+                    "TOKEN_BOUNDARY_LIMIT", "Known token bound reached")
+        role = chk["next_action"]
+        attempt_id = f"{role}-{uuid.uuid4().hex[:16]}"
+        directory = self.root / "attempts" / lesson / attempt_id
+        packet = {"schema_version": VERSION, "attempt_id": attempt_id, "role": role,
+                  "agent": "coursera-" + role, "course_id": self.course, "lesson_id": lesson,
+                  "source_path": self.ref(source_path), "source_sha256": meta["source_sha256"],
+                  "source_type": meta["source_type"], "source_status": meta["status"], "locators": meta.get("locators", []),
+                  "prompt_spec": f"course_harness/prompts/{role}.md", "metadata": meta,
+                  "artifact_output_path": self.ref(directory / ("output.json" if role == "auditor" else "output.md")),
+                  "runtime_evidence_output_path": self.ref(directory / "runtime-return.json"),
+                  "fresh_context_required": True, "read_only_candidate": role == "auditor"}
+        if role != "worker":
+            candidate = self.latest_candidate(chk)
+            packet.update({"candidate": candidate["candidate"], "visual_manifest": candidate["visual_manifest"],
+                           "candidate_root": candidate["candidate_root"], "draft_validation": candidate["validation"]})
+        if role == "repair":
+            failed = next(a for a in reversed(chk["attempts"]) if a.get("audit_validation"))
+            packet["verified_findings_path"] = failed["audit_validation"]["path"]
+        self.schema("native-packet.schema.json", packet)
+        artifact = self.archive(directory / "packet.json", json.dumps(packet, ensure_ascii=False, indent=2).encode())
+        chk["attempts"].append({"attempt_id": attempt_id, "role": role, "status": "DISPATCHED", "packet": artifact})
+        chk["active_attempt"] = attempt_id
+        self.save(chk)
+        batch["dispatches"] += 1
+        self.save_batch(batch)
+        return {"packet": packet, "packet_path": artifact["path"], "next_action": "invoke_native_subagent"}
+
+    def current_attempt(self, chk, attempt_id):
+        attempt = next((a for a in chk["attempts"] if a["attempt_id"] == attempt_id), None)
+        require(attempt is not None, "UNKNOWN_ATTEMPT", "Attempt was not prepared")
+        return attempt
+
+    def record(self, request):
+        _, chk = self.lesson_state(request)
+        attempt = self.current_attempt(chk, request.get("attempt"))
+        require(chk["active_attempt"] == attempt["attempt_id"] or attempt["status"] == "RECORDED",
+                "STALE_ATTEMPT", "Attempt is no longer active")
+        packet = self.load(attempt["packet"]["path"])
+        artifact_path, runtime_path = self.path(request["artifact"]), self.path(request["runtime_evidence"])
+        require(artifact_path == self.path(packet["artifact_output_path"]) and
+                runtime_path == self.path(packet["runtime_evidence_output_path"]), "WRONG_OUTPUT_PATH", "Use prepared output paths")
+        require(artifact_path.is_file() and runtime_path.is_file(), "MISSING_NATIVE_RESPONSE", "Native artifact/runtime return is missing")
+        artifact, runtime = artifact_path.read_bytes(), runtime_path.read_bytes()
+        for key, name, data in (("artifact", "response.raw", artifact), ("runtime", "runtime.raw.json", runtime)):
+            ref = self.archive(artifact_path.parent / name, data)
+            if attempt.get(key):
+                require(attempt[key] == ref, "EVIDENCE_COLLISION", "Attempt already has different output", True)
+            attempt[key] = ref
+        require(bool(artifact.strip()), "EMPTY_RESPONSE", "Native subagent returned no artifact")
+        try:
+            payload = json.loads(runtime)
+        except (ValueError, UnicodeDecodeError):
+            raise ToolError("INVALID_RUNTIME_RETURN", "Runtime return is not valid UTF-8 JSON")
+        require(isinstance(payload, dict), "INVALID_RUNTIME_RETURN", "Runtime evidence must be a JSON object")
+        if attempt["status"] == "RECORDED":
+            return {"checkpoint": chk, "next_action": chk["next_action"]}
+        # Only these fields actually returned in the raw AGY result can become metadata.
+        attempt["provenance"] = {key: payload.get(key) if payload.get(key) is not None else "NOT_VERIFIED"
+                                 for key in ("model", "conversation_id", "invocation_id", "usage", "effort")}
+        attempt["provenance"]["verification"] = "RUNTIME_RETURN_RECORDED_NOT_INDEPENDENTLY_AUTHENTICATED"
+        require(attempt["provenance"]["model"] in ("NOT_VERIFIED", "gemini-3.8-flash-high"),
+                "MODEL_MISMATCH", "Native runtime returned a different model", True)
+        require(attempt["provenance"]["effort"] in ("NOT_VERIFIED", "high"),
+                "EFFORT_MISMATCH", "Native runtime returned a different effort", True)
+        attempt["recorded_at"] = now()
+        attempt["status"] = "RECORDED"
+        chk["active_attempt"] = None
+        if attempt["role"] == "auditor":
+            chk["next_action"] = "validate-audit"
+        else:
+            if attempt["role"] == "repair":
+                chk["repair_rounds"] += 1
+            chk["next_action"] = "process-visuals"
+            chk["status"] = "DRAFTED"
+        self.save(chk)
+        return {"checkpoint": chk, "next_action": chk["next_action"]}
+
+    def latest_candidate(self, chk):
+        return next(a for a in reversed(chk["attempts"]) if a["role"] in ("worker", "repair") and a.get("artifact"))
+
+    def draft_check(self, chk, attempt):
+        meta, raw, _ = self.source(chk["lesson_id"])
+        content = self.path(attempt["candidate"]["path"]).read_text(encoding="utf-8")
+        base = self.path(attempt["candidate_root"])
+        vm = self.load(attempt["visual_manifest"]["path"])
+        issues = validate_draft_structure(content, meta["source_type"], lesson_id=chk["lesson_id"],
+                                          raw_source_content=raw, base_dir=str(base), check_student_cleanliness=True)
+        visuals = {"figures": vm["figures"], "manifest_path": str(self.path(attempt["visual_manifest"]["path"])),
+                   "manifest_sha256": attempt["visual_manifest"]["sha256"]}
+        issues += validate_automatic_visuals(content, visuals, str(base))
+        issues += scan_for_prohibited_instructor_images(content, [str(base / f["rendered_asset_path"])
+                     for f in vm["figures"] if f.get("rendered_asset_path")])
+        valid, category, message = validate_figure_semantic_binding(content, vm, lambda p: str(self.path(base / p)))
+        if not valid:
+            issues.append(f"{category}: {message}")
+        if meta["status"] == "INCOMPLETE" and not re.search(r"thiếu|không đầy đủ|chưa có|không có|hạn chế", content, re.I):
+            issues.append("INCOMPLETE source requires a transparent Vietnamese limitation")
+        blocking, warnings = classify_draft_issues(issues)
+        return {"valid": not blocking, "blocking": blocking, "warnings": warnings,
+                "candidate_sha256": attempt["candidate"]["sha256"], "human_visual_review": "PENDING" if vm["figures"] else "NOT_APPLICABLE"}
+
+    def visuals(self, request):
+        _, chk = self.lesson_state(request)
+        attempt = self.latest_candidate(chk)
+        if attempt.get("candidate"):
+            return {"validation": self.draft_check(chk, attempt), "next_action": chk["next_action"]}
+        require(chk["next_action"] == "process-visuals", "WRONG_STAGE", "No candidate awaiting visuals")
+        _, raw, _ = self.source(chk["lesson_id"])
+        content = self.path(attempt["artifact"]["path"]).read_text(encoding="utf-8")
+        figures = extract_figures_from_markdown(content)
+        base = self.path(Path(attempt["artifact"]["path"]).parent / "processed")
+        # An interrupted render directory is diagnostic evidence; render in a fresh generation.
+        base = base.with_name("processed-" + uuid.uuid4().hex[:12])
+        manager = VisualAssetManager(str(base / "assets"), automatic=True)
+        processed, vm_path, _ = manager.process_figures_for_lesson(chk["lesson_id"], figures, raw)
+        content = normalize_markdown_asset_paths(content, processed, lesson_id=chk["lesson_id"])
+        attempt["candidate"] = self.archive(base / "lesson.md", content.encode())
+        attempt["candidate_root"] = self.ref(base)
+        attempt["visual_manifest"] = {"path": self.ref(vm_path), "sha256": calculate_sha256(vm_path)}
+        validation = self.draft_check(chk, attempt)
+        attempt["validation"] = self.archive(base / "validation.json", json.dumps(validation, ensure_ascii=False, indent=2).encode())
+        if validation["valid"]:
+            chk["next_action"] = "auditor"
+        else:
+            chk["status"], chk["next_action"] = "BLOCKED", "done"
+        self.save(chk)
+        return {"candidate": attempt["candidate"], "visual_manifest": attempt["visual_manifest"],
+                "validation": validation, "next_action": chk["next_action"]}
+
+    def validate_audit(self, chk, attempt):
+        candidate = self.latest_candidate(chk)
+        require(self.draft_check(chk, candidate)["valid"], "DRAFT_BLOCKED", "Structural or visual errors remain")
+        packet = self.load(attempt["packet"]["path"])
+        require(packet["candidate"] == candidate["candidate"] and packet["visual_manifest"] == candidate["visual_manifest"],
+                "STALE_AUDIT", "Auditor input differs from the final candidate", True)
+        raw = self.path(attempt["artifact"]["path"]).read_text(encoding="utf-8")
+        try:
+            payload = json.loads(raw)
+        except ValueError:
+            raise ToolError("AUDIT_JSON_INVALID", "Auditor output is not strict JSON")
+        require(isinstance(payload, dict), "AUDIT_SCHEMA_INVALID", "Auditor output must be a JSON object")
+        schema_errors = list(self.validator.validator.iter_errors(payload))
+        require(not schema_errors, "AUDIT_SCHEMA_INVALID", "; ".join(e.message for e in schema_errors))
+        require(payload.get("audited_final_sha256") == candidate["candidate"]["sha256"],
+                "AUDIT_HASH_MISMATCH", "Auditor did not bind the exact candidate SHA256", True)
+        meta, _, _ = self.source(chk["lesson_id"])
+        content = self.path(candidate["candidate"]["path"]).read_text(encoding="utf-8")
+        require(payload.get("quality_rubric_version") == "2.0-visual-first",
+                "AUDIT_SCHEMA_INVALID", "Native audits require canonical Rubric 2.0")
+        try:
+            # Legacy strict mode additionally requires acceptance, so apply it only to PASS.
+            report, warnings = self.validator.validate_report(
+                raw, chk["lesson_id"], meta["source_type"], meta["status"],
+                strict_rubric_2_0=payload.get("verdict") == "PASS", final_markdown=content)
+        except ValidationError as exc:
+            raise ToolError("AUDIT_SCHEMA_INVALID", str(exc))
+        vm = self.load(candidate["visual_manifest"]["path"])
+        require(payload.get("visual_figures_audited") == len(vm["figures"]), "AUDIT_VISUAL_MISMATCH", "Auditor figure count differs")
+        if vm["figures"]:
+            require(payload.get("visual_manifest_sha256") == candidate["visual_manifest"]["sha256"],
+                    "AUDIT_VISUAL_MISMATCH", "Auditor visual manifest hash differs", True)
+        contexts = [a["provenance"]["conversation_id"] for a in chk["attempts"] if a.get("artifact")]
+        independent = all(isinstance(c, str) and c and c != "NOT_VERIFIED" for c in contexts) and len(set(contexts)) == len(contexts)
+        eligible, reason = is_production_quality_eligible(report, meta["source_type"], meta["status"])
+        return {"report": report, "warnings": warnings, "quality_eligible": eligible,
+                "quality_reason": reason, "independent_context": "REPORTED_DISTINCT_CONTEXT" if independent else "NOT_VERIFIED",
+                "production_eligible": eligible and independent,
+                "candidate_sha256": candidate["candidate"]["sha256"],
+                "visual_manifest_sha256": candidate["visual_manifest"]["sha256"]}
+
+    def audit(self, request):
+        _, chk = self.lesson_state(request)
+        attempt = next(a for a in reversed(chk["attempts"]) if a["role"] == "auditor" and a.get("artifact"))
+        if attempt.get("audit_validation"):
+            return {"validation": self.validate_audit(chk, attempt), "next_action": chk["next_action"]}
+        require(chk["next_action"] == "validate-audit", "WRONG_STAGE", "No audit awaiting validation")
+        validation = self.validate_audit(chk, attempt)
+        attempt["audit_validation"] = self.archive(self.path(attempt["artifact"]["path"]).parent / "audit-validation.json",
+                                                   json.dumps(validation, ensure_ascii=False, indent=2).encode())
+        if validation["production_eligible"]:
+            chk["status"], chk["next_action"] = "AUDITED", "publish"
+        elif validation["independent_context"] == "NOT_VERIFIED" or validation["report"]["verdict"] == "INCONCLUSIVE" or chk["repair_rounds"] >= 2:
+            chk["status"], chk["next_action"] = "NEEDS_HUMAN_REVIEW", "done"
+        else:
+            chk["status"], chk["next_action"] = "REPAIRING", "repair"
+        self.save(chk)
+        return {"validation": validation, "next_action": chk["next_action"]}
+
+    def failure(self, request):
+        batch, chk = self.lesson_state(request)
+        require(chk["status"] not in TERMINAL, "TERMINAL_LESSON", "Terminal evidence cannot be reset")
+        category = request["category"]
+        require(category in ("transient", "integrity", "authentication", "budget", "lesson"),
+                "INVALID_FAILURE", "Runtime suspension/cancellation does not fail a lesson")
+        fatal = category in ("integrity", "authentication", "budget")
+        diagnostic = {"category": category, "message": request["diagnostic"], "timestamp": now()}
+        self.archive(self.root / "diagnostics" / chk["lesson_id"] / (uuid.uuid4().hex + ".json"),
+                     json.dumps(diagnostic, ensure_ascii=False).encode())
+        attempt = self.current_attempt(chk, request.get("attempt") or chk["active_attempt"] or chk["attempts"][-1]["attempt_id"])
+        require(attempt["status"] != "FAILED", "STALE_ATTEMPT", "Failure is already recorded")
+        attempt["status"], attempt["failure"] = "FAILED", diagnostic
+        chk["active_attempt"] = None
+        chk["next_action"] = attempt["role"]
+        failures = sum(a["status"] == "FAILED" for a in chk["attempts"])
+        if category != "transient" or failures >= 3:
+            chk["status"], chk["next_action"] = "BLOCKED", "done"
+        if fatal:
+            batch["status"], batch["halt_reason"] = "HALTED", diagnostic
+            self.save_batch(batch)
+        self.save(chk)
+        return {"fatal": fatal, "checkpoint": chk, "next_action": chk["next_action"]}
+
+    def verify_published(self, chk):
+        publication = self.path(chk["publication_path"])
+        require((publication / "lesson.md").is_file() and calculate_sha256(publication / "lesson.md") == chk["final_sha256"],
+                "PUBLICATION_INTEGRITY", "Published candidate changed", True)
+        for relative, sha in chk["publication_files"].items():
+            path = confined(publication / relative, publication)
+            require(path.is_file() and calculate_sha256(path) == sha,
+                    "PUBLICATION_INTEGRITY", "Published evidence changed", True)
+        auditor = next(a for a in reversed(chk["attempts"]) if a.get("audit_validation"))
+        require(self.validate_audit(chk, auditor)["production_eligible"], "PUBLICATION_INTEGRITY", "Published audit is no longer valid", True)
+        candidate = self.latest_candidate(chk)
+        require(chk["final_sha256"] == candidate["candidate"]["sha256"], "PUBLICATION_INTEGRITY", "Publication differs from audited candidate", True)
+        vm = self.load(candidate["visual_manifest"]["path"])
+        for fig in vm["figures"]:
+            for key in ("source_spec", "rendered_asset"):
+                p = publication / fig[key + "_path"]
+                require(p.is_file() and calculate_sha256(p) == fig[key + "_sha256"],
+                        "PUBLICATION_INTEGRITY", "Published visual differs", True)
+
+    def publish(self, request):
+        _, chk = self.lesson_state(request)
+        if chk["status"] == "PASS":
+            self.verify_published(chk)
+            return {"checkpoint": chk, "next_action": "done"}
+        require(chk["next_action"] == "publish", "WRONG_STAGE", "Quality gates have not passed")
+        auditor = next(a for a in reversed(chk["attempts"]) if a.get("audit_validation"))
+        validation = self.validate_audit(chk, auditor)
+        require(validation["production_eligible"], "QUALITY_GATE_FAILED", "Fresh independent audit and deterministic PASS required")
+        candidate = self.latest_candidate(chk)
+        publication = self.root / "publications" / chk["lesson_id"] / candidate["attempt_id"]
+        base = self.path(candidate["candidate_root"])
+        for p in sorted(base.rglob("*")):
+            if p.is_file():
+                self.archive(publication / p.relative_to(base), confined(p, base).read_bytes())
+        self.archive(publication / "audit.raw.json", self.path(auditor["artifact"]["path"]).read_bytes())
+        quality = {"status": "AUTOMATIC_PRODUCTION_PASS", "human_acceptance": "NOT_GRANTED",
+                   "human_visual_review": "PENDING" if self.load(candidate["visual_manifest"]["path"])["figures"] else "NOT_APPLICABLE",
+                   "provenance": "RUNTIME_REPORTED_NOT_INDEPENDENTLY_AUTHENTICATED", "validation": validation}
+        self.archive(publication / "quality-report.json", json.dumps(quality, ensure_ascii=False, indent=2).encode())
+        chk.update({"status": "PASS", "next_action": "done", "publication_path": self.ref(publication),
+                    "final_sha256": candidate["candidate"]["sha256"], "evidence_class": "AGY_NATIVE_RUNTIME_REPORTED",
+                    "publication_files": {str(p.relative_to(publication)): calculate_sha256(p)
+                                          for p in publication.rglob("*") if p.is_file()}})
+        self.save(chk)
+        self.verify_published(chk)
+        return {"checkpoint": chk, "quality": quality, "next_action": "done"}
+
+    def report(self, batch):
+        rows, known_tokens, unknown_usage = [], 0, 0
+        for lesson in batch["lessons"]:
+            chk = self.checkpoint(lesson)
+            if chk:
+                self.check_bindings(chk)
+                if chk["status"] == "PASS":
+                    self.verify_published(chk)
+                for a in chk["attempts"]:
+                    usage = a.get("provenance", {}).get("usage")
+                    value = usage.get("total_tokens") if isinstance(usage, dict) else None
+                    if type(value) is int and value >= 0:
+                        known_tokens += value
+                    elif a["status"] in ("RECORDED", "FAILED"):
+                        unknown_usage += 1
+            row = {"lesson_id": lesson, "status": chk["status"] if chk else "PENDING",
+                   "next_action": chk["next_action"] if chk else "prepare-lesson"}
+            if chk and chk["status"] in ("BLOCKED", "NEEDS_HUMAN_REVIEW"):
+                row["diagnostic_checkpoint"] = self.ref(self.root / "checkpoints" / (lesson + ".json"))
+                failure = next((a["failure"] for a in reversed(chk["attempts"]) if a.get("failure")), None)
+                row["reason"] = failure or "See checkpoint validation/audit findings; publication was not granted"
+            rows.append(row)
+        pending = next((r["lesson_id"] for r in rows if r["status"] not in TERMINAL), None)
+        if pending is None and batch["status"] == "ACTIVE":
+            batch["status"] = "COMPLETED"
+            self.save_batch(batch)
+        mode = batch.get("mode", "bounded")
+        action = "prepare-lesson" if pending else "done"
+        scope_status = "ACTIVE" if pending else "COMPLETED"
+        summary = {}
+        if batch["status"] == "COMPLETED":
+            scope_rows = self.list_lessons(batch.get("scope", batch["lessons"]))["lessons"]
+            for row in scope_rows:
+                summary[row["status"]] = summary.get(row["status"], 0) + 1
+            remaining = any(row["eligible"] for row in scope_rows)
+            if remaining and mode == "continuous":
+                action, scope_status = "advance-batch", "ACTIVE"
+            elif any(row["status"] in ("BLOCKED", "NEEDS_HUMAN_REVIEW") for row in scope_rows):
+                scope_status = "COMPLETED_WITH_FAILURES"
+        if batch["status"] in ("HALTED", "PAUSED", "CANCELLED"):
+            action, scope_status = "stop", batch["status"]
+        return {"batch_id": batch["batch_id"], "status": batch["status"], "lessons": rows,
+                "mode": mode, "scope": batch.get("scope", batch["lessons"]),
+                "scope_status": scope_status, "scope_summary": summary, "next_action": action,
+                "halt_reason": batch.get("halt_reason"),
+                "next_lesson": pending, "known_total_tokens": known_tokens,
+                "unreported_usage_attempts": unknown_usage, "monetary_cost": "NOT_VERIFIED",
+                "dispatches": batch["dispatches"], "concurrency": 1,
+                "resume_instruction": f"Sử dụng Coursera Producer khôi phục batch {batch['batch_id']} của khóa {self.course} từ checkpoint và tự tiếp tục toàn bộ phạm vi đã lưu. Không gọi lại phần việc đã ghi nhận; không chờ xác nhận sau mỗi batch."}
+
+    def execute(self, request):
+        self.schema("native-request.schema.json", request)
+        try:
+            result = self._execute(request)
+            self.schema("native-result.schema.json", {"schema_version": VERSION, "ok": True,
+                                                     "operation": request["operation"], "result": result})
+            return result
+        except ToolError as exc:
+            if exc.fatal and re.fullmatch(r"batch-[a-f0-9]{16}", request.get("batch", "")):
+                with self.locked():
+                    path = self.root / "batches" / (request["batch"] + ".json")
+                    if path.exists():
+                        batch = self.load(path)
+                        batch["status"] = "HALTED"
+                        batch["halt_reason"] = {"code": exc.code, "message": str(exc), "timestamp": now()}
+                        self.save_batch(batch)
+            raise
+
+    def _execute(self, request):
+        op = request["operation"]
+        if op == "preflight":
+            return self.preflight()
+        self.baseline_check()
+        if op == "list-lessons":
+            return self.list_lessons(request.get("lessons"))
+        with self.locked():
+            if op == "upgrade-continuous":
+                return self.upgrade_continuous(request)
+            if op == "start-batch":
+                return self.start_batch(request)
+            if op in ("report-batch", "resume", "advance-batch"):
+                batch = self.batch(request.get("batch"))
+                require(op != "advance-batch" or batch.get("mode") == "continuous", "BOUNDED_SCOPE",
+                        "A bounded batch does not advance automatically")
+                if op in ("resume", "advance-batch") and batch.get("mode") == "continuous":
+                    result = self.advance_batch(batch)
+                    batch = self.batch(result["batch_id"])
+                if op == "resume" and batch["status"] == "PAUSED":
+                    batch["status"] = "ACTIVE"
+                    self.save_batch(batch)
+                result = self.report(batch)
+                artifact = self.archive(self.root / "reports" / result["batch_id"] / (uuid.uuid4().hex + ".json"),
+                                        json.dumps(result, ensure_ascii=False, indent=2).encode())
+                result["report_path"] = artifact["path"]
+                return result
+            if op == "suspend":
+                return self.suspend(request)
+            if op == "prepare-lesson":
+                return self.prepare(request)
+            if op == "record-attempt":
+                return self.record(request)
+            if op == "process-visuals":
+                return self.visuals(request)
+            if op == "validate-draft":
+                _, chk = self.lesson_state(request)
+                return self.draft_check(chk, self.latest_candidate(chk))
+            if op == "validate-audit":
+                return self.audit(request)
+            if op == "record-failure":
+                return self.failure(request)
+            if op == "publish":
+                return self.publish(request)
+        raise ToolError("UNKNOWN_OPERATION", op)
+
+
+class Parser(argparse.ArgumentParser):
+    def error(self, message):
+        raise ToolError("INVALID_ARGUMENTS", message)
+
+
+def main(argv=None):
+    operation = None
+    try:
+        parser = Parser(description=__doc__)
+        parser.add_argument("operation", choices=OPERATIONS)
+        parser.add_argument("--course", required=True)
+        parser.add_argument("--lesson")
+        parser.add_argument("--lessons", nargs="+")
+        parser.add_argument("--limit", type=int, default=5)
+        parser.add_argument("--mode", choices=("continuous", "bounded"))
+        parser.add_argument("--batch")
+        parser.add_argument("--attempt")
+        parser.add_argument("--artifact")
+        parser.add_argument("--runtime-evidence")
+        parser.add_argument("--category", choices=("transient", "integrity", "authentication", "budget", "lesson", "runtime", "cancelled"))
+        parser.add_argument("--diagnostic")
+        request = {k: v for k, v in vars(parser.parse_args(argv)).items() if v is not None}
+        operation = request["operation"]
+        tool = NativeTools(Path.cwd(), request["course"])
+        result = tool.execute(request)
+        envelope = {"schema_version": VERSION, "ok": True, "operation": operation, "result": result}
+        print(json.dumps(envelope, ensure_ascii=False))
+        return 0
+    except (ToolError, OSError, ValueError, KeyError, StopIteration) as exc:
+        code = exc.code if isinstance(exc, ToolError) else "INVALID_INPUT_OR_EVIDENCE"
+        fatal = exc.fatal if isinstance(exc, ToolError) else True
+        print(json.dumps({"schema_version": VERSION, "ok": False, "operation": operation,
+                          "error": {"code": code, "message": str(exc), "fatal": fatal}}, ensure_ascii=False))
+        return 3 if fatal else 2
+
+
+if __name__ == "__main__":
+    sys.exit(main())

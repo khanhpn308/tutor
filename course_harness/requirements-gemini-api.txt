@@ -1,0 +1,3 @@
+# Archived API experiment and offline regression tests only. No live authorization.
+-r requirements.txt
+google-genai==2.33.0

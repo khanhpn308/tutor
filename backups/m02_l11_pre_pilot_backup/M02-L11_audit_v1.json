@@ -1,0 +1,38 @@
+{
+  "lesson_id": "M02-L11",
+  "verdict": "PASS",
+  "summary": "Bản dự thảo (Draft) đạt chất lượng xuất sắc trên toàn bộ 7 tiêu chí kiểm định. Nội dung bám sát 100% tài liệu gốc (Raw Source), không có hiện tượng bịa đặt thông tin hay tự chế đáp án câu hỏi. Hệ thống hóa cấu trúc sư phạm rõ ràng, đối chiếu thuật ngữ Anh - Việt chuẩn mực theo Scrum Guide và giữ nguyên vẹn các ví dụ thực tế (đội phần mềm, đội tiếp thị, đặc thù tại Google). Chỉ tồn tại 2 điểm lưu ý nhỏ ở mức LOW liên quan đến việc làm rõ xuất xứ thuật ngữ mở rộng và bổ sung mốc thời gian audio.",
+  "dimension_scores": {
+    "SOURCE_FIDELITY": "MINOR_ISSUES",
+    "COMPLETENESS": "MET",
+    "TECHNICAL_ACCURACY": "MET",
+    "TERMINOLOGY": "MET",
+    "PEDAGOGICAL_QUALITY": "MET",
+    "STRUCTURE": "MET",
+    "TRACEABILITY": "MINOR_ISSUES"
+  },
+  "findings": [
+    {
+      "finding_id": "F-001",
+      "severity": "LOW",
+      "category": "SOURCE_FIDELITY",
+      "source_locator": "Mục 'The Scrum Master' & 'Scrum Master vs. project manager'",
+      "draft_locator": "Mục 3.2, Bảng so sánh (Hàng 'Phong cách lãnh đạo')",
+      "description": "Bản draft đưa vào khái niệm 'Lãnh đạo phục vụ (Servant Leader)' để đối sánh với phong cách chỉ đạo truyền thống. Mặc dù đây là khái niệm chuẩn xác trong lý thuyết Agile/Scrum, văn bản gốc chỉ sử dụng các thuật ngữ 'coach' và 'strong leadership skills' mà không trực tiếp nhắc tới cụm từ 'Servant Leader'.",
+      "required_action": "Bổ sung ghi chú nguồn (ví dụ: '[Khái niệm chuẩn hóa trong Scrum Guide]') hoặc điều chỉnh từ ngữ bám sát nguyên bản ('Đóng vai trò Huấn luyện viên - Coach với năng lực lãnh đạo/điều phối')."
+    },
+    {
+      "finding_id": "F-002",
+      "severity": "LOW",
+      "category": "TRACEABILITY",
+      "source_locator": "Toàn văn tài liệu gốc (Audio narration 0:06 - 7:50)",
+      "draft_locator": "Mục 8 (Source Traceability)",
+      "description": "Bảng đối chiếu nguồn đã dẫn chiếu chính xác theo tiêu đề phân đoạn và cụm từ then chốt, nhưng chưa ánh xạ mốc thời gian âm thanh tương ứng từ file Audio đính kèm (tổng thời lượng 7:50) cho học liệu dạng Reading kết hợp Audio.",
+      "required_action": "Bổ sung cột mốc thời gian ước lượng (Audio Timestamps, ví dụ: 00:30 - 02:15) vào bảng đối chiếu nguồn để hỗ trợ tối đa người học sử dụng tệp âm thanh đính kèm."
+    }
+  ],
+  "limitations": [
+    "Auditor chia sẻ cùng họ mô hình Gemini 3.8 Flash High với Worker",
+    "Kiểm định đối chiếu dựa trên văn bản bài đọc (Reading text); thông tin ngữ điệu trong tệp audio đi kèm (7:50) được giả định khớp hoàn toàn với văn bản transcript gốc."
+  ]
+}

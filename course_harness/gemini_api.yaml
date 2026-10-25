@@ -1,0 +1,36 @@
+models:
+  worker: {model: gemini-3.8-flash, effort: high}
+  auditor: {model: gemini-3.8-flash, effort: high, fresh_session: true, read_only: true}
+  repair: {model: gemini-3.8-flash, effort: high}
+workflow:
+  max_repair_rounds: 2
+  resumable: true
+  source_grounded: true
+  audit_required: true
+  model_fallback: false
+  seed_drafts:
+    M01-L01:
+      path: generated_course/Agile_Project_Management/drafts/M01-L01_draft_v1.md
+      sha256: c50c81928cbfc4d17813c0e24976776ee1853ab31f73b06db63b14b9d3fc2f3b
+      source_sha256: 1d9f0b5020138cb86f7d122dff71dbc05db7c7d31379eb022ebca04a7ff11a3d
+      visual_manifest_path: generated_course/Agile_Project_Management/assets/M01-L01/visual_manifest.json
+      visual_manifest_sha256: 97f91f3767b8bdc48c51e5535d540702e5515f160aacfb2055d808dc5ff5c518
+execution:
+  enabled: false  # Historical experimental provider; not authorized for production.
+  mode: gemini_api
+  timeout_seconds: 180
+  max_retries: 2
+paths:
+  course_id: Agile_Project_Management
+  source_dir: output_course/Agile_Project_Management
+  output_dir: generated_course/Agile_Project_Management/gemini_api
+  approved_output_dir: generated_course/Agile_Project_Management
+  manifest_path: generated_course/Agile_Project_Management/manifest.json
+  schema_path: course_harness/schemas/audit.schema.json
+  prompts_dir: course_harness/prompts
+resources:
+  max_lessons: 10000
+  max_concurrency: 1
+  max_provider_invocations: 60
+  max_batch_tokens: 500000
+  max_batch_runtime_seconds: 3600

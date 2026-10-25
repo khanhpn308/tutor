@@ -1,0 +1,413 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Native deterministic tool result",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "ok",
+    "operation"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "2.0"
+    },
+    "ok": {
+      "type": "boolean"
+    },
+    "operation": {
+      "enum": [
+        null,
+        "preflight",
+        "list-lessons",
+        "start-batch",
+        "prepare-lesson",
+        "record-attempt",
+        "process-visuals",
+        "validate-draft",
+        "validate-audit",
+        "record-failure",
+        "publish",
+        "report-batch",
+        "resume",
+        "advance-batch",
+        "suspend",
+        "upgrade-continuous"
+      ]
+    },
+    "result": {
+      "type": "object",
+      "properties": {
+        "next_action": {
+          "type": "string"
+        },
+        "checkpoint": {
+          "type": "object"
+        },
+        "packet": {
+          "type": "object"
+        },
+        "packet_path": {
+          "type": "string"
+        },
+        "validation": {
+          "type": "object"
+        },
+        "lessons": {
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "batch_id": {
+          "type": "string",
+          "pattern": "^batch-[a-f0-9]{16}$"
+        },
+        "status": {
+          "type": "string"
+        },
+        "next_lesson": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "known_total_tokens": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "unreported_usage_attempts": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "monetary_cost": {
+          "const": "NOT_VERIFIED"
+        },
+        "dispatches": {
+          "type": "integer"
+        },
+        "concurrency": {
+          "const": 1
+        },
+        "resume_instruction": {
+          "type": "string"
+        },
+        "valid": {
+          "type": "boolean"
+        },
+        "blocking": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "warnings": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "candidate_sha256": {
+          "type": "string",
+          "pattern": "^[a-f0-9]{64}$"
+        },
+        "candidate": {
+          "type": "object",
+          "required": [
+            "path",
+            "sha256"
+          ],
+          "properties": {
+            "path": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          },
+          "additionalProperties": false
+        },
+        "visual_manifest": {
+          "type": "object",
+          "required": [
+            "path",
+            "sha256"
+          ],
+          "properties": {
+            "path": {
+              "type": "string",
+              "minLength": 1
+            },
+            "sha256": {
+              "type": "string",
+              "pattern": "^[a-f0-9]{64}$"
+            }
+          },
+          "additionalProperties": false
+        },
+        "fatal": {
+          "type": "boolean"
+        },
+        "quality": {
+          "type": "object"
+        },
+        "mode": {
+          "enum": [
+            "continuous",
+            "bounded"
+          ]
+        },
+        "scope": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "scope_status": {
+          "enum": [
+            "ACTIVE",
+            "COMPLETED",
+            "COMPLETED_WITH_FAILURES",
+            "HALTED",
+            "PAUSED",
+            "CANCELLED"
+          ]
+        },
+        "scope_summary": {
+          "type": "object"
+        }
+      }
+    },
+    "error": {
+      "type": "object",
+      "required": [
+        "code",
+        "message",
+        "fatal"
+      ],
+      "properties": {
+        "code": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        },
+        "fatal": {
+          "type": "boolean"
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "additionalProperties": false,
+  "oneOf": [
+    {
+      "properties": {
+        "ok": {
+          "const": true
+        }
+      },
+      "required": [
+        "result"
+      ]
+    },
+    {
+      "properties": {
+        "ok": {
+          "const": false
+        }
+      },
+      "required": [
+        "error"
+      ]
+    }
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "ok": {
+            "const": true
+          },
+          "operation": {
+            "enum": [
+              "preflight"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "result": {
+            "required": [
+              "provider_calls",
+              "execution_boundary",
+              "agents",
+              "baselines",
+              "native_invocation"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "ok": {
+            "const": true
+          },
+          "operation": {
+            "enum": [
+              "list-lessons"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "result": {
+            "required": [
+              "lessons"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "ok": {
+            "const": true
+          },
+          "operation": {
+            "enum": [
+              "start-batch",
+              "report-batch",
+              "resume",
+              "advance-batch",
+              "suspend",
+              "upgrade-continuous"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "result": {
+            "required": [
+              "batch_id",
+              "status",
+              "lessons",
+              "next_lesson",
+              "resume_instruction",
+              "known_total_tokens",
+              "unreported_usage_attempts",
+              "monetary_cost"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "ok": {
+            "const": true
+          },
+          "operation": {
+            "enum": [
+              "prepare-lesson"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "result": {
+            "required": [
+              "next_action"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "ok": {
+            "const": true
+          },
+          "operation": {
+            "enum": [
+              "record-attempt",
+              "record-failure",
+              "publish"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "result": {
+            "required": [
+              "checkpoint",
+              "next_action"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "ok": {
+            "const": true
+          },
+          "operation": {
+            "enum": [
+              "process-visuals",
+              "validate-audit"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "result": {
+            "required": [
+              "validation",
+              "next_action"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "ok": {
+            "const": true
+          },
+          "operation": {
+            "enum": [
+              "validate-draft"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "result": {
+            "required": [
+              "valid",
+              "blocking",
+              "warnings",
+              "candidate_sha256"
+            ]
+          }
+        }
+      }
+    }
+  ]
+}

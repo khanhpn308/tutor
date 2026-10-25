@@ -1,0 +1,68 @@
+# 🎥 Customizing Git Bash Prompt (Lab)
+
+🔗 **Link Video MP4:** [Xem / Tải Video](https://d3c33hcgiwev3.cloudfront.net/9dced2d0-4851-4bb3-a399-7b62ee7d4f87_c512d8bfc3394cecacf6587b47797d9b_video27_1.mp4.mediaconvert/full/9dced2d0-4851-4bb3-a399-7b62ee7d4f87_c512d8bfc3394cecacf6587b47797d9b_video27_1_WEBM_540.webm?Expires=1793059200&Signature=RcTV9zFi~J~MVz9HALnxfNoWdxdZyRPKfxNUwvSyk~oSvM6HMcFDn4hreG7Bo~xYFfFI~AUo4fyR4NrSsoLialOBCQN~vHz4ps8VOntYn2xMLav2GpdyVe4ceGVHD7t170Mv6jhHwM~~0mr4thr2AL~zCji4DJIM1FzdkhkYXLQ_&Key-Pair-Id=APKAJLTNE6QMUY6HBC5A)
+
+---
+
+## 📜 Transcript (Lời giảng viên)
+
+Play video starting at ::10 and follow transcript
+0:10
+​Hi, welcome in ​this lecture. I'll show ​how to customize the ​git prompt. ​So as you can see ​in the red box, ​so this is the ​git prompt with which we have been working so far. ​And the prompt consists of several parts, for example ​HPP ​PC. ​This is the name of the user. Then there is ​a ​symbol and then HP, this is the name of the host. Then there is a space in between. 
+Play video starting at ::41 and follow transcript
+0:41
+​And after that, there is a git ​fast, which is my current working directory. Then there is a space in between. ​And after that, there is a dollar form ​and then there is a space in between. ​So this comprises of the entire ​prompt ​that you have been working so far. ​I'm sure this is not the kind of prompt ​you were having after installing it in your machine, ​but it is quite possible to get this prompt and I'll show you how to do that. ​And not only that I'll be able to show you how to ​get better prompt and friendlier prompt while working with ​Gitbash. ​Also, ​the prompt can be customized to include several ​functionalities that will make you more productive Now, ​in this lecture, I will show the code that will work well in the Windows. 
+Play video starting at :1:37 and follow transcript
+1:37
+​Linux ​and Mac, I have not kept separate lectures for Windows. ​Linux or mac intentionally because the same code that works in Windows ​will also also work in Linux and Mac with some additional adjustments. ​So let's get started. ​Now, let's see what kind of code is responsible for this prompt. ​So I'll show you that right now. ​So let's see by trying out the ​ECO ​command. So if I do ​eco ​dollar PS one, don't worry about what is PS one, I'll explain shortly. 
+Play video starting at :2:13 and follow transcript
+2:13
+​So press enter. ​So here is a code that is responsible for this kind of prompt that we're getting. ​Now, the bash prompt is controlled via special variables. ​So there are variables like PS one, PS two, ​PS three and PS four for our purpose. We'll be working with PS one variable only ​displays the primary prompt. PS one ​when it is ready ​to read a command and the secondary prompt, PS two ​when it needs more input to complete a command. ​Now we'll be working with PS one only now. 
+Play video starting at :2:54 and follow transcript
+2:54
+​Bash allows these prompt strings to be ​customized by inserting a number of backslash escape ​special characters. Now, shortly I'll show you what are those ​special characters and what they do. Now, this code actually lies or resides in the ​bash ​RC ​file. ​So let's check it out. ​So let's open the ​bash ​file. ​So the ​bash ​file resides on the home directory. ​So we ​TDE ​which represents the home directory ​slash ​bash. 
+Play video starting at :3:37 and follow transcript
+3:37
+​So that was a Typo, I'll retype it V ​TLL ​bash. ​And so here is a code that was residing in my ​pass ​file ​that was responsible for the kind of bash prompt I was getting. ​Now, since I want to show you ​how to build up a customized bash prompt from the scratch, ​I'll just undo this code or remove this code. So let's press the I key to insert. ​Let's come down and remove this code. OK? ​OK. So now I have removed this code, I'll escape, quit and save ​WQ press enter ​and now we're back in the editor. 
+Play video starting at :4:23 and follow transcript
+4:23
+​Now I'll exit from the editor ​and restart the bash terminal. ​OK. So I have restarted the bash terminal. ​Now, remember that I'm currently on the Windows platform. ​Now, I'm quite sure for those who have installed ​git ​afresh ​on Windows will be getting a prompt somewhat similar like this, ​except this portion which will be different ​depending on the name of the user and the name of the host that you're having ​as I mentioned earlier. So this is the portion which represents ​first ​the ​name of the user, ​then the at symbol and the name of the host, ​this is called Mingw ​64 or ​M ​IGW ​64. So what does it mean? 
+Play video starting at :5:19 and follow transcript
+5:19
+​So the 64 stands for 64 bit ​and ​M ​IGW ​stands for minimalist ​GNU for Windows. ​Now ​IGW ​is a free and open source software ​development environment for creating Windows applications. ​M ​NGW ​64 ​is applicable for Windows only. ​However, whatever I'll teach you now will be equally applicable to Linux ​and Mac platforms with suitable adjustments. ​Now let's check the value of the PS one variable ​which is responsible ​for this kind of prompt. ​So we get this value by using the eco command, ​printing out the PS one variable, ​we need to put a dollar since it's a variable press enter. ​So here is the code that is responsible for the kind of prompt ​that you're getting in windows ​just after installing git. 
+Play video starting at :6:25 and follow transcript
+6:25
+​Now, initially, this code might appear very complicated to you ​but don't, ​I'll be expelling every component and I'll show you how to build ​up a custom batch prompt that will make the environment more friendlier ​as well as make you more productive. Now, ​you can override this bash prompt that you're getting right now ​by resetting the PS one variables value. So let me show you now how to do that. ​So simply type PS one ​equals, ​let's start with a value. Hello? ​That will look nice when you enter ​into the bash prompt. So this is a simple string. 
+Play video starting at :7:9 and follow transcript
+7:09
+​We give an exclamation mark then backslash ​W ​now this backslash ​W ​where W is in uppercase ​represents the current working directory and this is called a prompt string. ​Now, there are several other prompt string. I'll show you, which can be used, ​used to get custom bash prompt. ​So once we have our working directory, let's have a space and then print a dollar. ​So the dollar will actually be the end of the prompt. ​And let's have a space after the dollar symbol. Now, let's space enter ​and here you go. Now, you can see ​the prompt has changed from this one ​to this one and this is our custom bash prompt right now. So this is a simple ​hello string. And this is ​T ​which represents the home directory. 
+Play video starting at :8:3 and follow transcript
+8:03
+​And this comes from this part of the code which is backlash ​uppercase W for current working directory. ​And the dollar space is a simple string that is reflected here. Now, if you see ​into a directory ​called ​git ​fast, you can see ​the working directory automatically changes from the home directory ​to the git fast ​directory. So now let me show you more examples of prom strings. So here they are. ​So here is one prompt string which is backlash, ​H where H is in lowercase ​and it represents the hostname. ​Here is another prompt string, ​which is ​U ​which represents the username ​of the machine you're using. This is another prompt ​which is backslash then ​at symbol ​and this represents the current time in 12 hour format with A ​PM. So let's try out some of these pro strings ​in the bash terminal. 
+Play video starting at :9:12 and follow transcript
+9:12
+​So let's clear the screen now, ​I'll press the arrow key to retrieve the earlier PS one variable that we assigned ​and let's modify it. We'll remove the backslash ​W ​with ​U in lower ​case, then given ​a symbol ​and ​H ​in lowercase. Let's press enter ​and here you go. Now, since we replaced ​W withl ​U ​at rate, ​H so ​git ​fast ​is that was a working directory ​is replaced ​by ​username, which is HPP ​PC ​for me ​at ​HP, which is a hostname. Now, let me show you another example. ​So I press the arrow key to retrieve the earlier assign value of PS one. ​Now I'll remove this prom string ​with something else. 
+Play video starting at :10:11 and follow transcript
+10:11
+​So let's try to get the current time. ​So I say it's then backslash at symbol ​which represents the current time in 12 hour format. ​Let's press ​enter ​and here you go. ​So it says hello, ​it's 7:41 a.m. ​Now, remember one important thing, ​all this change ​that we made ​in the prompt by assigning value to PS one variable is not permanent. ​So if I exit from the terminal and restart the terminal, ​I'll get the original prompt which I got after installing ​bash ​on windows. ​So to make this change permanent, we need to modify ​the bash ​file. So let's do that. So we'll type V ​and ​bash ​file resides in the home directory. 
+Play video starting at :11:9 and follow transcript
+11:09
+​So it's still ​a ​bash ​press enter. ​Now we're in the editor. ​Now, I'll simply copy, paste the code that you typed in the bash terminal ​earlier ​So let's have the working directory instead of the current time ​that looks better to me. And ​in addition, we need to issue ​the export command. ​So it's export and then the PS one value. So what does this export command mean? ​So the export command will actually export ​the value of the PS one variable ​in the bash environment. Escape ​colon W ​to quit and set ​and you're back in the terminal. So now to get the new prompt instead of quitting ​the ​terminal, you need to execute ​the bash ​file using the source command. 
+Play video starting at :12:8 and follow transcript
+12:08
+​So it's ​bash, ​press enter ​and here you get our new bash prompt. Now this is permanent. ​So if you restart the ​bash ​terminal, it's going to stay. ​So let's try it out. Let's exit from the terminal ​and we'll restart it once again. So here I've restarted the bash terminal. ​OK? Now I see I made a mistake. So I will just modify it Vash ​Percy ​and I'll remove the ​its from here ​and press escape ​colon ​WQ to quit and save. 
+Play video starting at :12:52 and follow transcript
+12:52
+​And I will source the ​bash ​C once again. ​And now I get my desired prompt, ​which is a hello string ​with an exclamation mark space ​and the current working directory. ​So whatever changes I made has worked well in the Windows platform, ​the same code will work fine on Linux platform as well. ​However, ​on the Mac platform, ​you need to make another additional adjustment which I'll show you right now. ​So here I'm in my mac and I have a different kind of prompt here ​and I need to change it. So let's check where you are typing ​pwd. ​We are ​in the home directory. So let's change the prompt by modifying the bash ​RC file. We're in the editor, press in ​key ​to edit press paste. 
+Play video starting at :13:53 and follow transcript
+13:53
+​So this was a code we're having ​earlier when we were testing at ​the Windows bash terminal. ​So we want to have similar kind of prompt here. ​So we'll ​use the export command as I did earlier ​press S Kon ​WQ to quit and save. ​Now, one important thing about the terminal in mac ​is that just changing in bash ​file on to complete things. So you need to actually source your bash ​file in the bash profile file, which also resides in the home directory. ​The reason is while you open a terminal in mac, ​it actually executes the bash profile. ​So if you don't ​source your dot bash ​file ​within the bash profile, the code in the ​bash ​file won't get executed. So that's the concept. 
+Play video starting at :14:56 and follow transcript
+14:56
+​So you need to get into ​bash profile file. ​So that is also in the home directory. So ​bash profile press tab for auto completion press enter ​will go down press enter ​and here we source ​the ​bash. ​So this command will actually execute the ​bash ​file when the terminal is opened. Also, you should point to the ​bash ​sile which is residing in the home directory. So it's still ​a, ​let's press the S ​key column ​WQ to create ​and save. And now we are in the terminal. 
+Play video starting at :15:42 and follow transcript
+15:42
+​So I'll restart the terminal to check whether the ​changes we made are actually working or not. ​So let's press exit and let's restart our terminal. So I have restarted the terminal ​and now you can see ​that in mac, I'm having exactly the same bash prompt in the terminal, ​which I showed you in the Windows platform. ​It's worth mentioning that also the exactly same prompt will be obtainable ​in Linux by ​doing whatever changes we made in Windows. ​The only Exception is in mac where we need to do an extra bit of work, ​which is sourcing the ​bash ​file ​within the ​bash profile. ​So let's summarize whatever we ​did so far. ​So in order to ​get a custom bash prompt, ​you need to play around with the PS one ​variable ​to make quick changes, you can assign value to the PS one variable in the terminal ​and work on it till you get your desired bash prompt. 
+Play video starting at :16:55 and follow transcript
+16:55
+​And once you're done to make changes permanent, ​you need to put your PS one in the ​bash ​file. ​The additional thing that you need to do in the ​bash ​file is ​invoke the export command ​so that the PS one variable ​gets exported in the bash environment. ​The code works perfectly on both Windows and Linux ​platform in Mac platform. ​Just you need to do the additional thing of sourcing the ​bash ​file within the ​bash profile.

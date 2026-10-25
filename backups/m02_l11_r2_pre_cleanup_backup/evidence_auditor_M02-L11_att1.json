@@ -1,0 +1,41 @@
+{
+  "mode": "automated_cli",
+  "execution_mode": "automated_cli",
+  "evidence_class": "REAL_AGY_VERIFIED",
+  "provider": "agy",
+  "terminal_status": "SUCCESS",
+  "role": "auditor",
+  "lesson_id": "M02-L11",
+  "attempt": 1,
+  "invocation_id": "inv-auditor-M02-L11-att1-16e8e82af733",
+  "model_requested": "gemini-3.8-flash-high",
+  "model_reported": "gemini-3.8-flash-high",
+  "model_verified": "VERIFIED",
+  "model": "gemini-3.8-flash-high",
+  "effort": "high",
+  "conversation_id": "033e2a5f-e004-4486-81ed-dba696040146",
+  "fresh_session": true,
+  "duration_seconds": 62.326,
+  "usage": {
+    "input_tokens": 19415,
+    "output_tokens": 8630,
+    "thinking_tokens": 7910,
+    "cache_read_tokens": 0,
+    "total_tokens": 28045
+  },
+  "prompt_path": "generated_course/Agile_Project_Management/evidence/prompt_auditor_M02-L11_att1.md",
+  "timestamp": "2026-10-25T04:57:55Z",
+  "model_verification_evidence": {
+    "source": "sqlite_gen_metadata",
+    "conversation_id": "033e2a5f-e004-4486-81ed-dba696040146",
+    "db_path": "/home/khanh/.gemini/antigravity-cli/conversations/033e2a5f-e004-4486-81ed-dba696040146.db",
+    "model_resolved": "gemini-3.8-flash-high",
+    "raw_snippet_hex": "e2011567656d696e692d332e382d666c6173682d68696768"
+  },
+  "auditor_boundary": {
+    "fresh_session": true,
+    "write_boundary_status": "PROMPT_AND_CONTROLLER_ENFORCED_ONLY",
+    "os_filesystem_sandbox": "NOT_VERIFIED",
+    "verification_evidence": "NOT_VERIFIED (No OS-level sandbox or filesystem write restriction demonstrated in AGY CLI invocation; read-only boundary is maintained by prompt instructions and controller read-only contract.)"
+  }
+}

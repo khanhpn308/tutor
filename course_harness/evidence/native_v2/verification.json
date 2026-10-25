@@ -1,0 +1,49 @@
+{
+  "task_id": "COURSE-HARNESS-V2-AGY-NATIVE-MULTIAGENT-MIGRATION",
+  "timestamp": "2026-10-25T16:09:41.781714+00:00",
+  "branch": "feature/course-harness-v1",
+  "status": "IMPLEMENTED_OFFLINE_NATIVE_E2E_NOT_VERIFIED",
+  "baseline_tests": {
+    "passed": 353,
+    "seconds": 85.22
+  },
+  "focused_tests": {
+    "passed": 45,
+    "seconds": 13.05,
+    "path": "course_harness/evidence/native_v2/focused_tests.txt"
+  },
+  "full_tests": {
+    "passed": 398,
+    "seconds": 95.81,
+    "path": "course_harness/evidence/native_v2/full_tests.txt"
+  },
+  "skill_format_validation": "PASS",
+  "compileall": "PASS",
+  "git_diff_check": "PASS",
+  "provider_import_isolation_test": "PASS",
+  "five_lesson_simulation": "PASS_MOCK_ONLY",
+  "source_and_historical_preservation": {
+    "protected_files": 891,
+    "changed": 0,
+    "source_files": 783,
+    "generated_historical_files": 95
+  },
+  "native_runtime": {
+    "version": "1.4.7",
+    "producer_selection": "VERIFIED_IN_TUI",
+    "skill_discovery": "VERIFIED_IN_TUI_COMPLETION",
+    "worker_auditor_repair_invocation": "NOT_VERIFIED",
+    "metadata_return_shape": "NOT_VERIFIED"
+  },
+  "live_ai_calls": 0,
+  "live_batch_executions": 0,
+  "gemini_api": "DISABLED_UNCHANGED",
+  "checkpoints_reset": false,
+  "production_state_created": false,
+  "remaining_blockers": [
+    "Operator must perform native invoke_subagent smoke test inside AGY; no third-party-agent launch of consumer inference.",
+    "Confirm actual native-return metadata shape. Missing or reused context IDs prevent publication.",
+    "Runtime credits/model access and billing readiness not checked."
+  ],
+  "operator_start_command": "cd /home/khanh/projects/tutor && agy --agent coursera-producer --model gemini-3.8-flash-high --effort high"
+}

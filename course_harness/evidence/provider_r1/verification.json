@@ -1,0 +1,68 @@
+{
+  "task_id": "COURSE-HARNESS-V1-FULL-AUTOMATION-PROVIDER-R1",
+  "status": "IMPLEMENTED_OFFLINE_VERIFIED_LIVE_CANARY_PENDING",
+  "checked_at": "2026-10-25T14:03:35.245889+00:00",
+  "sdk": "google-genai",
+  "sdk_version": "2.33.0",
+  "model_requested": "gemini-3.8-flash",
+  "thinking_level": "high",
+  "focused_tests": {
+    "command": "course_harness/.venv/bin/python -m pytest -q course_harness/tests/test_gemini_automation.py",
+    "passed": 48,
+    "result": "48 passed in 4.95s"
+  },
+  "full_tests": {
+    "command": "course_harness/.venv/bin/python -m pytest -q",
+    "passed": 336,
+    "existing_tests_passed": 288,
+    "result": "336 passed in 84.29s (0:01:24)"
+  },
+  "test_transport": "Official Google GenAI SDK through httpx.MockTransport; no live network provider calls",
+  "canary_dry_run": "canary_dry_run.json",
+  "five_lesson_dry_run": "batch_5_dry_run.json",
+  "source_files_unchanged": 783,
+  "approved_baseline_related_files_unchanged": 44,
+  "production_checkpoints_created": 0,
+  "live_api_calls": 0,
+  "api_key_present": false,
+  "api_authentication": "NOT_CHECKED",
+  "billing_readiness": "NOT_CHECKED",
+  "git_commit_push_merge": "NONE",
+  "limits": "Token/runtime quotas stop new requests at safe boundaries; an in-flight request can exceed the remaining quota.",
+  "files_created": [
+    "course_harness/gemini_adapter.py",
+    "course_harness/gemini_api.yaml",
+    "course_harness/requirements.txt",
+    "course_harness/tests/test_gemini_automation.py",
+    "course_harness/AUTOMATION.md",
+    "pytest.ini",
+    "course_harness/evidence/provider_r1/canary_dry_run.json",
+    "course_harness/evidence/provider_r1/batch_5_dry_run.json",
+    "course_harness/evidence/provider_r1/preservation.json",
+    "course_harness/evidence/provider_r1/verification.json"
+  ],
+  "files_modified": [
+    "course_harness/run.py",
+    "course_harness/batch.py",
+    "course_harness/state.py",
+    "course_harness/visual.py",
+    "course_harness/validator.py",
+    "course_harness/README.md",
+    ".gitignore"
+  ],
+  "implementation_sha256": {
+    "course_harness/gemini_adapter.py": "9d9367f7d7de9f21fd3aeb01302aa625bab8e841a4bf39c5122eebcac5ebdd25",
+    "course_harness/gemini_api.yaml": "fd2472f7604ac6722d0390d47fd0166a909665f3f1b3b0db135fe723f1c34936",
+    "course_harness/requirements.txt": "10ffd54ed1d055926a836ce1e222430ceb0ac0cdb198cc4d18f2d611de3a5d2d",
+    "course_harness/tests/test_gemini_automation.py": "897124ec19a84292efa0538668ccfcc8b981245ebe12d2b5090696f67eff47bb",
+    "course_harness/AUTOMATION.md": "4e5695152ba064e47942197532bf51e34140356fb348dfb522d13b2e201cc73c",
+    "pytest.ini": "88a7d5ab0961551c0f0de53eef52cc515c2ff8691de84dc197e8fc326cc34b85",
+    "course_harness/run.py": "b5922c90ce319223dd3eba722a9171e950fece263ded1f672d81cb95bf900984",
+    "course_harness/batch.py": "addca74d0c9859fcdf35d563089d71c50cb6ddec43d3d0bd3001abac0d07048a",
+    "course_harness/state.py": "01b8f13a086dceac23d87dff1ae90da8e0e7e98c3f751cae30dbbcbc4ba96b3e",
+    "course_harness/visual.py": "53fb5fe1c0360607916135e55b843efcf79307c59baaceccf3317033a1f08531",
+    "course_harness/validator.py": "ab225e0c2961d9bb95e01737b27a739254fd3f9f32755e42eef5fc3bf939c2be",
+    "course_harness/README.md": "16c760285c21251be45511f0804b95fafef923f269f23f28d4f995827b6b77c7",
+    ".gitignore": "34a4326739ef24b89cda412999c157657f0e096161b7f0b8331e2f491eabaa2e"
+  }
+}

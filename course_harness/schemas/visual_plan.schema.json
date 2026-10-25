@@ -1,0 +1,194 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "CourseLessonVisualPlan",
+  "type": "object",
+  "required": [
+    "lesson_id",
+    "figures"
+  ],
+  "properties": {
+    "lesson_id": {
+      "type": "string",
+      "description": "Unique lesson identifier, e.g. M01-L07"
+    },
+    "visual_profile": {
+      "type": "string",
+      "enum": [
+        "VIDEO_TRANSCRIPT",
+        "READING",
+        "ACTIVITY",
+        "CASE_STUDY",
+        "QUIZ",
+        "GLOSSARY",
+        "LOCKED"
+      ],
+      "description": "Lesson-type visual profile"
+    },
+    "rationale": {
+      "type": "string",
+      "description": "Pedagogical rationale for visual choices in this lesson"
+    },
+    "total_figures": {
+      "type": "integer",
+      "minimum": 0,
+      "description": "Total count of planned figures"
+    },
+    "renderer_available": {
+      "type": "boolean",
+      "description": "Whether an automated Mermaid renderer was available during processing"
+    },
+    "renderer_binary": {
+      "type": "string",
+      "description": "Path or identifier of Mermaid renderer binary"
+    },
+    "quality_rubric_version": {
+      "type": "string",
+      "description": "Quality Rubric version applied"
+    },
+    "visual_acceptance_summary": {
+      "type": "object",
+      "properties": {
+        "spec_valid": { "type": "boolean" },
+        "render_verified": { "type": "boolean" },
+        "visual_reviewed": { "type": "boolean" },
+        "content_quality_accepted": { "type": "boolean" }
+      },
+      "additionalProperties": false,
+      "description": "Summary of visual acceptance stages"
+    },
+    "figures": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "figure_id",
+          "title",
+          "visual_type",
+          "educational_purpose",
+          "related_learning_objective",
+          "source_locators",
+          "provenance_class",
+          "alt_text",
+          "caption"
+        ],
+        "properties": {
+          "figure_id": {
+            "type": "string",
+            "pattern": "^[a-zA-Z0-9_-]+$",
+            "description": "Unique figure identifier within the lesson (e.g. F01, F02, fig-m01-l07-01)"
+          },
+          "title": {
+            "type": "string",
+            "minLength": 3,
+            "description": "Descriptive title of the visual"
+          },
+          "visual_type": {
+            "type": "string",
+            "enum": [
+              "CONCEPT_MAP",
+              "FLOWCHART",
+              "SEQUENCE_DIAGRAM",
+              "TIMELINE",
+              "COMPARISON_DIAGRAM",
+              "INFOGRAPHIC_SUMMARY",
+              "DATA_CHART",
+              "IMAGE_ASSET_REQUIRED"
+            ],
+            "description": "Pedagogical visual representation category"
+          },
+          "educational_purpose": {
+            "type": "string",
+            "minLength": 10,
+            "description": "Concrete teaching purpose of the visual"
+          },
+          "related_learning_objective": {
+            "type": "string",
+            "description": "The specific lesson learning objective supported by this visual"
+          },
+          "source_locators": {
+            "type": "array",
+            "items": { "type": "string" },
+            "minItems": 1,
+            "description": "Timestamps or section headings in raw source grounding this diagram"
+          },
+          "provenance_class": {
+            "type": "string",
+            "enum": [
+              "SOURCE_DERIVED",
+              "PEDAGOGICAL_RECONSTRUCTION",
+              "AI_GENERATED_ILLUSTRATION",
+              "EXTERNAL_VERIFIED_ASSET"
+            ],
+            "description": "Provenance classification"
+          },
+          "alt_text": {
+            "type": "string",
+            "minLength": 10,
+            "description": "Informative alt text for accessibility"
+          },
+          "caption": {
+            "type": "string",
+            "minLength": 10,
+            "description": "Short explanatory caption displayed with the figure"
+          },
+          "mermaid_code": {
+            "type": "string",
+            "description": "Mermaid specification code (if Mermaid-based visual)"
+          },
+          "source_spec_path": {
+            "type": "string",
+            "description": "Relative path to saved diagram source (.mmd)"
+          },
+          "rendered_asset_path": {
+            "type": "string",
+            "description": "Relative path to rendered visual asset (.svg or .png)"
+          },
+          "rendering_status": {
+            "type": "string",
+            "enum": [
+              "RENDER_VERIFIED",
+              "RENDER_NOT_VERIFIED",
+              "RENDER_UNAVAILABLE",
+              "RENDER_FAILED",
+              "FALLBACK_MARKDOWN",
+              "IMAGE_ASSET_REQUIRED"
+            ],
+            "description": "Status of diagram rendering"
+          },
+          "source_spec_sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$",
+            "description": "SHA-256 hash of the diagram source file"
+          },
+          "rendered_asset_sha256": {
+            "type": "string",
+            "pattern": "^[a-f0-9]{64}$",
+            "description": "SHA-256 hash of rendered asset file"
+          },
+          "spec_status": {
+            "type": "string",
+            "enum": [
+              "SPEC_VALID",
+              "SPEC_INVALID"
+            ],
+            "description": "Status of diagram source specification and schema validation"
+          },
+          "visual_review_status": {
+            "type": "string",
+            "enum": [
+              "VISUAL_REVIEWED",
+              "VISUAL_LAYOUT_NOT_VERIFIED"
+            ],
+            "description": "Status of rendered diagram visual and layout review"
+          },
+          "visual_review_notes": {
+            "type": "string",
+            "description": "Inspector findings or notes regarding layout, legibility, and clipping"
+          }
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

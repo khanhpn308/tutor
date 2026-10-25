@@ -1,0 +1,35 @@
+{
+  "mode": "automated_cli",
+  "execution_mode": "automated_cli",
+  "evidence_class": "REAL_AGY_VERIFIED",
+  "provider": "agy",
+  "terminal_status": "SUCCESS",
+  "role": "worker",
+  "lesson_id": "M02-L11",
+  "attempt": 1,
+  "invocation_id": "inv-worker-M02-L11-att1-42b6e5a36325",
+  "model_requested": "gemini-3.8-flash-high",
+  "model_reported": "gemini-3.8-flash-high",
+  "model_verified": "VERIFIED",
+  "model": "gemini-3.8-flash-high",
+  "effort": "high",
+  "conversation_id": "af169730-ebe9-40d2-8b57-9cabf5fda872",
+  "fresh_session": true,
+  "duration_seconds": 127.532,
+  "usage": {
+    "input_tokens": 12070,
+    "output_tokens": 16430,
+    "thinking_tokens": 8692,
+    "cache_read_tokens": 0,
+    "total_tokens": 28500
+  },
+  "prompt_path": "generated_course/Agile_Project_Management/evidence/prompt_worker_M02-L11_att1.md",
+  "timestamp": "2026-10-25T04:23:05Z",
+  "model_verification_evidence": {
+    "source": "sqlite_gen_metadata",
+    "conversation_id": "af169730-ebe9-40d2-8b57-9cabf5fda872",
+    "db_path": "/home/khanh/.gemini/antigravity-cli/conversations/af169730-ebe9-40d2-8b57-9cabf5fda872.db",
+    "model_resolved": "gemini-3.8-flash-high",
+    "raw_snippet_hex": "e2011567656d696e692d332e382d666c6173682d68696768"
+  }
+}

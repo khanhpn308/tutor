@@ -1,0 +1,62 @@
+# 🎥 Git Reflog - Part 2 (Lab)
+
+🔗 **Link Video MP4:** [Xem / Tải Video](https://d3c33hcgiwev3.cloudfront.net/e0967d2c-cb1c-4782-be4d-b6c5b93ad59a_4ac6f024793c45468dff44a8ba87f255_video19_10.mp4.mediaconvert/full/e0967d2c-cb1c-4782-be4d-b6c5b93ad59a_4ac6f024793c45468dff44a8ba87f255_video19_10_WEBM_540.webm?Expires=1793059200&Signature=el2jBiAKOrcE6Nf2I2AYJqbV5ZBJHGA5aCppSQu9cv0BCle8~e1hnEBPB1UpvS5iesZnziovhiMCq3FUb7Euky0httBUqQQw6CCuFVHarfmPLHGjriPk4ppHJRqF5KZ869NfunViVjiQSid-Dsegr7h9d30C4ybaaQD5Lfxc2mc_&Key-Pair-Id=APKAJLTNE6QMUY6HBC5A)
+
+---
+
+## 📜 Transcript (Lời giảng viên)
+
+Play video starting at ::10 and follow transcript
+0:10
+​Hey there, welcome. ​So in this lecture, we'll continue to deliver it upon the git reflog command. ​And also we'll continue to use this ​demo based repository to explain the concepts behind ​the git ​reflog. Now to see reflog information formatted, like the git ​log output, you can run the following command. ​Let me show you so get log, then the flag ​option G and suppose we want to deal with the master branch, then master press enter. ​So it starts with master at zero and then ​continues with subsequent reflog details such as master one, ​master two ​and so on. ​And if you press the space bar, ​you'll be able to see the further details ​of reflog formatted like the gate logs output. 
+Play video starting at :1:6 and follow transcript
+1:06
+​So here are the details ​for a particular reflog information. So you can see the commit message over here. ​The date author details the reflog message. So let's press press ​one and continue to see the further details. ​We bridge the end and we can type Q to return to our prompt. ​It's important to note that reflog information is strictly local. ​It's a log of what you have done in your repository. 
+Play video starting at :1:37 and follow transcript
+1:37
+​The references won't be the same on someone else's copy of the repository. ​For example, if you clone a repository and try to access the ref log, ​you'll get empty results since you have an empty reflog ​because no activity has occurred yet in your repository. ​Now, if you run the command git show head at two months ago, ​that will work only if you clone the ​project at least two months ago. ​Now, if you just cloned it an hour ago, you'll get no results. ​And another important information for you is the location of reflog information. ​Now, the reflog data is kept in the ​git directory ​under the subdirectory ​logs. ​Now, if you are interested to dig deeper, ​you can access the subdirectory logs under the dot gate directory. 
+Play video starting at :2:34 and follow transcript
+2:34
+​So let's clear the screen and let's now discuss about log versus ​reflog. ​Now, this sounds very similar. ​However, there are quite a big difference between the two. ​Now, let's type the command git ​log ​oneline ​decorate ​graph ​all ​press enter. Now, as you can see git log ​shows the current head and its ancestry. ​That is, ​it prints the comet head points to ​and then its parent ​and further its parent and so on. ​So it traverses back through the repo's ​ancestry by recursively looking up each commit's parent. 
+Play video starting at :3:19 and follow transcript
+3:19
+​Now, if I execute the ​git reflog command press enter, ​so you can see that ​git reflog doesn't traverse head's ancestry at all. ​The reflog is an ordered list, most of the commits that he ​has pointed to. Basically, it's undo history for your repository. ​The reflog isn't part of the repository itself ​and isn't included in pushes fetches or clones. ​It's purely local understanding. The reflog means ​you can't really lose data from your repository ​once it has been committed, ​if you accidentally reset to a older comet or rebase ​wrongly or any other operation that visually removes commit, ​you can use reflog to see where you were before and restore your previous debt. ​We'll shortly discuss on how to achieve such things. Now, ​a word of caution, you sometimes can lose data because refl ​entries do not persist eternally. They are purged upon certain conditions. 
+Play video starting at :4:33 and follow transcript
+4:33
+​Generally, if the destructive operation was not more than two weeks ago, ​you most probably safe. ​OK. ​So now that you've learned what git reflog is ​and how to access entries in the ref logs, ​I'll show you an example, ​how can use an entry in the reflog to revert to a state that would otherwise get lost. ​Now, the head at curly ​brace ​N syntax lets you reference coms ​stored in the reflog. It works a lot like the head to ​N references. ​But the N in the head at Calibri ​and syntax refers to an entry in the reflog instead of the commit history. OK? 
+Play video starting at :5:23 and follow transcript
+5:23
+​So let's get going with the example. Let's check the contents of the dress. ​And ​here we have multiple files in the demo ​reflog repository that I have created for you. So it's a fresh repository. ​As you can see if I do the git log ​online, ​then there is a single entry in the repository ​which has been used to set up the repository. ​So I'll simply edit the file 44 dot HTML. Press enter, I'm in the editor. 
+Play video starting at :5:57 and follow transcript
+5:57
+​I'll make a few simple changes. So first, I'll change the title ​to get ​reflog demo. So that will be our first change. ​And I'll do a ​git ​commit with ​a option. ​So the branch is master. ​I added a title as an action and the file is 404 dot HTML codes, ​close press enter and the comment is done. ​I'll do another simple ​having the editor and here I'll change the line height from ​1.2 to 1.5 and that will be our second change. 
+Play video starting at :6:36 and follow transcript
+6:36
+​So I'll quit the editor after saving ​WQ to query and save. Now, I'll do an express ​for the change you made right now. So branch is master ​and we modified ​line height and the file is 404 dot html codes, close ​press enter and the commit is done. ​Let's clear the screen and now we'll execute the git lock command. ​So we'll retrieve the version of the glock command we executed earlier press enter. ​So these are the two comments we made or in other words, ​these were the two modification in the repository after setting up the repository. ​And now for some important reason I felt I don't need these two changes ​and I want to scrap these changes. 
+Play video starting at :7:27 and follow transcript
+7:27
+​So for that purpose, I want to execute the git reset command with the hard option. ​And I choose to reset to this commit ID. ​So I copy this commit ID, ​paste it and press enter and we have reset our ​history as you can see in the git response. ​So let's do a git log once again. And you can see we have successfully reset it to ​the ​ID, which is 01 F 12 C seven. ​And let's now check the reflog and you can see ​that all our moves have been recorded by ​git and there are four entries in the reflog now. ​And let's assume that I stopped working on this ​feature which is related to these two comets. 
+Play video starting at :8:15 and follow transcript
+8:15
+​And after a few days, ​I had a discussion with my developer friend and after the discussion, I realized ​that I shouldn't have scrapped these two comments. ​And it's important for me to restore my repository ​to what it was before the reset was done. ​So git provides you the opportunity to do that. ​So for this purpose, what you need to do is you need to do a ​git checkout and then you need to access your reflog. ​And since you want to restore ​your repository to a position ​where it was before the reset, you need to access the ref log which is head at ​the rate curly presses one. So let's copy this ref log which is head at ​the rate, curly presses one ​and do a ​git checkout press enter. ​Now you can see that you have entered into a detached head state as indicated by git. 
+Play video starting at :9:18 and follow transcript
+9:18
+​And if you create any comment in this detached head state and you want to retain them, ​then you can well use this command ​git checkout ​B and then a branch name. ​Or in other words, ​you can create a branch and your comments in the detached head will be retained. ​Then let's clear the screen ​and you can see that we are in the ​detached head state by looking at this prompt itself. ​So let's do a glog once again. ​So let's execute the git log command we executed earlier. ​So this is the one press enter. ​And here you can see in the detached head state, you're able to see ​the two commits ​that you cracked earlier since you used the reflog to check out at this commit ID. 
+Play video starting at :10:11 and follow transcript
+10:11
+​And now our intention is to restore our depository ​so that we have these two commit IDS. ​And now we are not quite actually done and we want to ​have another change before we create a branch to retain the comment. ​So let's do a change in the file 404 dot HTML upon which we were working earlier, ​press enter ​and I'll do another simple change. ​So let's change this text alignment instead of center, we have the left now, ​press escape ​key column to quit and save. And let's do an express commit. ​So I'll retrieve an earlier commit command and I'll modify it appropriately. ​So in order to mark that we are in a detached head state, ​I'll simply tag it with detached head. 
+Play video starting at :11:7 and follow transcript
+11:07
+​And our action was modified text ​alignment. And the file is of course 404 dot HTML. Press enter ​and R commit is done. ​Now, if at this position, ​I do a git checkout master the commit we just now made will be lost. ​And not only that these two comets which you can see ​over here after accessing the reflog two will be lost. ​Now, ​our intention is to restore our repository and also ​retain the fresh commit we made just now. ​And in order to do that, we need to create a branch, ​let's name the branch, ​restore branch ​and we use the git checkout ​B command. 
+Play video starting at :11:52 and follow transcript
+11:52
+​So with this command, ​we'll switch into this branch as well and let's clear the screen. ​And if you execute the git log, once again, ​you'll be able to see that we have been able to retain our freshly created comment. ​So in this position, ​you can continue to work on the feature that ​you are working on the file four and four dot ​HTML and let's do that. So let's create another comment in the file 404 dot HTML. ​So this time we'll change the font family ​and our font family will be aerial black press ​SK P colon ​WQ to query ​and save. ​And let's do an express commit as we did earlier. So we'll just modify the action. 
+Play video starting at :12:36 and follow transcript
+12:36
+​So that was modification ​of font family. ​And of course, we'll remove this tag ​test head and we'll replace it with restoration branch. ​It's not quite restoration. So it's a restore branch press enter ​and now let's clear the screen. ​And now we have decided to merge this restore branch to our main line of development, ​which is master branch. ​And hence, we'll do a git checkout master press enter. ​Let's clear the screen and let's do execution F ​klog command once again. 
+Play video starting at :13:14 and follow transcript
+13:14
+​So we have been able not only to restore this but ​also we have work further on the feature involving the file 404 ​HTML and created two more new commits. ​So let's now merge this branch, ​which is restoration branch and we've done a successful ​fast forward and we're done with the branch, ​restoration branch. ​So we'll delete the restore branch ​and the branch is deleted. ​Let's clear the screen and let's execute the git log command once again. ​And well, you can see our head is at this commit ID. ​And the reference to the restore branch has been deleted ​by git since we have deleted the branch itself. ​And ​let's do a git log. 
+Play video starting at :14:4 and follow transcript
+14:04
+​Now, press enter ​and getit stores all the movements of our in the reflog ​entries right from the commits that we make to reset, ​check out and merging. ​So that culminates our learning on the reflog. And we have learned ​what a reflog is, ​how to access reflog, ​using the special syntax on which we had a discussion and ​how to implement restoration of your repository to a previous position ​by accessing reflog. ​So with this, ​we conclude this lecture.

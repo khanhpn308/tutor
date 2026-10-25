@@ -1,0 +1,61 @@
+{
+  "lesson_id": "M01-L07",
+  "total_figures": 2,
+  "renderer_available": true,
+  "renderer_binary": "/home/khanh/.gemini/antigravity/bin/mmdc",
+  "quality_rubric_version": "2.0-visual-first",
+  "visual_acceptance_summary": {
+    "spec_valid": true,
+    "render_verified": true,
+    "visual_reviewed": true,
+    "content_quality_accepted": false
+  },
+  "figures": [
+    {
+      "figure_id": "F01",
+      "title": "Bốn cặp giá trị cốt lõi của Tuyên ngôn Agile (Agile Manifesto)",
+      "visual_type": "COMPARISON_DIAGRAM",
+      "educational_purpose": "Giúp người học nhận diện rõ nguyên lý ưu tiên tương đối của 4 cặp giá trị và tránh ngộ nhận tiêu cực rằng Agile phủ nhận hoàn toàn quy trình, tài liệu, hợp đồng hay kế hoạch.",
+      "related_learning_objective": "Nắm vững nguyên lý trọng tâm",
+      "source_locators": [
+        "00:52",
+        "01:51"
+      ],
+      "provenance_class": "PEDAGOGICAL_RECONSTRUCTION",
+      "alt_text": "Sơ đồ đối chiếu hai cột phân định rõ 4 cặp giá trị của Tuyên ngôn Agile: cột bên trái là các yếu tố được coi trọng hơn, liên kết đối chiếu sang cột bên phải là các yếu tố vẫn giữ giá trị cho dự án.",
+      "caption": "Hình F01: Bốn cặp giá trị cốt lõi của Tuyên ngôn Agile [00:52]–[01:51]. Trong khi các yếu tố bên phải vẫn có giá trị đối với dự án, các yếu tố bên trái được coi trọng hơn.",
+      "mermaid_code": "flowchart LR\n    subgraph LeftSide[\"VẾ TRÁI: ĐƯỢC COI TRỌNG HƠN\"]\n        direction TB\n        L1[\"Cá nhân và sự tương tác<br/>(Individuals and interactions)\"]\n        L2[\"Phần mềm chạy tốt<br/>(Working software)\"]\n        L3[\"Cộng tác với khách hàng<br/>(Customer collaboration)\"]\n        L4[\"Phản hồi với thay đổi<br/>(Responding to change)\"]\n    end\n\n    subgraph RightSide[\"VẾ PHẢI: VẪN CÓ GIÁ TRỊ\"]\n        direction TB\n        R1[\"Quy trình và công cụ<br/>(Processes and tools)\"]\n        R2[\"Tài liệu toàn diện<br/>(Comprehensive documentation)\"]\n        R3[\"Đàm phán hợp đồng<br/>(Contract negotiation)\"]\n        R4[\"Bám sát một kế hoạch<br/>(Following a plan)\"]\n    end\n\n    L1 --- R1\n    L2 --- R2\n    L3 --- R3\n    L4 --- R4",
+      "rendering_status": "RENDER_VERIFIED",
+      "visual_review_status": "VISUAL_REVIEWED",
+      "visual_review_notes": "Vietnamese glyphs rendered cleanly, no text clipping, symmetrical layout, clear semantic comparison lines without process flow implication.",
+      "spec_status": "SPEC_VALID",
+      "source_spec_path": "assets/M01-L07/F01_b_n_c_p_gi_tr_c_t_l_i_c_a_tuy_n_ng_n_agi.mmd",
+      "source_spec_sha256": "8b99ff8e59303cf7d434a77d5aa3b9ea90f1cb2d6b884d12b3cd57413932fb8e",
+      "rendered_asset_path": "assets/M01-L07/F01_b_n_c_p_gi_tr_c_t_l_i_c_a_tuy_n_ng_n_agi.svg",
+      "rendered_asset_sha256": "be765dcf52d19a0d508c545010da84efb5a92cb619c6fe4b9e60588e232dc938"
+    },
+    {
+      "figure_id": "F02",
+      "title": "Vòng lặp thích ứng và cân bằng kế hoạch trong Agile",
+      "visual_type": "FLOWCHART",
+      "educational_purpose": "Khắc sâu tư duy quản trị linh hoạt: Agile không loại bỏ kế hoạch mà duy trì một vòng lặp phản hồi năng động, điều chỉnh kế hoạch mượt mà khi phát sinh thay đổi để đảm bảo sự hài lòng tối đa của khách hàng.",
+      "related_learning_objective": "Nắm vững nguyên lý trọng tâm",
+      "source_locators": [
+        "04:37",
+        "05:42"
+      ],
+      "provenance_class": "PEDAGOGICAL_RECONSTRUCTION",
+      "alt_text": "Lưu đồ vòng lặp phản hồi mô tả chu trình quản lý dự án linh hoạt: từ khâu thiết lập kế hoạch định hướng, cộng tác tiếp nhận phản hồi khách hàng qua thử nghiệm thực tế, thích ứng khi phát sinh thay đổi để cập nhật kế hoạch và tối đa hóa giá trị bàn giao.",
+      "caption": "Hình F02: Vòng lặp thích ứng và cân bằng kế hoạch trong Agile (Planning, Customer Collaboration & Feedback, Responding to Change, Customer Value) [04:37]–[05:42].",
+      "mermaid_code": "flowchart TD\n    Plan[\"Thiết lập kế hoạch định hướng\"]\n    Feedback[\"Cộng tác & Phản hồi khách hàng\"]\n    Adapt[\"Thích ứng và điều chỉnh\"]\n    Value[\"Tối đa hóa giá trị khách hàng\"]\n\n    Plan -->|\"Thực thi & thử nghiệm\"| Feedback\n    Feedback -->|\"Đáp ứng đúng nhu cầu\"| Value\n    Feedback -.->|\"Khi phát sinh thay đổi\"| Adapt\n    Adapt -.->|\"Cập nhật kế hoạch\"| Plan",
+      "rendering_status": "RENDER_VERIFIED",
+      "visual_review_status": "VISUAL_REVIEWED",
+      "visual_review_notes": "Vietnamese glyphs rendered cleanly, no text clipping, compact balanced layout (height ~398px), clear semantic feedback loop without forcing change or implying delivery causes planning.",
+      "spec_status": "SPEC_VALID",
+      "source_spec_path": "assets/M01-L07/F02_v_ng_l_p_th_ch_ng_v_c_n_b_ng_k_ho_ch_tro.mmd",
+      "source_spec_sha256": "5466162853c8b8ed55effcac7822fdc6a57dd700c3ce63f93ab45a0baf4c7141",
+      "rendered_asset_path": "assets/M01-L07/F02_v_ng_l_p_th_ch_ng_v_c_n_b_ng_k_ho_ch_tro.svg",
+      "rendered_asset_sha256": "674cc2776540cbf28ef28d913aa0843b3f7edab7711450495a6423ab17d16a2a"
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "mode": "automated_cli",
+  "execution_mode": "automated_cli",
+  "evidence_class": "MANUAL_UNVERIFIED",
+  "provider": "agy",
+  "terminal_status": "SUCCESS",
+  "role": "auditor",
+  "lesson_id": "M02-L11",
+  "attempt": 1,
+  "invocation_id": "inv-auditor-M02-L11-att1-5003b5edecae",
+  "model_requested": "gemini-3.8-flash-high",
+  "model_reported": null,
+  "model_verified": "NOT_VERIFIED",
+  "model": "gemini-3.8-flash-high",
+  "effort": "high",
+  "conversation_id": "735efc6c-b64b-4f7d-866e-6fad886d6a8b",
+  "fresh_session": true,
+  "duration_seconds": 144.338,
+  "usage": {
+    "input_tokens": 38951,
+    "output_tokens": 14507,
+    "thinking_tokens": 11485,
+    "cache_read_tokens": 165083,
+    "total_tokens": 53458
+  },
+  "prompt_path": "generated_course/Agile_Project_Management/evidence/prompt_auditor_M02-L11_att1.md",
+  "timestamp": "2026-10-25T04:48:25Z",
+  "auditor_boundary": {
+    "fresh_session": true,
+    "write_boundary_status": "PROMPT_AND_CONTROLLER_ENFORCED_ONLY",
+    "os_filesystem_sandbox": "NOT_VERIFIED",
+    "verification_evidence": "NOT_VERIFIED (No OS-level sandbox or filesystem write restriction demonstrated in AGY CLI invocation; read-only boundary is maintained by prompt instructions and controller read-only contract.)"
+  }
+}

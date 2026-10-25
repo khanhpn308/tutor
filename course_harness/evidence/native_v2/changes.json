@@ -1,0 +1,43 @@
+{
+  "created": [
+    ".agents/agents/coursera-auditor/agent.md",
+    ".agents/agents/coursera-producer/agent.md",
+    ".agents/agents/coursera-repair/agent.md",
+    ".agents/agents/coursera-worker/agent.md",
+    ".agents/skills/coursera-harness/SKILL.md",
+    ".agents/skills/coursera-harness/references/evidence-contract.md",
+    ".agents/skills/coursera-harness/references/quality-gates.md",
+    ".agents/skills/coursera-harness/references/recovery-procedure.md",
+    ".agents/skills/coursera-harness/references/workflow.md",
+    "course_harness/NATIVE_AUTOMATION.md",
+    "course_harness/evidence/native_v2/AUTOMATION-v1-historical.md",
+    "course_harness/evidence/native_v2/changes.json",
+    "course_harness/evidence/native_v2/focused_tests.txt",
+    "course_harness/evidence/native_v2/full_tests.txt",
+    "course_harness/evidence/native_v2/preflight.json",
+    "course_harness/evidence/native_v2/preservation.json",
+    "course_harness/evidence/native_v2/runtime_smoke.json",
+    "course_harness/evidence/native_v2/selection_5.json",
+    "course_harness/evidence/native_v2/verification.json",
+    "course_harness/native_tools.py",
+    "course_harness/quality_policy.py",
+    "course_harness/schemas/native-batch.schema.json",
+    "course_harness/schemas/native-checkpoint.schema.json",
+    "course_harness/schemas/native-packet.schema.json",
+    "course_harness/schemas/native-request.schema.json",
+    "course_harness/schemas/native-result.schema.json",
+    "course_harness/tests/test_native_tools.py"
+  ],
+  "modified": [
+    "course_harness/batch.py",
+    "course_harness/state.py",
+    "course_harness/README.md",
+    "course_harness/AUTOMATION.md"
+  ],
+  "preexisting_uncommitted_items_untouched": [
+    ".gitignore",
+    "backups/",
+    "pytest.ini"
+  ],
+  "no_commit_push_merge": true
+}

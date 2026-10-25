@@ -1,0 +1,32 @@
+```json
+{
+  "lesson_id": "M02-L11",
+  "verdict": "PASS",
+  "summary": "Bản dự thảo M02-L11 đạt chất lượng xuất sắc, tuân thủ nghiêm ngặt Unified Quality Standard 2.0. Toàn bộ nội dung trích xuất từ tài liệu gốc (định nghĩa Scrum Guide, 4 nhiệm vụ của Scrum Master, 3 nhiệm vụ của Product Owner, 5 trách nhiệm của Developers, phép ẩn dụ đồng hồ thi đấu, và các ví dụ thực tế tại Google cũng như các nhóm phần mềm/marketing) đều được phản ánh trung thực, chính xác và không có hiện tượng bịa đặt thông tin. Các sơ đồ trực quan (F01, F02, F03) có cấu trúc sư phạm rõ ràng, cú pháp Mermaid hợp lệ, phân cấp logic chuẩn xác và được gán nhãn provenance minh bạch. Tình huống thực hành giả định được gắn nhãn AI_GENERATED_EXAMPLE đúng quy định và không gán mốc thời gian nguồn giả mạo. Bản dự thảo vượt qua toàn bộ các Hard Gates.",
+  "dimension_scores": {
+    "SOURCE_FIDELITY": "MET",
+    "CONTENT_COMPLETENESS": "MET",
+    "PEDAGOGICAL_QUALITY": "MET",
+    "VISUAL_PEDAGOGY": "MET",
+    "TERMINOLOGY_CONSISTENCY": "MET",
+    "SOURCE_TRACEABILITY": "MET",
+    "CLARITY_ORGANIZATION": "MET",
+    "FORMATTING": "MET"
+  },
+  "findings": [
+    {
+      "finding_id": "F-001",
+      "severity": "LOW",
+      "category": "VISUAL_PEDAGOGY",
+      "source_locator": "Scrum Master vs. project manager / Product Owner vs. project manager",
+      "draft_locator": "Mục 3.5 - Hình F02 (Mã nguồn Mermaid)",
+      "description": "Nhãn mũi tên 'Chuyển giao toàn bộ sang' nối giữa Project Manager (PM1) và Product Owner (PO1) trong Hình F02 có thể gây ngộ nhận cho người học rằng đây là quy trình bàn giao công việc tuần tự trong một dự án, thay vì là sự tái phân định trách nhiệm mang tính cơ cấu giữa hai mô hình quản lý (Waterfall sang Scrum).",
+      "required_action": "Ở lần biên tập định kỳ tiếp theo, có thể tinh chỉnh nhãn mũi tên thành 'Được phân bổ cho' hoặc 'Tương ứng với trách nhiệm của' để thể hiện chuẩn xác hơn mối quan hệ đối chiếu cơ cấu tổ chức."
+    }
+  ],
+  "limitations": [
+    "Auditor hoạt động trong phiên độc lập và đối chiếu với tài liệu gốc dạng văn bản đọc (Reading atom) kèm mốc tham chiếu âm thanh.",
+    "Kiểm tra cú pháp Mermaid dựa trên chuẩn cú pháp Mermaid v10/v11 tĩnh mà không thông qua môi trường render đồ họa trực tiếp."
+  ]
+}
+```
