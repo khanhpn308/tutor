@@ -1,0 +1,48 @@
+flowchart TD
+    subgraph IssueLifecycle ["VÒNG ĐỜI TRẠNG THÁI VÀ CHU TRÌNH TƯƠNG TÁC TRÊN GITHUB ISSUE"]
+        direction TB
+
+        subgraph StateOpen ["1. TRẠNG THÁI MỞ (OPEN STATE)"]
+            direction TB
+            Created["Khởi tạo Issue thành công (Submit new issue)<br/>Tự động gán nhãn trạng thái Open (Màu xanh lục)"]
+            
+            subgraph EngagementEngine ["Chu trình Tương tác và Thảo luận (Collaboration)"]
+                direction LR
+                Comments["Thảo luận qua chuỗi bình luận (Comment thread):<br/>Ví dụ: 'let us get started with creating the login page'"]
+                Reactions["Phản hồi cảm xúc (Emojis Reactions):<br/>Upvote/Downvote qua nút biểu tượng thích (Like button)"]
+                Timeline["Lịch sử cập nhật dòng thời gian (Issue Timeline):<br/>Ghi nhận hoạt động 'user commented a minute ago'"]
+                Comments <--> Reactions
+                Comments <--> Timeline
+            end
+            Created --> EngagementEngine
+        end
+
+        subgraph DecisionClosure ["2. QUYẾT ĐỊNH ĐÓNG ISSUE (CLOSING DECISION)"]
+            direction TB
+            CloseAction["Thực thi đóng Issue:<br/>Nút Close issue hoặc Close with comment"]
+            
+            subgraph TwoCloseModes ["Phân nhánh Trạng thái Đóng (2 Lựa chọn)"]
+                direction LR
+                CloseCompleted["Close as completed (Màu tím):<br/>- Đã giải quyết triệt để (resolved, fixed)<br/>- Đã hoàn thành các tác vụ (done, closed)"]
+                CloseNotPlanned["Close as not planned (Màu xám):<br/>- Không triển khai theo kế hoạch (wont fix)<br/>- Không thể tái hiện lỗi (cant produce)<br/>- Trùng lặp với tác vụ khác (duplicate)"]
+            end
+            CloseAction --> TwoCloseModes
+        end
+
+        subgraph StateClosed ["3. TRẠNG THÁI ĐÓNG (CLOSED STATE)"]
+            direction TB
+            ClosedResult["Issue chuyển sang trạng thái Closed<br/>Cập nhật tiến độ Milestone và đồ thị dự án"]
+        end
+
+        subgraph ReopenMechanism ["4. CƠ CHẾ TÁI KHỞI ĐỘNG (REOPEN MECHANISM)"]
+            direction TB
+            BtnReopen["Nhấp nút Reopen issue (hoặc Reopen with comment)"]
+            ReopenReason["Nguyên nhân tái mở:<br/>- Phát sinh lỗi hồi quy (Regression bug)<br/>- Cần bổ sung yêu cầu mới liên quan"]
+            ReopenReason --> BtnReopen
+        end
+    end
+
+    EngagementEngine --> DecisionClosure
+    TwoCloseModes --> StateClosed
+    StateClosed --> ReopenMechanism
+    BtnReopen -->|Khôi phục trạng thái hoạt động| StateOpen

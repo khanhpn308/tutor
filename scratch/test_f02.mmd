@@ -1,0 +1,50 @@
+flowchart TD
+    subgraph Ecosystem ["HỆ THỐNG PHÂN LOẠI NHÃN TRONG QUẢN LÝ DỰ ÁN GITHUB (LABELS ECOSYSTEM)"]
+        direction TB
+
+        subgraph BuiltInLabels ["1. BỘ 9 NHÃN DÁN ĐƯỢC CẤP SẴN MẶC ĐỊNH (DEFAULT LABELS)"]
+            direction TB
+
+            subgraph DefectCat ["Nhóm Phát hiện và Xử lý Lỗi"]
+                direction LR
+                L_Bug["bug:<br/>Báo cáo lỗi phần mềm hoặc chức năng có vấn đề"]
+                L_Invalid["invalid:<br/>Vấn đề không hợp lệ, không đúng thực tế"]
+                L_Duplicate["duplicate:<br/>Issue hoặc Pull Request bị trùng lặp"]
+                L_Wontfix["wontfix:<br/>Từ chối sửa chữa (không nằm trong kế hoạch)"]
+            end
+
+            subgraph FeatureCat ["Nhóm Nâng cấp Tính năng"]
+                direction LR
+                L_Enhancement["enhancement:<br/>Yêu cầu hoặc phát triển tính năng mới<br/>(Áp dụng cho Issue tạo trang đăng nhập)"]
+            end
+
+            subgraph CommunityCat ["Nhóm Hỗ trợ Cộng đồng và Thành viên mới"]
+                direction LR
+                L_GoodFirst["good first issue:<br/>Tác vụ nhập môn dành cho người mới"]
+                L_HelpWanted["help wanted:<br/>Cần trợ giúp thêm từ các thành viên khác"]
+            end
+
+            subgraph KnowledgeCat ["Nhóm Thông tin và Tài liệu"]
+                direction LR
+                L_Doc["documentation:<br/>Cải tiến hoặc bổ sung tài liệu hướng dẫn"]
+                L_Question["question:<br/>Yêu cầu làm rõ thông tin hoặc giải đáp thắc mắc"]
+            end
+        end
+
+        subgraph LabelOperations ["2. CÁC THAO TÁC QUẢN TRỊ NHÃN DÁN (LABEL OPERATIONS)"]
+            direction LR
+            OpCreate["Tạo nhãn mới (New label):<br/>Tùy biến tên, màu sắc Hex, mô tả"]
+            OpEdit["Chỉnh sửa (Edit):<br/>Đổi tên, cập nhật màu, sửa định nghĩa"]
+            OpDelete["Xóa nhãn (Delete):<br/>Loại bỏ nhãn khỏi toàn bộ kho lưu trữ"]
+        end
+
+        subgraph ApplicationWorkflow ["3. QUY TRÌNH ỨNG DỤNG NHÃN DÁN TRONG THỰC TẾ"]
+            direction LR
+            AppIssue["Tạo Issue mới"]
+            AppSelect["Sidebar: Chọn nhãn tương ứng<br/>(Ví dụ: Gán nhãn enhancement)"]
+            AppFilter["Phân luồng và Lọc nhanh:<br/>Tìm kiếm Issues theo nhãn trên kho lưu trữ"]
+            AppIssue --> AppSelect --> AppFilter
+        end
+    end
+
+    BuiltInLabels --> LabelOperations --> ApplicationWorkflow

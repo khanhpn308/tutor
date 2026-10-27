@@ -1,0 +1,45 @@
+flowchart TD
+    subgraph UI ["GIAO DIỆN KHỞI TẠO VÀ CẤU TRÚC GIẢI PHẪU GITHUB ISSUE"]
+        direction TB
+
+        subgraph MainEditor ["1. KHÔNG GIAN SOẠN THẢO CHÍNH (BÊN TRÁI)"]
+            direction TB
+            Title["Tiêu đề Issue (Title)<br/>Ví dụ: create a login page"]
+            TabMode["Chế độ hiển thị song song:<br/>- Tab Write: Soạn thảo nội dung Markdown<br/>- Tab Preview: Xem trước giao diện hiển thị"]
+            
+            subgraph BodyContent ["Nội dung và Danh mục Tác vụ (Task List)"]
+                direction TB
+                TaskSyntax["Cú pháp Markdown Task List:<br/>Dấu trừ + Dấu cách + Mở ngoặc vuông + Dấu cách + Đóng ngoặc vuông"]
+                Task1["Nhiệm vụ 1: create a basic login page"]
+                Task2["Nhiệm vụ 2: add authentication"]
+                Task3["Nhiệm vụ 3: add recaptcha"]
+                Task4["Nhiệm vụ 4: improve styling and layout"]
+                TaskSyntax --> Task1 --> Task2 --> Task3 --> Task4
+            end
+
+            AttachFiles["Khu vực đính kèm tệp tin đa phương tiện:<br/>Kéo thả (Drag and drop) hoặc chọn tệp (Paste/Click)<br/>Hỗ trợ ảnh chụp màn hình (Screenshots) và video mô tả"]
+            
+            Title --> TabMode --> BodyContent --> AttachFiles
+        end
+
+        subgraph Sidebar ["2. THANH THUỘC TÍNH SIÊU DỮ LIỆU (SIDEBAR BÊN PHẢI)"]
+            direction TB
+            Assignees["Assignees:<br/>Phân công người chịu trách nhiệm thực thi"]
+            Labels["Labels:<br/>Gán nhãn phân loại (enhancement, bug...)"]
+            Projects["Projects:<br/>Liên kết bảng quản trị dự án (Tables, Boards, Roadmaps)"]
+            Milestones["Milestones:<br/>Gán vào cột mốc phát hành và hạn chót (Deadline)"]
+            Development["Development:<br/>Liên kết nhánh làm việc (Branch) hoặc Pull Request"]
+            Assignees ~~~ Labels ~~~ Projects ~~~ Milestones ~~~ Development
+        end
+    end
+
+    subgraph SubmitPhase ["3. QUÁ TRÌNH KHỞI TẠO VÀ CẤP PHÁT ĐỊNH DANH TỰ ĐỘNG"]
+        direction TB
+        BtnSubmit["Nhấp nút Submit new issue"]
+        AutoNumber["Hệ thống GitHub tự động cấp số thứ tự định danh duy nhất:<br/>- Issue đầu tiên trong kho: Gán số định danh Issue #1<br/>- Issue tiếp theo trong kho: Gán số định danh Issue #2 (Tăng tuần tự)"]
+        TimelineView["Hiển thị dòng thời gian lịch sử (Issue Timeline):<br/>Ghi nhận người tạo và thời điểm khởi tạo vừa diễn ra"]
+        BtnSubmit --> AutoNumber --> TimelineView
+    end
+
+    MainEditor --> BtnSubmit
+    Sidebar --> BtnSubmit

@@ -1,0 +1,48 @@
+flowchart TD
+    subgraph MilestoneSystem ["MÔ HÌNH QUẢN LÝ CỘT MỐC VÀ THEO DÕI TIẾN ĐỘ PHÁT HÀNH (MILESTONES & RELEASE TRACKING)"]
+        direction TB
+
+        subgraph InitMilestone ["1. THIẾT LẬP CỘT MỐC PHÁT HÀNH (CREATE MILESTONE)"]
+            direction LR
+            M_Title["Tên cột mốc: release 1<br/>(Đại diện cho phiên bản phát hành)"]
+            M_Desc["Mô tả: This is a milestone for<br/>release 1 version of our login page"]
+            M_Date["Hạn chót (Deadline): Ngày 30 trong tháng<br/>(Due date xác định mốc thời gian hoàn thành)"]
+            M_Title --> M_Desc --> M_Date
+        end
+
+        subgraph GroupingIssues ["2. CƠ CHẾ GOM NHÓM ISSUES VÀ PULL REQUESTS"]
+            direction TB
+            GroupDesc["Gom nhóm các đầu việc phục vụ cho cùng một phiên bản phát hành"]
+            
+            subgraph IssuesInRelease ["Các Issues được gán thuộc tính Milestone: release 1"]
+                direction LR
+                I1["Issue #1: create a login page<br/>(Đang mở - Open)"]
+                I2["Issue #2: setup database schema<br/>(Tác vụ tiếp theo)"]
+                PR1["Pull Request #3: Implement basic auth<br/>(Đề xuất mã nguồn tích hợp)"]
+            end
+            GroupDesc --> IssuesInRelease
+        end
+
+        subgraph ProgressEngine ["3. ĐỘNG CƠ THEO DÕI TIẾN ĐỘ VÀ TÍNH TOÁN TỶ LỆ HOÀN THÀNH (%)"]
+            direction TB
+            Formula["Công thức tính tỷ lệ hoàn thành tự động:<br/>Tỷ lệ % = (Số Issues và PRs đã đóng) / (Tổng số Issues và PRs trong Milestone) x 100%"]
+            
+            subgraph StatusStages ["Các giai đoạn tiến độ thực tế"]
+                direction LR
+                Stage0["Khởi tạo ban đầu:<br/>0% complete<br/>(0 closed / 1 open)"]
+                StageMid["Quá trình thực hiện:<br/>Tăng dần theo số task hoàn thành<br/>(Ví dụ: 50% complete)"]
+                Stage100["Hoàn thành toàn bộ:<br/>100% complete<br/>(Tất cả Issues/PRs đã đóng)"]
+                Stage0 --> StageMid --> Stage100
+            end
+            Formula --> StatusStages
+        end
+
+        subgraph LifecycleActions ["4. VÒNG ĐỜI QUẢN TRỊ CỘT MỐC (MILESTONE MANAGEMENT)"]
+            direction LR
+            ActEdit["Chỉnh sửa (Edit):<br/>Gia hạn deadline hoặc cập nhật mô tả"]
+            ActClose["Đóng cột mốc (Close):<br/>Đóng phiên bản khi hoàn thành nghiệm thu"]
+            ActDelete["Xóa cột mốc (Delete):<br/>Hủy bỏ khi kế hoạch phiên bản thay đổi"]
+        end
+    end
+
+    InitMilestone --> GroupingIssues --> ProgressEngine --> LifecycleActions
